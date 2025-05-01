@@ -1,0 +1,30 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authorization
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using Microsoft.JSInterop
+
+@* Common *@
+@using Blazor.Common
+@using Blazor.Common.Services
+@using Blazor.Common.HttpClients
+@using Blazor.Common.Dtos
+
+@* Project Folders *@
+@using Blazor.Server
+@using Blazor.Server.Components
+@using Blazor.Server.Components.Layout
+
+@* Syncfusion *@
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.DataForm
+
+@* Injection *@
+@inject NavigationManager _NavigationManager
+@inject IJSRuntime _IJSRuntime
+@inject AuthenticationStateProvider AuthenticationStateProvider

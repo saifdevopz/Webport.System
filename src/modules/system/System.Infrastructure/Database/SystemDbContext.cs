@@ -1,0 +1,29 @@
+﻿using Common.Infrastructure.Interceptors;
+using Microsoft.EntityFrameworkCore;
+using System.Domain.Models;
+
+namespace System.Infrastructure.Database;
+
+public sealed class SystemDbContext(DbContextOptions<SystemDbContext> options) : DbContext(options)
+{
+    public DbSet<TenantM> Tenants => Set<TenantM>();
+    public DbSet<UserM> Users => Set<UserM>();
+    public DbSet<RoleM> Roles => Set<RoleM>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        ArgumentNullException.ThrowIfNull(modelBuilder);
+
+        modelBuilder.HasDefaultSchema(SystemConstants.Schema);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(SystemDbContext).Assembly);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        ArgumentNullException.ThrowIfNull(optionsBuilder);
+
+        optionsBuilder.AddInterceptors(new AuditableEntityInterceptor());
+    }
+}
+

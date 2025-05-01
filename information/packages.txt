@@ -1,0 +1,8 @@
+Open Telemetry
+Dapper
+Polly
+Fluent Validation
+Serilog
+Quartz.NET
+Mailkit
+SignalR

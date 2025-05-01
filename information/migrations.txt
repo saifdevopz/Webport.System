@@ -1,0 +1,23 @@
+System
+
+Add-Migration -Name InitialCreate -Context SystemDbContext -OutputDir Database/Migrations -Project System.Infrastructure -StartupProject System.API
+Update-Database -Context SystemDbContext -Project System.API -StartupProject System.API 
+
+-----------------------------------------------------------------------------------------------------------------
+
+Parent
+
+Add-Migration -Name InitialCreate -Context ParentDbContext -OutputDir Database/Migrations -Project Parent.Infrastructure -StartupProject Parent.API
+Update-Database -Context ParentDbContext -Project Parent.API -StartupProject Parent.API 
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+Project Reference
+
+Modules
+
+Domain => Common.Domain
+Infrastructure => Common.Infrastructure, Application, Presentation
+Application => Common.Application, Domain, IntegrationEvents
+Presentation => Common.Presentation, Application
