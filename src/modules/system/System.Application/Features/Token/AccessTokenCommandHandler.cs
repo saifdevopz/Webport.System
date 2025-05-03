@@ -14,7 +14,7 @@ public class AccessTokenCommandHandler(ITokenService tokenService)
         CancellationToken cancellation = default)
     {
 
-        var tokenResult = await tokenService.AccessToken(command.Request);
+        var tokenResult = await tokenService.AccessToken(new AccessTokenRequest(command.Email, command.Password));
 
         if (tokenResult.IsFailure)
         {
@@ -25,7 +25,7 @@ public class AccessTokenCommandHandler(ITokenService tokenService)
     }
 }
 
-public sealed record AccessTokenCommand(AccessTokenRequest Request);
+public sealed record AccessTokenCommand(string Email, string Password);
 
 public sealed record AccessTokenResult(TokenResponse Response);
 
@@ -33,7 +33,7 @@ public class AccessTokenCommandValidator : AbstractValidator<AccessTokenCommand>
 {
     public AccessTokenCommandValidator()
     {
-        RuleFor(_ => _.Request.Email).NotNull().NotEmpty();
-        RuleFor(_ => _.Request.Password).NotNull().NotEmpty();
+        RuleFor(_ => _.Email).NotNull().NotEmpty();
+        RuleFor(_ => _.Password).NotNull().NotEmpty();
     }
 }

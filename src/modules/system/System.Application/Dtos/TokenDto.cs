@@ -2,11 +2,11 @@
 
 public sealed record TokenResponse(string Token, string RefreshToken, DateTime RefreshTokenExpiryTime);
 
-public class AccessTokenRequest
-{
-    public required string Email { get; init; }
-    public required string Password { get; init; }
-}
+public sealed record AccessTokenRequest
+(
+    string Email,
+    string Password
+);
 
 public class RefreshTokenRequest
 {
