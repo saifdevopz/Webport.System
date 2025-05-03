@@ -21,13 +21,13 @@ public class AccessTokenCommandHandler(ITokenService tokenService)
             return Result.Failure<AccessTokenResult>(tokenResult.Error!);
         }
 
-        return Result.Success(new AccessTokenResult(tokenResult.Value));
+        return Result.Success(new AccessTokenResult(tokenResult.Value.Token, tokenResult.Value.RefreshToken));
     }
 }
 
 public sealed record AccessTokenCommand(string Email, string Password);
 
-public sealed record AccessTokenResult(TokenResponse Response);
+public sealed record AccessTokenResult(string Token, string RefreshToken);
 
 public class AccessTokenCommandValidator : AbstractValidator<AccessTokenCommand>
 {
