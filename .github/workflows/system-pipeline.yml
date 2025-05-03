@@ -47,7 +47,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          cd /root/starter-api-install
+          cd /root/webport-system
           docker-compose -f docker-compose.yml down || true
           docker image prune -a -f
           docker-compose pull
