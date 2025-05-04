@@ -13,6 +13,7 @@ internal sealed class GetRolesEndpoint(IQueryDispatcher _sender) : IEndpoint
 
             return response;
         })
-        .WithTags(Tags.Role);
+        .WithTags(Tags.Role)
+        .RequireAuthorization();
     }
 }

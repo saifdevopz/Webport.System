@@ -15,7 +15,7 @@ public class TokenService(BaseHttpClient httpClient) : ITokenService
         HttpResponseMessage response = await httpclient.PostAsJsonAsync($"/access", request, cancellationToken);
         var result = await response.Content.ReadFromJsonAsync<ApiResult<TokenResponse>>(cancellationToken);
 
-        return result!.Value;
+        return result!.data;
     }
 
     public Task<TokenResponse> RefreshToken(RefreshTokenRequest request, CancellationToken cancellationToken = default)

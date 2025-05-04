@@ -35,7 +35,7 @@ public class AccessTokenCommandValidator : AbstractValidator<AccessTokenCommand>
 {
     public AccessTokenCommandValidator()
     {
-        RuleFor(_ => _.Email).NotNull().NotEmpty();
-        RuleFor(_ => _.Password).NotNull().NotEmpty();
+        RuleFor(_ => _.Email).NotEmpty();
+        RuleFor(_ => _.Password).NotEmpty();
     }
 }

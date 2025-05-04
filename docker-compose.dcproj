@@ -10,11 +10,14 @@
     <DockerServiceName>system.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="src\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="docker-compose-blazor-server.yml" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
-    <None Include="src\apps\Blazor.Server\Components\Pages\Test\Component.razor" />
   </ItemGroup>
 </Project>
