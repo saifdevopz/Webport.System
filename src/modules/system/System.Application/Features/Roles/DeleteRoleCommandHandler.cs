@@ -14,14 +14,14 @@ public class DeleteRoleCommandHandler(IRepository<RoleM> Repository)
         DeleteRoleCommand command,
         CancellationToken cancellation = default)
     {
-        var Obj = await Repository.FindOneAsync(_ => _.RoleId == command.RoleId, cancellation);
+        var obj = await Repository.FindOneAsync(_ => _.RoleId == command.RoleId, cancellation);
 
-        if (Obj is null)
+        if (obj is null)
         {
             return Result.Failure(CustomError.NotFound("Not Found", "Role not found."));
         }
 
-        Repository.Delete(Obj);
+        Repository.Delete(obj);
         await Repository.SaveChangesAsync(cancellation);
 
         return Result.Success();
@@ -34,6 +34,6 @@ public class DeleteRoleCommandValidator : AbstractValidator<DeleteRoleCommand>
 {
     public DeleteRoleCommandValidator()
     {
-        RuleFor(_ => _.RoleId).NotNull().NotEmpty();
+        RuleFor(_ => _.RoleId).NotEmpty();
     }
 }

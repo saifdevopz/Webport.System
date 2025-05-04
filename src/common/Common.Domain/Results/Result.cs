@@ -21,31 +21,31 @@ public class Result
     public bool IsFailure => !IsSuccess;
     public CustomError? Error { get; }
 
-    public static Result<T> Success<T>(T value) => value is not null
-        ? new Result<T>(value, true, CustomError.None)
-        : throw new ArgumentNullException(nameof(value), "Value cannot be null for success");
+    public static Result<T> Success<T>(T data) => data is not null
+        ? new Result<T>(data, true, CustomError.None)
+        : throw new ArgumentNullException(nameof(data), "Value cannot be null for success");
 
     public static Result Success() => new(true, CustomError.None);
     public static Result Failure(CustomError error) => new(false, error);
     public static Result<T> Failure<T>(CustomError error) => new(default, false, error);
 
-    public static Result<T> ToResult<T>(T? value)
+    public static Result<T> ToResult<T>(T? data)
     {
-        return value is not null
-            ? Success(value)
+        return data is not null
+            ? Success(data)
             : Failure<T>(CustomError.NullValue);
     }
 
 }
 
-public class Result<T>(T? value, bool isSuccess, CustomError error) : Result(isSuccess, error)
+public class Result<T>(T? data, bool isSuccess, CustomError error) : Result(isSuccess, error)
 {
-    private readonly T? _value = value;
+    private readonly T? _data = data;
 
     [JsonPropertyOrder(99)]
     [NotNull]
-    public T Value => IsSuccess
-        ? _value!
+    public T data => IsSuccess
+        ? _data!
         : throw new InvalidOperationException("Cannot access the value of a failed result.");
 
     [SuppressMessage("Design", "CA1000:Do not declare static members on generic types", Justification = "<Pending>")]

@@ -3,23 +3,29 @@
 public sealed class TenantM : AggregateRoot
 {
     public int TenantId { get; set; }
-    public string TenantName { get; set; } = string.Empty;
-    public string DatabaseName { get; set; } = string.Empty;
-    public string ConnectionString { get; set; } = string.Empty;
+    public required string TenantName { get; set; }
+    public required string DatabaseName { get; set; }
+    public required string ConnectionString { get; set; }
     public DateTime LicenceExpiryDate { get; set; }
 
     public static TenantM Create(
         string tenantName,
         string databaseName)
     {
-        TenantM tenant = new()
+        TenantM obj = new()
         {
             TenantName = tenantName,
             DatabaseName = databaseName,
-            LicenceExpiryDate = DateTime.Now.AddDays(7),
+            ConnectionString = BuildConnectionString(databaseName),
+            LicenceExpiryDate = DateTime.Now.AddDays(30),
         };
 
-        return tenant;
+        return obj;
+    }
+
+    private static string BuildConnectionString(string databaseName)
+    {
+        return $"Host=102.211.206.231;Port=5432;Database={databaseName};Username=sa;Password=25122000SK;Pooling=true;MinPoolSize=10;MaxPoolSize=100;Include Error Detail=true";
     }
 }
 

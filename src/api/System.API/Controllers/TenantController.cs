@@ -5,11 +5,11 @@ using System.Domain.Models;
 using System.Infrastructure.Database;
 
 namespace System.API.Controllers;
-[Route("[controller]")]
+[Route("tenant-v2")]
 [ApiController]
-public sealed class TenantController(SystemDbContext systemDbContext) : ControllerBase
+internal sealed class TenantController(SystemDbContext systemDbContext) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("getall")]
     public async Task<ActionResult<CollectionDto>> GetTenants()
     {
         List<TenantDto> tenants = await systemDbContext
@@ -25,7 +25,7 @@ public sealed class TenantController(SystemDbContext systemDbContext) : Controll
         return Ok(response);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("SSS/{id}")]
     public async Task<ActionResult<TenantDto>> GetTenant(int id)
     {
         TenantDto? tenant = await systemDbContext
@@ -42,7 +42,7 @@ public sealed class TenantController(SystemDbContext systemDbContext) : Controll
         return Ok(tenant);
     }
 
-    [HttpPost]
+    [HttpPost("sS")]
     public async Task<ActionResult<TenantDto>> CreateTenant(CreateTenantDto createTenantDto)
     {
         TenantM tenant = createTenantDto.ToEntity();
@@ -56,7 +56,7 @@ public sealed class TenantController(SystemDbContext systemDbContext) : Controll
         return CreatedAtAction(nameof(CreateTenant), new { tenanName = tenantDto.TenantName }, tenantDto);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("SWWS/{id}")]
     public async Task<ActionResult> UpdateTenant(int id, CreateTenantDto dto)
     {
         TenantM? tenant = await systemDbContext.Tenants.FirstOrDefaultAsync(h => h.TenantId == id);
@@ -74,7 +74,7 @@ public sealed class TenantController(SystemDbContext systemDbContext) : Controll
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("SSWS/{id}")]
     public async Task<ActionResult> DeleteHabit(int id)
     {
         TenantM? tenant = await systemDbContext.Tenants.FirstOrDefaultAsync(h => h.TenantId == id);

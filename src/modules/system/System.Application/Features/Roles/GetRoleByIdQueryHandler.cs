@@ -1,7 +1,6 @@
 ﻿using Common.Application.CQRS;
 using Common.Domain.Errors;
 using Common.Domain.Results;
-using FluentValidation;
 using System.Application.Interfaces;
 using System.Domain.Models;
 
@@ -14,10 +13,10 @@ public class GetRoleByIdQueryHandler(IRepository<RoleM> repository)
         GetRoleByIdQuery query,
         CancellationToken cancellation = default)
     {
-        var Obj = await repository.FindOneAsync(_ => _.RoleId == query.RoleId, cancellation);
+        var obj = await repository.FindOneAsync(_ => _.RoleId == query.RoleId, cancellation);
 
-        return Obj is not null
-            ? Result.Success(new GetRoleByIdQueryResult(Obj))
+        return obj is not null
+            ? Result.Success(new GetRoleByIdQueryResult(obj))
             : Result.Failure<GetRoleByIdQueryResult>(CustomError.NotFound("Not Found", "Role not found."));
     }
 }
@@ -25,11 +24,3 @@ public class GetRoleByIdQueryHandler(IRepository<RoleM> repository)
 public sealed record GetRoleByIdQuery(int RoleId);
 
 public sealed record GetRoleByIdQueryResult(RoleM Role);
-
-public class GetRoleByIdValidator : AbstractValidator<GetRoleByIdQuery>
-{
-    public GetRoleByIdValidator()
-    {
-        RuleFor(_ => _.RoleId).NotNull().NotEmpty();
-    }
-}

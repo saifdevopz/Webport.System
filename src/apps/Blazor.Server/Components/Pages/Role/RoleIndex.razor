@@ -1,0 +1,92 @@
+﻿@page "/role/index"
+@using Syncfusion.Blazor.Notifications
+
+<h3>Role Index</h3>
+
+<SfGrid @ref="sGrid" 
+DataSource="@RoleList" 
+AllowPaging="true" 
+AllowSorting="true" 
+AllowFiltering="true" 
+AllowGrouping="true"
+Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Cancel", "Update" })">
+    <GridEvents OnActionBegin="ActionBeginHandler" TValue="RoleDto"></GridEvents>
+    <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog"></GridEditSettings>
+    <GridPageSettings PageSize="20"></GridPageSettings>
+    <GridColumns>
+        <GridColumn IsPrimaryKey="true" Field=@nameof(RoleDto.RoleId) HeaderText="ID" AllowAdding="false" Width="100" TextAlign="TextAlign.Right"></GridColumn>
+        <GridColumn Field=@nameof(RoleDto.RoleName) HeaderText="Name"></GridColumn>
+        <GridColumn Field=@nameof(RoleDto.IsActive) HeaderText="Is Active"></GridColumn>
+        <GridColumn Field=@nameof(RoleDto.CreatedBy) HeaderText="Created By"></GridColumn>
+        <GridColumn Field=@nameof(RoleDto.CreatedDt) HeaderText="Created Date" IsIdentity="true"></GridColumn>
+    </GridColumns>
+</SfGrid>
+
+
+@code {
+    public SfGrid<RoleDto>? sGrid { get; set; }
+    public List<RoleDto>? RoleList { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client =  _BaseHttpClient.GetPrivateHttpClient();
+        var response = await client.GetFromJsonAsync<ApiResult<RoleWrapper>>("role");
+
+        if (response!.IsSuccess)
+        {
+            RoleList = response?.Value!.Roles;
+        }
+
+    }
+
+    public async void ActionBeginHandler(ActionEventArgs<RoleDto> Args)
+    {
+        var client = _BaseHttpClient.GetPrivateHttpClient();
+
+        if (Args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            if (Args.Action == "Add")
+            {
+                var response = await client.PostAsJsonAsync("role", Args.Data);
+                if (response!.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("ss");
+                }
+                await sGrid!.Refresh();
+            }
+            else
+            {
+                Console.WriteLine("s");
+            }
+        }
+
+        if (Args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var response = await client.DeleteAsync($"role/{Args.Data.RoleId}");
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("wws");
+            }
+            else
+            {
+                Console.WriteLine("shh");
+            }
+        }
+    }
+
+    public record RoleDto(
+        int RoleId,
+        string RoleName,
+        string NormalizedRoleName,
+        string LastModBy,
+        DateTime LastModDt,
+        string CreatedBy,
+        DateTime CreatedDt,
+        bool IsActive
+    );
+
+    public record RoleWrapper(
+        List<RoleDto> Roles
+    );
+}
+

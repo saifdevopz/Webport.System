@@ -12,9 +12,9 @@ public class GetUsersQueryHandler(IRepository<UserM> repository)
         GetUsersQuery query,
         CancellationToken cancellation = default)
     {
-        var Obj = await repository.GetAllAsync(cancellation);
+        var obj = await repository.GetAllAsync(cancellation);
 
-        return Result.Success(new GetUsersQueryResult(Obj));
+        return Result.Success(new GetUsersQueryResult(obj));
     }
 }
 

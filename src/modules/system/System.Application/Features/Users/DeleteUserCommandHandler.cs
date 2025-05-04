@@ -1,7 +1,6 @@
 ﻿using Common.Application.CQRS;
 using Common.Domain.Errors;
 using Common.Domain.Results;
-using FluentValidation;
 using System.Application.Interfaces;
 using System.Domain.Models;
 
@@ -14,14 +13,14 @@ public class DeleteUserCommandHandler(IRepository<UserM> Repository)
         DeleteUserCommand command,
         CancellationToken cancellation = default)
     {
-        var Obj = await Repository.FindOneAsync(_ => _.UserId == command.UserId, cancellation);
+        var obj = await Repository.FindOneAsync(_ => _.UserId == command.UserId, cancellation);
 
-        if (Obj is null)
+        if (obj is null)
         {
             return Result.Failure(CustomError.NotFound("Not Found", "User not found."));
         }
 
-        Repository.Delete(Obj);
+        Repository.Delete(obj);
         await Repository.SaveChangesAsync(cancellation);
 
         return Result.Success();
@@ -29,11 +28,3 @@ public class DeleteUserCommandHandler(IRepository<UserM> Repository)
 }
 
 public sealed record DeleteUserCommand(int UserId);
-
-public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
-{
-    public DeleteUserCommandValidator()
-    {
-        RuleFor(_ => _.UserId).NotNull().NotEmpty();
-    }
-}

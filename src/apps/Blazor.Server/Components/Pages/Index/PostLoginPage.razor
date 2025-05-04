@@ -1,6 +1,6 @@
-﻿@page "/postlogin"
-@inject IHttpContextAccessor HttpContextAccessor
-@inject NavigationManager NavigationManager
+﻿@page "/account/postlogin"
+@using Blazor.Server.Services.Interfaces
+@attribute [AllowAnonymous]
 
 @code {
     [SupplyParameterFromQuery]
@@ -10,17 +10,19 @@
     {
         if (string.IsNullOrEmpty(Token))
         {
-            NavigationManager.NavigateTo("/login");
+            _NavigationManager.NavigateTo("/account/login");
         }
         else
         {
-            HttpContextAccessor.HttpContext!.Response.Cookies.Append(BlazorConstants.AuthCookieName, Token, new CookieOptions
-            {                
+            _HttpContextAccessor.HttpContext!.Response.Cookies
+            .Append(BlazorConstants.AuthCookieName, Token, new CookieOptions
+                {
                     HttpOnly = true,
                     Expires = DateTimeOffset.Now.AddMinutes(30),
-            });
+                });
 
-            NavigationManager.NavigateTo("/");
+            _NavigationManager.NavigateTo("/dashboard/home");
         }
     }
 }
+

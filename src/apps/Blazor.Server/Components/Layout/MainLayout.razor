@@ -1,23 +1,37 @@
-﻿@inherits LayoutComponentBase
+﻿@using Blazor.Server.Services.Interfaces
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inherits LayoutComponentBase
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<ErrorBoundary @ref="errorBoundary">
+    <ChildContent>
+        <AuthorizeView>
+            <Authorized>
+                <div class="main-wrapper">
+                    <Header />
+                    <div class="body-wrapper">
+                        @Body
+                    </div>
+                    <Footer />
+                </div>
+            </Authorized>
+            <NotAuthorized>@Body</NotAuthorized>
+        </AuthorizeView>
+    </ChildContent>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    <ErrorContent Context="exception">
+        <p>Error Occurred!!! -  From Main</p>
+        <p>@exception.GetType()</p>
+        <p>@exception.Message</p>
+        <p>@exception.StackTrace</p>
+        <button onclick ="() => errorBoundary?.Recover()">Try Again</button>
+    </ErrorContent>
+</ErrorBoundary>
 
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
+@code {
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+}

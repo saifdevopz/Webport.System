@@ -13,9 +13,9 @@ public class CreateUserCommandHandler(IRepository<UserM> Repository)
         CreateUserCommand command,
         CancellationToken cancellation = default)
     {
-        var Obj = UserM.Create(command.FullName, command.Email, command.Password, command.TenantId, command.RoleId);
+        var obj = UserM.Create(command.TenantId, command.RoleId, command.FullName, command.Email, command.Password);
 
-        await Repository.AddAsync(Obj);
+        await Repository.AddAsync(obj);
         await Repository.SaveChangesAsync(cancellation);
 
         return Result.Success();
@@ -33,9 +33,9 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {
     public CreateUserCommandValidator()
     {
-        RuleFor(_ => _.FullName).NotNull().NotEmpty();
-        RuleFor(_ => _.Email).NotNull().NotEmpty().EmailAddress();
-        RuleFor(_ => _.Password).NotNull().NotEmpty();
-        RuleFor(_ => _.TenantId).NotNull().NotEmpty();
+        RuleFor(_ => _.FullName).NotEmpty();
+        RuleFor(_ => _.Email).NotEmpty().EmailAddress();
+        RuleFor(_ => _.Password).NotEmpty();
+        RuleFor(_ => _.TenantId).NotEmpty();
     }
 }

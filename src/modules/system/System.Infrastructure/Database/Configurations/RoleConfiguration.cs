@@ -8,12 +8,17 @@ public sealed class RoleConfiguration : IEntityTypeConfiguration<RoleM>
 {
     public void Configure(EntityTypeBuilder<RoleM> builder)
     {
-        builder.HasKey(_ => _.RoleId);
+        builder
+            .HasKey(_ => _.RoleId);
 
-        builder.Property(_ => _.RoleName).IsRequired().HasMaxLength(50);
+        builder.Property(_ => _.RoleName)
+            .IsRequired()
+            .HasMaxLength(50);
 
-        builder.Property(_ => _.NormalizedRoleName).HasMaxLength(50);
+        builder.Property(_ => _.NormalizedRoleName)
+            .HasMaxLength(50);
 
-        builder.HasIndex(_ => new { _.NormalizedRoleName }).IsUnique();
+        builder.HasIndex(_ => new { _.NormalizedRoleName })
+            .IsUnique();
     }
 }

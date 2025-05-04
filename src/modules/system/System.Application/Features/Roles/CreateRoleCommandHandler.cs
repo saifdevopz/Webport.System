@@ -13,9 +13,9 @@ public class CreateRoleCommandHandler(IRepository<RoleM> Repository)
         CreateRoleCommand command,
         CancellationToken cancellation = default)
     {
-        var Obj = RoleM.Create(command.RoleName);
+        var obj = RoleM.Create(command.RoleName);
 
-        await Repository.AddAsync(Obj);
+        await Repository.AddAsync(obj);
         await Repository.SaveChangesAsync(cancellation);
 
         return Result.Success();
@@ -28,6 +28,6 @@ public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
 {
     public CreateRoleCommandValidator()
     {
-        RuleFor(_ => _.RoleName).NotNull().NotEmpty();
+        RuleFor(_ => _.RoleName).NotEmpty();
     }
 }

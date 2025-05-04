@@ -1,0 +1,87 @@
+﻿@page "/dashboard/home"
+@using Blazor.Server.Services.Interfaces
+@using Microsoft.AspNetCore.Components.Authorization
+
+<PageTitle>Home</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        @{
+            var user = context.User;
+            var identity = user.Identity;
+            var authType = identity?.AuthenticationType ?? "N/A";
+            var name = identity?.Name ?? "Anonymous";
+            var isAuthenticated = identity?.IsAuthenticated == true;
+            var allClaims = user.Claims.ToList();
+
+            var roleClaims = allClaims
+            .Where(c => c.Type == ClaimTypes.Role || c.Type == "role")
+            .Select(c => c.Value)
+            .Distinct()
+            .ToList();
+
+            var expClaim = allClaims.FirstOrDefault(c => c.Type == "exp");
+            string? tokenExpiry = null;
+            if (expClaim != null && long.TryParse(expClaim.Value, out var expUnix))
+            {
+                var expiryDate = DateTimeOffset.FromUnixTimeSeconds(expUnix).ToLocalTime();
+                tokenExpiry = expiryDate.ToString("f");
+            }
+        }
+
+        <h2>Welcome, @name!</h2>
+        <p><strong>Authenticated:</strong> @isAuthenticated</p>
+        <p><strong>Auth Type:</strong> @authType</p>
+        @if (tokenExpiry != null)
+        {
+            <p><strong>Token Expiration:</strong> @tokenExpiry</p>
+        }
+
+        <h3>Roles</h3>
+        @if (roleClaims.Any())
+        {
+            <ul>
+                @foreach (var role in roleClaims)
+                {
+                    <li>@role</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No roles found.</p>
+        }
+
+        <h3>Claims (@allClaims.Count)</h3>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in allClaims)
+                {
+                    <tr>
+                        <td>@claim.Type</td>
+                        <td>@claim.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>Security Info (Raw Dump)</h3>
+        <pre>@user.ToString()</pre>
+    </Authorized>
+
+    <NotAuthorized>
+        <p class="text-danger">You are not authorized to view this page. Please <a href="/login">log in</a>.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Admin">
+    <div class="alert alert-info mt-3">
+        <strong>Admin Panel:</strong> You have administrative access.
+    </div>
+</AuthorizeView>

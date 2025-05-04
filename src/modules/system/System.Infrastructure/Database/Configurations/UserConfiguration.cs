@@ -8,23 +8,24 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<UserM>
 {
     public void Configure(EntityTypeBuilder<UserM> builder)
     {
-        builder
-            .HasKey(_ => _.UserId);
+        builder.HasKey(_ => _.UserId);
 
-        builder
-            .Property(_ => _.FullName).IsRequired().HasMaxLength(50);
+        builder.Property(_ => _.FullName)
+            .IsRequired()
+            .HasMaxLength(50);
 
-        builder
-            .Property(_ => _.Email).IsRequired().HasMaxLength(30);
+        builder.Property(_ => _.Email)
+            .IsRequired()
+            .HasMaxLength(30);
 
-        builder
-            .Property(_ => _.PasswordHash).IsRequired().HasMaxLength(100);
+        builder.Property(_ => _.PasswordHash)
+            .IsRequired();
 
-        builder
-            .Property(_ => _.PasswordSalt).IsRequired().HasMaxLength(256);
+        builder.Property(_ => _.PasswordSalt)
+            .IsRequired();
 
-        builder
-            .HasIndex(_ => new { _.Email }).IsUnique();
+        builder.HasIndex(_ => new { _.Email })
+            .IsUnique();
 
         builder
             .HasOne(_ => _.Tenant)

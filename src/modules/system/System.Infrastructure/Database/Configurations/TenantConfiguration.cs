@@ -8,12 +8,24 @@ public sealed class TenantConfiguration : IEntityTypeConfiguration<TenantM>
 {
     public void Configure(EntityTypeBuilder<TenantM> builder)
     {
-        builder.HasKey(t => t.TenantId);
+        builder
+            .HasKey(_ => _.TenantId);
 
-        builder.Property(t => t.TenantName).IsRequired().HasMaxLength(50);
+        builder.Property(_ => _.TenantName)
+            .IsRequired()
+            .HasMaxLength(50);
 
-        builder.Property(t => t.DatabaseName).HasMaxLength(50);
+        builder.Property(_ => _.DatabaseName)
+            .IsRequired()
+            .HasMaxLength(20);
 
-        builder.HasIndex(t => new { t.TenantName }).IsUnique();
+        builder.Property(_ => _.ConnectionString)
+            .IsRequired();
+
+        builder.Property(_ => _.LicenceExpiryDate)
+            .IsRequired();
+
+        builder.HasIndex(_ => new { _.TenantName })
+            .IsUnique();
     }
 }

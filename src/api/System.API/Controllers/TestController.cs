@@ -5,7 +5,7 @@ namespace System.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TestController() : ControllerBase
+    internal sealed class TestController() : ControllerBase
     {
         [Authorize]
         [HttpGet]

@@ -1,5 +1,12 @@
 
+using Blazor.Common.Helpers;
+using Blazor.Server.Authentication;
 using Blazor.Server.Components;
+using Blazor.Server.HttpClients;
+using Blazor.Server.Services.Implementations;
+using Blazor.Server.Services.Interfaces;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,18 +19,29 @@ builder.Services.AddRazorComponents()
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXtedHZXRGZcVkVxWkBWYUA=");
 builder.Services.AddSyncfusionBlazor();
 
-// Authentication
-//builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-//builder.Services.AddAuthorization();
-builder.Services.AddCascadingAuthenticationState();
+// Local Storage
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<LocalStorageService>();
+
 
 // Http Client
-builder.Services.AddHttpClient("BaseHttpClient", (sp, options) =>
+builder.Services.AddHttpClient<BaseHttpClient>((sp, client) =>
 {
-    IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-    options.BaseAddress = new Uri(configuration["BaseUrls:Development"]!);
+    //IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
+#pragma warning disable S1075 // URIs should not be hardcoded
+    client.BaseAddress = new Uri("https://system.webport.co.za");
+#pragma warning restore S1075 // URIs should not be hardcoded
 });
+
+builder.Services.AddScoped<BaseHttpClient>();
+
+// Services
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+// Authentication
+//builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 var app = builder.Build();
 
@@ -41,6 +59,7 @@ app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+    .AddInteractiveServerRenderMode()
+    .AllowAnonymous();
 
 await app.RunAsync();

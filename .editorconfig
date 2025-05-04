@@ -80,8 +80,6 @@ dotnet_diagnostic.CA1062.severity = none
 # Consider making public types internal
 dotnet_diagnostic.CA1515.severity = none
 
-dotnet_diagnostic.S125.severity = none
-
 # Properties should not return arrays
 dotnet_diagnostic.CA1819.severity = none
 
@@ -93,12 +91,12 @@ dotnet_diagnostic.CA1812.severity = none
 
 # For improved performance, use the LoggerMessage delegates
 dotnet_diagnostic.CA1848.severity = none
-csharp_style_expression_bodied_constructors = false:silent
-csharp_style_expression_bodied_operators = false:silent
-csharp_style_expression_bodied_properties = true:silent
-csharp_style_expression_bodied_indexers = true:silent
-csharp_style_expression_bodied_accessors = true:silent
-csharp_style_expression_bodied_lambdas = true:silent
-csharp_style_expression_bodied_local_functions = false:silent
+
+
+
+dotnet_diagnostic.S108.severity = none
+dotnet_diagnostic.S125.severity = none
+
+
 
 ########################################################

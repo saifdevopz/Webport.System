@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Blazor.Common.Helpers;
 
-internal static class Serialization
+public static class Serialization
 {
     public static JsonSerializerOptions JsonOptions()
     {

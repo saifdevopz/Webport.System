@@ -14,19 +14,19 @@ public class UpdateUserCommandHandler(IRepository<UserM> Repository)
         UpdateUserCommand command,
         CancellationToken cancellation = default)
     {
-        var Obj = await Repository.FindOneAsync(_ => _.UserId == command.UserId, cancellation);
+        var obj = await Repository.FindOneAsync(_ => _.UserId == command.UserId, cancellation);
 
-        if (Obj == null)
+        if (obj == null)
         {
             return Result.Failure(CustomError.NotFound("Not Found", "User not found"));
         }
 
-        Obj.FullName = command.FullName;
+        obj.FullName = command.FullName;
 
-        Repository.Update(Obj);
+        Repository.Update(obj);
         await Repository.SaveChangesAsync(cancellation);
 
-        return Result.Success(Obj);
+        return Result.Success();
     }
 }
 
@@ -38,7 +38,7 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserCommandValidator()
     {
-        RuleFor(_ => _.UserId).NotNull().NotEmpty();
-        RuleFor(_ => _.FullName).NotNull().NotEmpty();
+        RuleFor(_ => _.UserId).NotEmpty();
+        RuleFor(_ => _.FullName).NotEmpty();
     }
 }

@@ -15,18 +15,18 @@ public sealed class UserM : AggregateRoot
     public RoleM? Role { get; set; }
 
     public static UserM Create(
+        int tenantId,
+        int roleId,
         string fullName,
         string email,
-        string password,
-        int tenantId,
-        int roleId)
+        string password)
     {
         GeneralExtensions.CreatePasswordHash(
             password,
             out byte[] passwordHash,
             out byte[] passwordSalt);
 
-        UserM user = new()
+        UserM obj = new()
         {
             TenantId = tenantId,
             RoleId = roleId,
@@ -36,7 +36,7 @@ public sealed class UserM : AggregateRoot
             PasswordSalt = passwordSalt
         };
 
-        return user;
+        return obj;
     }
 }
 

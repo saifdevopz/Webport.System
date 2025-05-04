@@ -1,10 +1,9 @@
 ﻿using Blazor.Common.Dtos;
-using Blazor.Common.HttpClients;
 using Blazor.Common.Results;
-using Blazor.Common.Services.Interfaces;
-using System.Net.Http.Json;
+using Blazor.Server.HttpClients;
+using Blazor.Server.Services.Interfaces;
 
-namespace Blazor.Common.Services.Implementations;
+namespace Blazor.Server.Services.Implementations;
 public class TokenService(BaseHttpClient httpClient) : ITokenService
 {
     public const string baseUrl = "/token/accesstoken";
@@ -13,10 +12,10 @@ public class TokenService(BaseHttpClient httpClient) : ITokenService
     {
         HttpClient httpclient = httpClient.GetPublicHttpClient();
 
-        HttpResponseMessage response = await httpclient.PostAsJsonAsync($"{baseUrl}/refresh", request, cancellationToken);
+        HttpResponseMessage response = await httpclient.PostAsJsonAsync($"/access", request, cancellationToken);
         var result = await response.Content.ReadFromJsonAsync<ApiResult<TokenResponse>>(cancellationToken);
 
-        return result!.Data;
+        return result!.Value;
     }
 
     public Task<TokenResponse> RefreshToken(RefreshTokenRequest request, CancellationToken cancellationToken = default)

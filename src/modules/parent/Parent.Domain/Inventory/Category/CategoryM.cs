@@ -13,12 +13,12 @@ public sealed class CategoryM : AggregateRoot
         string categoryDesc
     )
     {
-        CategoryM Obj = new()
+        CategoryM obj = new()
         {
             CategoryCode = categoryCode,
             CategoryDesc = categoryDesc,
         };
 
-        return Obj;
+        return obj;
     }
 }

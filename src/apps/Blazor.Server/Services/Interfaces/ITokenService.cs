@@ -1,6 +1,6 @@
 ﻿using Blazor.Common.Dtos;
 
-namespace Blazor.Common.Services.Interfaces;
+namespace Blazor.Server.Services.Interfaces;
 
 public interface ITokenService
 {
