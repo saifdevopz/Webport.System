@@ -13,7 +13,6 @@
     <None Remove="src\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="docker-compose-blazor-server.yml" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
