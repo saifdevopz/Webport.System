@@ -21,8 +21,8 @@ jobs:
         run: |
           IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/system-api
           TAG=$(echo $GITHUB_SHA | cut -c1-7)
-          docker compose -f deployment/docker-compose-blazor-server.yml build
-          docker compose -f deployment/docker-compose-blazor-server.yml push
+          docker compose -f docker-compose-blazor-server.yml build
+          docker compose -f docker-compose-blazor-server.yml push
 
   copy_files:
     name: Copy files to server
