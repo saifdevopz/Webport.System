@@ -13,11 +13,15 @@
     <None Remove="src\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="docker-compose-blazor-server.yml" />
-    <None Include="docker-compose.override.yml">
-      <DependentUpon>docker-compose.yml</DependentUpon>
+    <None Include="docker-compose - Copy.override.yml">
+      <DependentUpon>docker-compose-system-api.yml</DependentUpon>
     </None>
-    <None Include="docker-compose.yml" />
+    <None Include="docker-compose-parent-api.yml" />
+    <None Include="docker-compose-blazor-server.yml" />
+    <None Include="docker-compose-system-api.override.yml">
+      <DependentUpon>docker-compose-system-api.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose-system-api.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
 </Project>

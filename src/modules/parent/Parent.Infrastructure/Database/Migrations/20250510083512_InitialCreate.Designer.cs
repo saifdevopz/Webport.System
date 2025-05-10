@@ -12,15 +12,16 @@ using Parent.Infrastructure.Database;
 namespace Parent.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ParentDbContext))]
-    [Migration("20250428110201_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20250510083512_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasDefaultSchema("main")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -65,7 +66,7 @@ namespace Parent.Infrastructure.Database.Migrations
                     b.HasIndex("CategoryCode")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", "main");
                 });
 #pragma warning restore 612, 618
         }

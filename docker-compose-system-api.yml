@@ -13,11 +13,11 @@ services:
       - "5000:8080"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.parent-api.loadbalancer.server.port=8080"
-      - "traefik.http.routers.parent-api.entrypoints=https"
-      - "traefik.http.routers.parent-api.rule=Host(`system.webport.co.za`)"
-      - "traefik.http.routers.parent-api.tls=true"
-      - "traefik.http.routers.parent-api.tls.certresolver=cloudflare"
+      - "traefik.http.services.system-api.loadbalancer.server.port=8080"
+      - "traefik.http.routers.system-api.entrypoints=https"
+      - "traefik.http.routers.system-api.rule=Host(`system.webport.co.za`)"
+      - "traefik.http.routers.system-api.tls=true"
+      - "traefik.http.routers.system-api.tls.certresolver=cloudflare"
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
     networks:
       - proxy

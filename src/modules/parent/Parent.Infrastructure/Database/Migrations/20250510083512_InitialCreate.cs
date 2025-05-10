@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -11,8 +12,12 @@ namespace Parent.Infrastructure.Database.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "main");
+
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Categories",
+                schema: "main",
                 columns: table => new
                 {
                     CategoryId = table.Column<int>(type: "integer", nullable: false)
@@ -27,12 +32,13 @@ namespace Parent.Infrastructure.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.CategoryId);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Roles_CategoryCode",
-                table: "Roles",
+                name: "IX_Categories_CategoryCode",
+                schema: "main",
+                table: "Categories",
                 column: "CategoryCode",
                 unique: true);
         }
@@ -41,7 +47,8 @@ namespace Parent.Infrastructure.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Categories",
+                schema: "main");
         }
     }
 }
