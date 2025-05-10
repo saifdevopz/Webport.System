@@ -21,8 +21,8 @@ jobs:
         run: |
           IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/system-api
           TAG=$(echo $GITHUB_SHA | cut -c1-7)
-          docker compose -f docker-compose.yml build
-          docker compose -f docker-compose.yml push
+          docker compose -f docker-compose-system-api.yml build
+          docker compose -f docker-compose-system-api.yml push
 
   copy_files:
     name: Copy files to server
@@ -36,7 +36,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: docker-compose.yml
+          source: docker-compose-system-api.yml
           target: /root/webport-system
 
   update_server:
@@ -52,7 +52,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /root/webport-system
-            docker-compose -f docker-compose.yml down || true
+            docker-compose -f docker-compose-system-api.yml down || true
             docker image prune -a -f
             docker-compose pull
-            docker-compose -f docker-compose.yml up -d
+            docker-compose -f docker-compose-system-api.yml up -d
