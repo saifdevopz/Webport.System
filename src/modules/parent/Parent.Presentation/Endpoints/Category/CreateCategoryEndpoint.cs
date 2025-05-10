@@ -19,3 +19,4 @@ internal sealed class CreateCategoryEndpoint(ICommandDispatcher _sender) : IEndp
         .RequireAuthorization();
     }
 }
+

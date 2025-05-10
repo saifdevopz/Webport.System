@@ -59,13 +59,13 @@ WebApplication app = builder.Build();
 
 app.UseCors("MyPolicy");
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.MapOpenApi();
     app.MapScalarApiReference(_ =>
     {
         _.Servers = [];
-        _.Theme = ScalarTheme.BluePlanet;
+        _.Theme = ScalarTheme.Kepler;
     });
     await app.ApplyAllMigrations();
 }

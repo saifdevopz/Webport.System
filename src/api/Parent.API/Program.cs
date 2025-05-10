@@ -59,7 +59,7 @@ var app = builder.Build();
 
 app.UseCors("MyPolicy");
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.MapOpenApi();
     app.MapScalarApiReference(_ =>
