@@ -15,6 +15,7 @@ internal sealed class GetAllCategoryEndpoint(IQueryDispatcher _sender) : IEndpoi
 
             return response;
         })
-        .WithTags(Tags.Category);
+        .WithTags(Tags.Category)
+        .RequireAuthorization();
     }
 }
