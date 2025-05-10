@@ -44,7 +44,20 @@ builder.Services.AddCommonInfrastructure();
 
 builder.Services.AddParentModule(builder.Configuration);
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("MyPolicy");
 
 if (app.Environment.IsDevelopment())
 {
