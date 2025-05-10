@@ -53,7 +53,7 @@
         }
 
         <h3>Claims (@allClaims.Count)</h3>
-        <table class="table table-sm table-bordered">
+@*         <table class="table table-sm table-bordered">
             <thead>
                 <tr>
                     <th>Type</th>
@@ -69,10 +69,10 @@
                     </tr>
                 }
             </tbody>
-        </table>
+        </table> *@
 
         <h3>Security Info (Raw Dump)</h3>
-        <pre>@user.ToString()</pre>
+        <p>@user.ToString()</p>
     </Authorized>
 
     <NotAuthorized>

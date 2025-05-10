@@ -1,6 +1,6 @@
 ﻿///*=============== SHOW MENU ===============*/
 window.showMenu = (toggleId, navId) => {
-    console.log("From JS v");
+    console.log("JavaScript Loaded (main.js)");
     const toggle = document.getElementById(toggleId),
         nav = document.getElementById(navId);
 

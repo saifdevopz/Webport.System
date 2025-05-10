@@ -17,7 +17,8 @@
             <ul class="nav__list">
                 <li><a href="dashboard/home" class="nav__link">Home</a></li>
 
-                <li class="dropdown__item">
+                <AuthorizeView Roles="Admin">
+                    <li class="dropdown__item">
                     <div class="nav__link">
                         Admin <i class="ri-arrow-down-s-line dropdown__arrow"></i>
                     </div>
@@ -25,217 +26,55 @@
                     <ul class="dropdown__menu">
                         <li class="dropdown__subitem">
                             <div class="dropdown__link">
-                                <i class="ri-bar-chart-line"></i> Roles <i class="ri-add-line dropdown__add"></i>
+                                <i class="ri-bar-chart-line"></i> Tenant <i class="ri-add-line dropdown__add"></i>
                             </div>
 
-                            <ul class="dropdown__submenu">
+@*                             <ul class="dropdown__submenu">
                                 <li>
                                     <a href="/role/index" class="dropdown__link">
                                         <i class="ri-user-line"></i> Role List
                                     </a>
                                 </li>
-                            </ul>
+                            </ul> *@
                         </li>
                         <li class="dropdown__subitem">
                             <div class="dropdown__link">
-                                <i class="ri-bar-chart-line"></i> Other Controls <i class="ri-add-line dropdown__add"></i>
+                                <i class="ri-bar-chart-line"></i> Roles <i class="ri-add-line dropdown__add"></i>
                             </div>
-
-                            <ul class="dropdown__submenu">
-                                <li>
-                                    <a href="/dialog-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> Dialog Control
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
+                            <li class="dropdown__subitem">
+                                <div class="dropdown__link">
+                                    <i class="ri-bar-chart-line"></i> Users <i class="ri-add-line dropdown__add"></i>
+                                </div>
+                            </li>
                     </ul>
                 </li>
-
-                <li class="dropdown__item">
-                    <div class="nav__link">
-                        Components <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                    </div>
-
-                    <ul class="dropdown__menu">
-                        <li class="dropdown__subitem">
-                            <div class="dropdown__link">
-                                <i class="ri-bar-chart-line"></i> Input Controls <i class="ri-add-line dropdown__add"></i>
-                            </div>
-
-                            <ul class="dropdown__submenu">
-                                <li>
-                                    <a href="/textbox-control" class="dropdown__link">
-                                        <i class="ri-user-line"></i> TextBox
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/textarea-control" class="dropdown__link">
-                                        <i class="ri-user-line"></i> TextArea
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/radiobutton-control" class="dropdown__link">
-                                        <i class="ri-lock-line"></i> Radio
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/calendar-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> Calendar Control
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/checkbox-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> Checkbox Control
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/colorpicker-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> ColourPicker Control
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/combobox-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> ComboBox Control
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown__subitem">
-                            <div class="dropdown__link">
-                                <i class="ri-bar-chart-line"></i> Other Controls <i class="ri-add-line dropdown__add"></i>
-                            </div>
-
-                            <ul class="dropdown__submenu">
-                                <li>
-                                    <a href="/dialog-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> Dialog Control
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/fileupload-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> File Upload Control
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/listbox-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> ListBox Control
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/listview-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> ListView Control
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="/multicolumncombobox-control" class="dropdown__link">
-                                        <i class="ri-message-3-line"></i> Multi ComboBox
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="dropdown__item">
-                    <div class="nav__link">
-                        Demos <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                    </div>
-
-                    <ul class="dropdown__menu">
-                        <li>
-                            <a href="/demo1" class="dropdown__link">
-                                <i class="ri-user-line"></i> Demo 1
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/demo2" class="dropdown__link">
-                                <i class="ri-user-line"></i> Demo 2
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/demo3" class="dropdown__link">
-                                <i class="ri-lock-line"></i> Demo 3
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/demo4" class="dropdown__link">
-                                <i class="ri-message-3-line"></i> Demo 4
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <AuthorizeView Roles="Admin">
-                    <!--=============== LINK 2 ===============-->
-                    <li class="dropdown__item">
-                        <div class="nav__link">
-                            System <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                        </div>
-
-                        <ul class="dropdown__menu">
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-user-line"></i> Tenant Types
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-user-line"></i> Tenants
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-lock-line"></i> Users
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-message-3-line"></i> Roles
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </AuthorizeView>
 
-                <AuthorizeView Roles="Customer">
+                <AuthorizeView>
                     <!--=============== DROPDOWN 1 ===============-->
                     <li class="dropdown__item">
                         <div class="nav__link">
-                            Analytics <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                            Inventory <i class="ri-arrow-down-s-line dropdown__arrow"></i>
                         </div>
 
                         <ul class="dropdown__menu">
                             <li>
                                 <a href="#" class="dropdown__link">
-                                    <i class="ri-pie-chart-line"></i> Overview
+                                    <i class="ri-pie-chart-line"></i> Category
                                 </a>
                             </li>
 
                             <li>
                                 <a href="#" class="dropdown__link">
-                                    <i class="ri-arrow-up-down-line"></i> Transactions
+                                    <i class="ri-arrow-up-down-line"></i> Items
                                 </a>
                             </li>
 
                             <!--=============== DROPDOWN SUBMENU ===============-->
                             <li class="dropdown__subitem">
                                 <div class="dropdown__link">
-                                    <i class="ri-bar-chart-line"></i> Reports <i class="ri-add-line dropdown__add"></i>
+                                    <i class="ri-bar-chart-line"></i> Setup <i class="ri-add-line dropdown__add"></i>
                                 </div>
 
                                 <ul class="dropdown__submenu">
@@ -247,70 +86,16 @@
 
                                     <li>
                                         <a href="#" class="dropdown__sublink">
-                                            <i class="ri-cash-line"></i> Payments
+                                            <i class="ri-cash-line"></i> Configs
                                         </a>
                                     </li>
 
                                     <li>
                                         <a href="#" class="dropdown__sublink">
-                                            <i class="ri-refund-2-line"></i> Refunds
+                                            <i class="ri-refund-2-line"></i> Info
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <!--=============== DROPDOWN 2 ===============-->
-                    <li class="dropdown__item">
-                        <div class="nav__link">
-                            Settings <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                        </div>
-
-                        <ul class="dropdown__menu">
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-user-line"></i> Profiles
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-lock-line"></i> Accounts
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-message-3-line"></i> Messages
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <!--=============== DROPDOWN 3 ===============-->
-                    <li class="dropdown__item">
-                        <div class="nav__link">
-                            Inventory <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                        </div>
-
-                        <ul class="dropdown__menu">
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-user-line"></i> Categories
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-lock-line"></i> Items
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="dropdown__link">
-                                    <i class="ri-message-3-line"></i> Sales
-                                </a>
                             </li>
                         </ul>
                     </li>
