@@ -12,7 +12,6 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Directory.Packages.Props", "."]
 COPY ["Directory.Build.props", "."]
 COPY ["src/api/Parent.API/Parent.API.csproj", "src/api/Parent.API/"]
 RUN dotnet restore "./src/api/Parent.API/Parent.API.csproj"
