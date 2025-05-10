@@ -14,6 +14,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 string? systemDatabaseString = builder.Configuration["SQLServer:ProductionConnection"];
 ArgumentException.ThrowIfNullOrWhiteSpace(systemDatabaseString);
 
+// Serilog
+builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
+
 // Controller Support
 builder.Services.AddControllers();
 
@@ -26,9 +29,6 @@ builder.Services.AddOpenApi();
 // Global Exception Handling
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
-
-// Serilog
-builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
 
 // Application Module Assemblies
 Assembly[] moduleApplicationAssemblies =
@@ -45,6 +45,7 @@ builder.Services.AddCommonInfrastructure();
 builder.Services.AddSystemModule(builder.Configuration, systemDatabaseString);
 
 WebApplication app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {

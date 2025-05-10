@@ -15,7 +15,7 @@
   <ItemGroup>
     <None Include="docker-compose-parent-api.yml" />
     <None Include="docker-compose-blazor-server.yml" />
-    <None Include="docker-compose-system-api.yml" />
+    <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
 </Project>
