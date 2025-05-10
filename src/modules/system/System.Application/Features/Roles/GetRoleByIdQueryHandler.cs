@@ -1,12 +1,12 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Errors;
 using Common.Domain.Results;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Roles;
 
-public class GetRoleByIdQueryHandler(IRepository<RoleM> repository)
+public class GetRoleByIdQueryHandler(IGenericRepository<RoleM> repository)
     : IQueryHandler<GetRoleByIdQuery, Result<GetRoleByIdQueryResult>>
 {
     public async Task<Result<GetRoleByIdQueryResult>> Handle(

@@ -1,12 +1,12 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Errors;
 using Common.Domain.Results;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
-public class GetTenantByIdQueryHandler(IRepository<TenantM> repository)
+public class GetTenantByIdQueryHandler(IGenericRepository<TenantM> repository)
     : IQueryHandler<GetTenantByIdQuery, Result<GetTenantByIdQueryResult>>
 {
     public async Task<Result<GetTenantByIdQueryResult>> Handle(

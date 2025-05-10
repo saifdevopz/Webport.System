@@ -1,11 +1,11 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Results;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Users;
 
-public class GetUsersQueryHandler(IRepository<UserM> repository)
+public class GetUsersQueryHandler(IGenericRepository<UserM> repository)
     : IQueryHandler<GetUsersQuery, Result<GetUsersQueryResult>>
 {
     public async Task<Result<GetUsersQueryResult>> Handle(

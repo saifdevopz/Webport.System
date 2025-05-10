@@ -16,16 +16,13 @@ public sealed class TenantM : AggregateRoot
         {
             TenantName = tenantName,
             DatabaseName = databaseName,
-            ConnectionString = BuildConnectionString(databaseName),
+            ConnectionString = GeneralExtensions.BuildConnectionString(databaseName),
             LicenceExpiryDate = DateTime.Now.AddDays(30),
         };
 
         return obj;
     }
 
-    private static string BuildConnectionString(string databaseName)
-    {
-        return $"Host=102.211.206.231;Port=5432;Database={databaseName};Username=sa;Password=25122000SK;Pooling=true;MinPoolSize=10;MaxPoolSize=100;Include Error Detail=true";
-    }
+
 }
 

@@ -1,12 +1,12 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Results;
 using FluentValidation;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Roles;
 
-public class CreateRoleCommandHandler(IRepository<RoleM> Repository)
+public class CreateRoleCommandHandler(IGenericRepository<RoleM> Repository)
     : ICommandHandler<CreateRoleCommand, Result>
 {
     public async Task<Result> Handle(

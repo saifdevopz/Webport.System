@@ -1,12 +1,12 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Results;
 using FluentValidation;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Users;
 
-public class CreateUserCommandHandler(IRepository<UserM> Repository)
+public class CreateUserCommandHandler(IGenericRepository<UserM> Repository)
     : ICommandHandler<CreateUserCommand, Result>
 {
     public async Task<Result> Handle(

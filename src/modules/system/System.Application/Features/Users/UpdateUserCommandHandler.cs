@@ -1,13 +1,13 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Errors;
 using Common.Domain.Results;
 using FluentValidation;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Users;
 
-public class UpdateUserCommandHandler(IRepository<UserM> Repository)
+public class UpdateUserCommandHandler(IGenericRepository<UserM> Repository)
     : ICommandHandler<UpdateUserCommand, Result>
 {
     public async Task<Result> Handle(

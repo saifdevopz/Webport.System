@@ -1,12 +1,12 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Results;
 using FluentValidation;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
-public class CreateTenantCommandHandler(IRepository<TenantM> Repository)
+public class CreateTenantCommandHandler(IGenericRepository<TenantM> Repository)
     : ICommandHandler<CreateTenantCommand, Result>
 {
     public async Task<Result> Handle(

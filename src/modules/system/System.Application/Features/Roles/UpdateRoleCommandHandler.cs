@@ -1,13 +1,13 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Errors;
 using Common.Domain.Results;
 using FluentValidation;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Roles;
 
-public class UpdateRoleCommandHandler(IRepository<RoleM> Repository)
+public class UpdateRoleCommandHandler(IGenericRepository<RoleM> Repository)
     : ICommandHandler<UpdateRoleCommand, Result>
 {
     public async Task<Result> Handle(

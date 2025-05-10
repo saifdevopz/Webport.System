@@ -8,6 +8,7 @@ internal static class MigrationExtensions
     public static async Task ApplyAllMigrations(this IApplicationBuilder app)
     {
         await app.ApplySystemMigrations();
+        await app.ApplySystemSeeder();
     }
 
     public static async Task ApplySystemMigrations(this IApplicationBuilder app)
@@ -34,5 +35,12 @@ internal static class MigrationExtensions
             Console.ResetColor();
             context.Database.Migrate();
         }
+    }
+
+    public static async Task ApplySystemSeeder(this IApplicationBuilder app)
+    {
+        using IServiceScope scope = app.ApplicationServices.CreateScope();
+        DataSeeder seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+        await seeder.SeedAsync();
     }
 }

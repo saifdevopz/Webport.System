@@ -1,12 +1,12 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Errors;
 using Common.Domain.Results;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Users;
 
-public class GetUserByIdQueryHandler(IRepository<UserM> repository)
+public class GetUserByIdQueryHandler(IGenericRepository<UserM> repository)
     : IQueryHandler<GetUserByIdQuery, Result<GetUserByIdQueryResult>>
 {
     public async Task<Result<GetUserByIdQueryResult>> Handle(

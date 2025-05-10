@@ -1,12 +1,12 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Errors;
 using Common.Domain.Results;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Users;
 
-public class DeleteUserCommandHandler(IRepository<UserM> Repository)
+public class DeleteUserCommandHandler(IGenericRepository<UserM> Repository)
     : ICommandHandler<DeleteUserCommand, Result>
 {
     public async Task<Result> Handle(

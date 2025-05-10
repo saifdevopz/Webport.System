@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Parent.Application.Interfaces;
 using Parent.Infrastructure.Database;
 
-namespace System.API.Extensions;
+namespace Parent.API.Extensions;
 
 internal static class MigrationExtensions
 {
@@ -12,7 +13,15 @@ internal static class MigrationExtensions
 
     public static async Task ApplyParentMigrations(this IApplicationBuilder app)
     {
-        app.ApplyCustomMigration<ParentDbContext>(null);
+        using var scope = app.ApplicationServices.CreateScope();
+        var systemService = scope.ServiceProvider.GetRequiredService<ISystemService>();
+        var tenants = await systemService.GetAllTenantsAsync();
+
+        foreach (var tenant in tenants.Data?.tenants!)
+        {
+            app.ApplyCustomMigration<ParentDbContext>(tenant.ConnectionString);
+        }
+
         await Task.CompletedTask;
     }
 

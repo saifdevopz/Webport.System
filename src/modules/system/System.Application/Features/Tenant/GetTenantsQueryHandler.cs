@@ -1,11 +1,11 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Results;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
-public class GetTenantsQueryHandler(IRepository<TenantM> repository)
+public class GetTenantsQueryHandler(IGenericRepository<TenantM> repository)
     : IQueryHandler<GetTenantsQuery, Result<GetTenantsQueryResult>>
 {
     public async Task<Result<GetTenantsQueryResult>> Handle(

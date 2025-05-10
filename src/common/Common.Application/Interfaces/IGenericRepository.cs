@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 
-namespace System.Application.Interfaces;
+namespace Common.Application.Interfaces;
 
-public interface IRepository<TEntity> where TEntity : class
+public interface IGenericRepository<TEntity> where TEntity : class
 {
     // Create
     void Add(TEntity entity);

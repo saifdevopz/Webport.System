@@ -1,4 +1,5 @@
-﻿using Common.Infrastructure.Authentication;
+﻿using Common.Application.Interfaces;
+using Common.Infrastructure.Authentication;
 using Common.Infrastructure.Database;
 using Common.Presentation.Endpoints;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Application.Interfaces;
 using System.Infrastructure.Database;
-using System.Infrastructure.Database.Repository;
 using System.Infrastructure.Services;
 using System.Reflection;
 
@@ -39,12 +39,13 @@ public static class SystemModule
             return new DbContextProvider(scopeFactory, AssemblyName);
         });
 
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         services.AddScoped<ITokenService, TokenService>();
 
         services.AddAuthenticationInternal();
 
+        services.AddScoped<DataSeeder>();
         services.AddDbContext<SystemDbContext>((sp, options) =>
         {
             options.UseSqlServer(systemDatabaseString, sqlServerOptionsAction: sqlOptions =>

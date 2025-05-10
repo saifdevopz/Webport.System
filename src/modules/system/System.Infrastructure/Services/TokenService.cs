@@ -1,4 +1,5 @@
-﻿using Common.Domain.Errors;
+﻿using Common.Application.Interfaces;
+using Common.Domain.Errors;
 using Common.Domain.Results;
 using Common.Infrastructure.Authentication;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace System.Infrastructure.Services;
 
 public class TokenService(
     IOptions<JwtOptions> JwtOptions,
-    IRepository<UserM> Repository,
+    IGenericRepository<UserM> Repository,
     SystemDbContext SystemContext) : ITokenService
 {
     public async Task<Result<TokenResponse>> AccessToken(AccessTokenRequest request)

@@ -11,7 +11,7 @@ using System.Reflection;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Connection Strings
-string? systemDatabaseString = builder.Configuration["SQLServer:DefaultConnection"];
+string? systemDatabaseString = builder.Configuration["SQLServer:ProductionConnection"];
 ArgumentException.ThrowIfNullOrWhiteSpace(systemDatabaseString);
 
 // Controller Support

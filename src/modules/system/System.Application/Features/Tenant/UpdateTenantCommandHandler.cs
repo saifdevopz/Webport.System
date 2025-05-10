@@ -1,13 +1,13 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Errors;
 using Common.Domain.Results;
 using FluentValidation;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
-public class UpdateTenantCommandHandler(IRepository<TenantM> Repository)
+public class UpdateTenantCommandHandler(IGenericRepository<TenantM> Repository)
     : ICommandHandler<UpdateTenantCommand, Result>
 {
     public async Task<Result> Handle(

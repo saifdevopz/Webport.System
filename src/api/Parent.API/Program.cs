@@ -2,10 +2,10 @@ using Common.Application;
 using Common.Infrastructure;
 using Common.Infrastructure.Middlewares;
 using Common.Presentation.Endpoints;
+using Parent.API.Extensions;
 using Parent.Infrastructure;
 using Scalar.AspNetCore;
 using Serilog;
-using System.API.Extensions;
 using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -42,7 +42,7 @@ builder.Services.AddCommonApplication(moduleApplicationAssemblies);
 // Common Infrastructure Module
 builder.Services.AddCommonInfrastructure();
 
-builder.Services.AddParentModule(builder.Configuration, parentDatabaseString);
+builder.Services.AddParentModule(builder.Configuration);
 
 var app = builder.Build();
 

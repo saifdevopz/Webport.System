@@ -83,9 +83,6 @@ dotnet_diagnostic.CA1515.severity = none
 # Properties should not return arrays
 dotnet_diagnostic.CA1819.severity = none
 
-# Type names should not match namespaces
-dotnet_diagnostic.CA1724.severity = none
-
 # Avoid uninstantiated internal classes
 dotnet_diagnostic.CA1812.severity = none
 

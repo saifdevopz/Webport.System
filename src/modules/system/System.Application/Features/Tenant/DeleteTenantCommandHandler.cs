@@ -1,12 +1,12 @@
 ﻿using Common.Application.CQRS;
+using Common.Application.Interfaces;
 using Common.Domain.Errors;
 using Common.Domain.Results;
-using System.Application.Interfaces;
 using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
-public class DeleteTenantCommandHandler(IRepository<TenantM> Repository)
+public class DeleteTenantCommandHandler(IGenericRepository<TenantM> Repository)
     : ICommandHandler<DeleteTenantCommand, Result>
 {
     public async Task<Result> Handle(

@@ -1,16 +1,15 @@
-﻿using Common.Infrastructure.Database;
+﻿using Common.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Application.Interfaces;
 using System.Linq.Expressions;
 
-namespace System.Infrastructure.Database.Repository;
+namespace Common.Infrastructure.Database;
 
-public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
     private readonly DbContext _dbContext;
     private readonly DbSet<TEntity> _dbSet;
 
-    public Repository(IDbContextProvider dbContextProvider)
+    public GenericRepository(IDbContextProvider dbContextProvider)
     {
         ArgumentNullException.ThrowIfNull(dbContextProvider);
 
