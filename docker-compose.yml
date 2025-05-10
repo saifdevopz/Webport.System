@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: src/api/System.API/Dockerfile
     environment: 
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
     ports:
       - "5000:8080"
