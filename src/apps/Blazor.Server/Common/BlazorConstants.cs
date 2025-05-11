@@ -1,4 +1,4 @@
-﻿namespace Blazor.Common;
+﻿namespace Blazor.Server.Common;
 
 public static class BlazorConstants
 {

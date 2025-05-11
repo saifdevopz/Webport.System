@@ -1,4 +1,4 @@
-﻿using Blazor.Common.Dtos;
+﻿using Blazor.Server.Common.Dtos;
 
 namespace Blazor.Server.Services.Interfaces;
 

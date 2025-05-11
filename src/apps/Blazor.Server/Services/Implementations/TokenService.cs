@@ -1,5 +1,5 @@
-﻿using Blazor.Common.Dtos;
-using Blazor.Common.Results;
+﻿using Blazor.Server.Common.Dtos;
+using Blazor.Server.Common.Results;
 using Blazor.Server.HttpClients;
 using Blazor.Server.Services.Interfaces;
 

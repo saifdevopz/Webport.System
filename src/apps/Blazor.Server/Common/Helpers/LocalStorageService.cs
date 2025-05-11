@@ -1,6 +1,6 @@
 ﻿using Blazored.LocalStorage;
 
-namespace Blazor.Common.Helpers;
+namespace Blazor.Server.Common.Helpers;
 
 public sealed class LocalStorageService(ILocalStorageService localStorageService)
 {

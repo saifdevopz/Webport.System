@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Blazor.Common.Helpers;
+namespace Blazor.Server.Common.Helpers;
 
 public static class JsonSerialization
 {

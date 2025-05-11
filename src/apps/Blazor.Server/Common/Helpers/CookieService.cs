@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Blazor.Common.Helpers;
+namespace Blazor.Server.Common.Helpers;
 
 public sealed class CookieService(IJSRuntime jsRuntime)
 {

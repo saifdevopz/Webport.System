@@ -1,4 +1,4 @@
-﻿namespace Blazor.Common.Results;
+﻿namespace Blazor.Server.Common.Results;
 
 public class Result<T>
 {

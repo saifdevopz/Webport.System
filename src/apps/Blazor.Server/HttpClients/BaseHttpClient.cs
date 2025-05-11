@@ -1,4 +1,4 @@
-﻿using Blazor.Common;
+﻿using Blazor.Server.Common;
 using System.Net.Http.Headers;
 
 namespace Blazor.Server.HttpClients;
