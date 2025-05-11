@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -11,15 +11,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    
 
-		<!--Common-->
-		<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+		<!--Common
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 		<PackageReference Include="Syncfusion.Blazor.DataForm" Version="29.1.40" />
 		<PackageReference Include="Syncfusion.Blazor.Grid" Version="29.1.40" />
 		<PackageReference Include="Syncfusion.Blazor.Themes" Version="29.1.40" />
+		-->
+		<PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.9.0" />
+
   </ItemGroup>
 
 </Project>
