@@ -6,6 +6,7 @@ using Blazor.Server.Services.Implementations;
 using Blazor.Server.Services.Interfaces;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +15,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Syncfusion
-//Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXtedHZXRGZcVkVxWkBWYUA=");
-//builder.Services.AddSyncfusionBlazor();
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXtedHZXRGZcVkVxWkBWYUA=");
+builder.Services.AddSyncfusionBlazor();
 
 // Local Storage
 builder.Services.AddHttpContextAccessor();
@@ -46,7 +47,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseExceptionHandler("/ErrorOccured", createScopeForErrors: true);
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

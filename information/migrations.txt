@@ -22,42 +22,9 @@ Infrastructure => Common.Infrastructure, Application, Presentation
 Application => Common.Application, Domain, IntegrationEvents
 Presentation => Common.Presentation, Application
 
-<Project>
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
-    <PackageVersion Include="Dapper" Version="2.1.66" />
-    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="2.1.17" />
-    <PackageVersion Include="Scrutor" Version="6.0.1" />
-    <PackageVersion Include="Serilog" Version="4.2.0" />
-    <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
-    <PackageVersion Include="Serilog.Sinks.Seq" Version="9.0.0" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.6.0.109712" />
-    <PackageVersion Include="Syncfusion.Blazor.DataForm" Version="29.1.40" />
-    <PackageVersion Include="Syncfusion.Blazor.Grid" Version="29.1.40" />
-    <PackageVersion Include="Syncfusion.Blazor.Themes" Version="29.1.40" />
-    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.9.0" />
-  </ItemGroup>
-</Project>
+-----------------------------------------------------------------------------------------------------------------
 
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
-    <PackageReference Include="Scalar.AspNetCore" />
-    <PackageReference Include="Serilog.AspNetCore" />
-    <PackageReference Include="Serilog.Sinks.Seq" />
+Nuget Pack
+dotnet pack Blazor.UI.csproj --configuration Release
+dotnet pack --configuration Release --output ./nupkg --include-symbols --include-source --no-build src/apps/Blazor.UI/Blazor.UI.csproj
+
