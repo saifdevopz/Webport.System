@@ -1,8 +1,8 @@
 ﻿@page "/dashboard/home"
-@using Blazor.Server.Services.Interfaces
-@using Microsoft.AspNetCore.Components.Authorization
 
 <PageTitle>Home</PageTitle>
+
+<Blazor.Server.Components.Pages.UserInterfaces.Counter />
 
 <AuthorizeView>
     <Authorized>

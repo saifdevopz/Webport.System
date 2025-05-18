@@ -10,5 +10,5 @@ public class GetTenantDto
 }
 
 
-public record TenantWrapper<T>(IEnumerable<T> Tenants);
-public record TenantWrap<T>(T Tenant);
+public record TenantsWrapper<T>(IEnumerable<T> Tenants);
+public record TenantWrapper<T>(T Tenant);

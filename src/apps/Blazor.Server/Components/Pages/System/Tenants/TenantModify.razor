@@ -40,7 +40,7 @@
 
     private async Task<GetTenantDto> GetTenant()
     {
-        var response = await _DataService.GetByIdAsync<TenantWrap<GetTenantDto>>("tenant", Id!);
+        var response = await _DataService.GetByIdAsync<TenantWrapper<GetTenantDto>>("tenant", Id!);
         return response.Data!.Tenant;
     }
 

@@ -1,8 +1,5 @@
 ﻿@page "/tenant/index"
 
-
-
-
 <MudText Typo="Typo.h6">Tenant Index</MudText>
 
 <MudDataGrid Items="@Tenants.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true">
@@ -37,7 +34,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await _DataService.GetAllAsync<TenantWrapper<GetTenantDto>>("tenant");
+        var result = await _DataService.GetAllAsync<TenantsWrapper<GetTenantDto>>("tenant");
 
         if (result.IsSuccess)
         {

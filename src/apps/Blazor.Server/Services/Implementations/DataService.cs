@@ -98,4 +98,26 @@ public class DataService(BaseHttpClient BaseHttpClient)
             return Result.Failure<T>(CustomError.Conflict(",", $"{ex.Message}"));
         }
     }
+
+
+    public async Task<Result> DeleteByIdAsync(Uri source, int id)
+    {
+        try
+        {
+            Uri deleteUri = new(source, $"/delete/{id}");
+
+            var client = BaseHttpClient.GetPrivateHttpClient();
+            var response = await client.DeleteAsync(deleteUri);
+
+            if (response == null)
+                return Result.Failure(CustomError.Conflict(",", "No response from server."));
+
+            return response.IsSuccessStatusCode ? Result.Success()
+                : Result.Failure(CustomError.Conflict(",", "No response from server."));
+        }
+        catch (HttpRequestException ex)
+        {
+            return Result.Failure(CustomError.Conflict(",", $"{ex.Message}"));
+        }
+    }
 }

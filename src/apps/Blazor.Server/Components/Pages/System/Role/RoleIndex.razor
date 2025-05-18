@@ -1,11 +1,8 @@
 ﻿@page "/role/index"
-@using Blazor.Server.Common.Dtos
-@using Syncfusion.Blazor.Grids
-@using Syncfusion.Blazor.Notifications
 
 <MudText Typo="Typo.h6">Role Index</MudText>
 
-<MudDataGrid Items="@Roles.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true">
+<MudDataGrid Items="@Roles.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
     <ToolBarContent>
         <MudIconButton Href="@($"role/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
 
@@ -18,8 +15,8 @@
         <TemplateColumn CellClass="">
             <CellTemplate>
                 <MudStack Row>
-                    <MudIconButton Href="@($"role/modify/{context.Item.RoleId}")" Icon="@Icons.Material.Filled.Edit" aria-label="delete" />
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                    <MudIconButton Href="@($"role/modify/{context.Item.RoleId}")" Icon="@Icons.Material.Filled.Edit" Color="Color.Success" />
+                    <MudIconButton OnClick="@(() => Delete(context.Item.RoleId))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
                 </MudStack>
             </CellTemplate>
         </TemplateColumn>
@@ -30,7 +27,7 @@
 </MudDataGrid>
 
 
-@code {    
+@code {
     private List<RoleDto> Roles = new List<RoleDto>();
 
     protected override async Task OnInitializedAsync()
@@ -42,6 +39,19 @@
             Roles = response.Data!.Roles.ToList();
         }
 
+    }
+
+    private async Task Delete(int id)
+    {
+        bool? result = await _DialogService.ShowMessageBox(
+            "Confirm Delete",
+            $"Deleting can not be undone!",
+            yesText: "Delete", noText: "Cancel");
+
+        if (result == true)
+        {
+            await _DataService.DeleteByIdAsync(new Uri("role", UriKind.Relative), id);
+        }
     }
 }
 
