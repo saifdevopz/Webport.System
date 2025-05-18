@@ -18,7 +18,7 @@ public static class ResultExtensions
         Func<TIn, TOut> onSuccess,
         Func<Result<TIn>, TOut> onFailure)
     {
-        return result.IsSuccess ? onSuccess(result.data) : onFailure(result);
+        return result.IsSuccess ? onSuccess(result.Data) : onFailure(result);
     }
 
     public static async Task<IResult> MapResult<T>(

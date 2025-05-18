@@ -6,6 +6,7 @@ using Blazor.Server.Services.Implementations;
 using Blazor.Server.Services.Interfaces;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor.Services;
 using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,11 +19,16 @@ builder.Services.AddRazorComponents()
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXtedHZXRGZcVkVxWkBWYUA=");
 builder.Services.AddSyncfusionBlazor();
 
+// Mudblazor
+builder.Services.AddMudServices(config =>
+{
+
+});
+
 // Local Storage
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<LocalStorageService>();
-
 
 // Http Client
 builder.Services.AddHttpClient<BaseHttpClient>((sp, client) =>
@@ -36,6 +42,7 @@ builder.Services.AddHttpClient<BaseHttpClient>((sp, client) =>
 builder.Services.AddScoped<BaseHttpClient>();
 
 // Services
+builder.Services.AddScoped<DataService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Authentication

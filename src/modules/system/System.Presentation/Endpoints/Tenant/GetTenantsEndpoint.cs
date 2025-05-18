@@ -1,4 +1,5 @@
 ﻿using System.Application.Features.Tenant;
+using System.Domain.Models;
 
 namespace System.Presentation.Endpoints.Tenant;
 
@@ -9,7 +10,7 @@ internal sealed class GetTenantsEndpoint(IQueryDispatcher _sender) : IEndpoint
         app.MapGet("tenant", async () =>
         {
             var response = await _sender
-                .Dispatch<GetTenantsQuery, Result<GetTenantsQueryResult>>(new GetTenantsQuery())
+                .Dispatch<GetTenantsQuery, Result<List<TenantM>>>(new GetTenantsQuery())
                 .MapResult();
 
             return response;

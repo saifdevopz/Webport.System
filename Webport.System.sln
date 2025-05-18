@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "information", "information"
 		information\packages.txt = information\packages.txt
 		information\pipeline.txt = information\pipeline.txt
 		information\tasks.txt = information\tasks.txt
+		information\tools.txt = information\tools.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{2BE03A26-7E82-4B47-A422-511442155A0C}"

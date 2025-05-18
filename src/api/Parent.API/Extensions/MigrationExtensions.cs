@@ -17,7 +17,7 @@ internal static class MigrationExtensions
         var systemService = scope.ServiceProvider.GetRequiredService<ISystemService>();
         var tenants = await systemService.GetAllTenantsAsync();
 
-        foreach (var tenant in tenants.Data?.tenants!)
+        foreach (var tenant in tenants.Data?.Tenants!)
         {
             app.ApplyCustomMigration<ParentDbContext>(tenant.ConnectionString);
         }

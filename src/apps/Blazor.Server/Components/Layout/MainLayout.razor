@@ -2,6 +2,10 @@
 
 @inherits LayoutComponentBase
 
+@* Required Mudblazor *@
+<MudThemeProvider />
+<MudPopoverProvider />
+
 <ErrorBoundary @ref="errorBoundary">
     <ChildContent>
         <AuthorizeView>

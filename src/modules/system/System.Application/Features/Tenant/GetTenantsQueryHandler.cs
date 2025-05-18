@@ -6,15 +6,15 @@ using System.Domain.Models;
 namespace System.Application.Features.Tenant;
 
 public class GetTenantsQueryHandler(IGenericRepository<TenantM> repository)
-    : IQueryHandler<GetTenantsQuery, Result<GetTenantsQueryResult>>
+    : IQueryHandler<GetTenantsQuery, Result<List<TenantM>>>
 {
-    public async Task<Result<GetTenantsQueryResult>> Handle(
+    public async Task<Result<List<TenantM>>> Handle(
         GetTenantsQuery query,
         CancellationToken cancellation = default)
     {
         var obj = await repository.GetAllAsync(cancellation);
 
-        return Result.Success(new GetTenantsQueryResult(obj));
+        return Result.Success(obj);
     }
 }
 

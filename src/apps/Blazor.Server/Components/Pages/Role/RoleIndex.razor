@@ -1,94 +1,47 @@
 ﻿@page "/role/index"
-@using Blazor.Server.Common.Results
+@using Blazor.Server.Common.Dtos
 @using Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Notifications
 
-<h3>Role Index</h3>
+<MudText Typo="Typo.h6">Role Index</MudText>
 
-<SfGrid @ref="sGrid" 
-DataSource="@RoleList" 
-AllowPaging="true" 
-AllowSorting="true" 
-AllowFiltering="true" 
-AllowGrouping="true"
-Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Cancel", "Update" })">
-    <GridEvents OnActionBegin="ActionBeginHandler" TValue="RoleDto"></GridEvents>
-    <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog"></GridEditSettings>
-    <GridPageSettings PageSize="20"></GridPageSettings>
-    <GridColumns>
-        <GridColumn IsPrimaryKey="true" Field=@nameof(RoleDto.RoleId) HeaderText="ID" AllowAdding="false" Width="100" TextAlign="TextAlign.Right"></GridColumn>
-        <GridColumn Field=@nameof(RoleDto.RoleName) HeaderText="Name"></GridColumn>
-        <GridColumn Field=@nameof(RoleDto.IsActive) HeaderText="Is Active"></GridColumn>
-        <GridColumn Field=@nameof(RoleDto.CreatedBy) HeaderText="Created By"></GridColumn>
-        <GridColumn Field=@nameof(RoleDto.CreatedDt) HeaderText="Created Date" IsIdentity="true"></GridColumn>
-    </GridColumns>
-</SfGrid>
+<MudDataGrid Items="@Roles.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true">
+    <ToolBarContent>
+        <MudIconButton Href="@($"role/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
+
+        <MudSpacer />
+        <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="_ => _.RoleId" Title="Role Id" />
+        <PropertyColumn Property="_ => _.RoleName" Title="Role Name" />               
+        <TemplateColumn CellClass="">
+            <CellTemplate>
+                <MudStack Row>
+                    <MudIconButton Href="@($"role/modify/{context.Item.RoleId}")" Icon="@Icons.Material.Filled.Edit" aria-label="delete" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" />
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="RoleDto" />
+    </PagerContent>
+</MudDataGrid>
 
 
-@code {
-    public SfGrid<RoleDto>? sGrid { get; set; }
-    public List<RoleDto>? RoleList { get; set; }
+@code {    
+    private List<RoleDto> Roles = new List<RoleDto>();
 
     protected override async Task OnInitializedAsync()
     {
-        var client =  _BaseHttpClient.GetPrivateHttpClient();
-        var response = await client.GetFromJsonAsync<ApiResult<RoleWrapper>>("role");
+        var response = await _DataService.GetAllAsync<RolesWrapper<RoleDto>>("role");
 
         if (response!.IsSuccess)
         {
-            RoleList = response?.data!.Roles;
+            Roles = response.Data!.Roles.ToList();
         }
 
     }
-
-    public async void ActionBeginHandler(ActionEventArgs<RoleDto> Args)
-    {
-        var client = _BaseHttpClient.GetPrivateHttpClient();
-
-        if (Args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
-        {
-            if (Args.Action == "Add")
-            {
-                var response = await client.PostAsJsonAsync("role", Args.Data);
-                if (response!.IsSuccessStatusCode)
-                {
-                    Console.WriteLine("ss");
-                }
-                await sGrid!.Refresh();
-            }
-            else
-            {
-                Console.WriteLine("s");
-            }
-        }
-
-        if (Args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
-        {
-            var response = await client.DeleteAsync($"role/{Args.Data.RoleId}");
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("wws");
-            }
-            else
-            {
-                Console.WriteLine("shh");
-            }
-        }
-    }
-
-    public record RoleDto(
-        int RoleId,
-        string RoleName,
-        string NormalizedRoleName,
-        string LastModBy,
-        DateTime LastModDt,
-        string CreatedBy,
-        DateTime CreatedDt,
-        bool IsActive
-    );
-
-    public record RoleWrapper(
-        List<RoleDto> Roles
-    );
 }
 

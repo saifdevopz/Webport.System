@@ -57,9 +57,9 @@
         {
             var response = await _ITokenService.AccessToken(User);
 
-            if (response!.Token != null)
+            if (response!.Data.Token != null)
             {
-                _NavigationManager.NavigateTo("/account/postlogin?Token=" + response.Token, forceLoad: true);
+                _NavigationManager.NavigateTo("/account/postlogin?Token=" + response.Data.Token, forceLoad: true);
             }
 
         }

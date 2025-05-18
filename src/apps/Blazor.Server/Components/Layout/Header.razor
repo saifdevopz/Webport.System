@@ -23,31 +23,26 @@
                         Admin <i class="ri-arrow-down-s-line dropdown__arrow"></i>
                     </div>
 
-                    <ul class="dropdown__menu">
-                        <li class="dropdown__subitem">
-                            <div class="dropdown__link">
-                                <i class="ri-bar-chart-line"></i> Tenant <i class="ri-add-line dropdown__add"></i>
-                            </div>
-
-@*                             <ul class="dropdown__submenu">
-                                <li>
-                                    <a href="/role/index" class="dropdown__link">
-                                        <i class="ri-user-line"></i> Role List
-                                    </a>
-                                </li>
-                            </ul> *@
-                        </li>
-                        <li class="dropdown__subitem">
-                            <div class="dropdown__link">
-                                <i class="ri-bar-chart-line"></i> Roles <i class="ri-add-line dropdown__add"></i>
-                            </div>
-                        </li>
+                        <ul class="dropdown__menu">
                             <li class="dropdown__subitem">
                                 <div class="dropdown__link">
-                                    <i class="ri-bar-chart-line"></i> Users <i class="ri-add-line dropdown__add"></i>
+                                    <i class="ri-bar-chart-line"></i> System <i class="ri-add-line dropdown__add"></i>
                                 </div>
+
+                                <ul class="dropdown__submenu">
+                                    <li>
+                                        <a href="/role/index" class="dropdown__link">
+                                            <i class="ri-user-line"></i> Role
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/tenant/index" class="dropdown__link">
+                                            <i class="ri-user-line"></i> Tenant
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-                    </ul>
+                        </ul>
                 </li>
                 </AuthorizeView>
 

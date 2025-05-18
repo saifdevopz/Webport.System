@@ -1,0 +1,64 @@
+Remote Desktop
+- AnyDesk
+
+Design
+- Adobe Photoshop
+= Adobe Illustrator
+- Adobe InDesign
+- Adobe XD
+
+Redis
+- Another Redis Desktop Manager
+
+Browser
+- Google Chrome
+- Brave
+
+Database
+- DBeaver
+- SQL Server Management Studio
+- MySQL Workbench
+
+Docker
+- Docker Desktop
+- Docker Hub
+
+Source Control
+- Git
+- GitHub Desktop
+- Github
+
+Communication
+- Microsoft Outlook
+- Microsoft Teams
+
+API Management
+- Postman
+
+SSH 
+- PuTTY
+- WinSCP
+- FileZilla
+- Notepad++
+- WinRar
+
+Integrated Development Environment
+- Visual Studio Code
+- Visual Studio
+
+Media
+- ImageGlass
+- VLC Media Player
+		
+Virtualization
+- VirtualBox
+- VMware Workstation
+- Hyper-V
+- Vagrant
+- WSL
+
+Other
+- Microsoft Office
+- Microsoft PowerToys
+
+

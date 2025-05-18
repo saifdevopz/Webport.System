@@ -22,8 +22,8 @@ public class AccessTokenCommandHandler(ITokenService tokenService)
         }
 
         return Result.Success(new AccessTokenResult(
-            tokenResult.data.Token,
-            tokenResult.data.RefreshToken));
+            tokenResult.Data.Token,
+            tokenResult.Data.RefreshToken));
     }
 }
 
