@@ -1,6 +1,6 @@
-﻿using Blazor.Server.Common.Dtos;
-using Blazor.Server.HttpClients;
+﻿using Blazor.Server.Common.HttpClients;
 using Blazor.Server.Services.Interfaces;
+using Common.Domain.DataTransferObjects.System;
 using Common.Domain.Results;
 
 

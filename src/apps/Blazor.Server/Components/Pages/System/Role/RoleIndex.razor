@@ -1,11 +1,11 @@
 ﻿@page "/role/index"
+@using Blazor.Server.Common.HttpClients
 
 <MudText Typo="Typo.h6">Role Index</MudText>
 
 <MudDataGrid Items="@Roles.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
     <ToolBarContent>
         <MudIconButton Href="@($"role/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
-
         <MudSpacer />
         <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
@@ -28,17 +28,21 @@
 
 
 @code {
-    private List<RoleDto> Roles = new List<RoleDto>();
+    private List<RoleDto> Roles = new();
 
     protected override async Task OnInitializedAsync()
     {
+        await GetRoles();
+    }
+
+    private async Task GetRoles()
+    {
         var response = await _DataService.GetAllAsync<RolesWrapper<RoleDto>>("role");
 
-        if (response!.IsSuccess)
+        if (response.IsSuccess)
         {
-            Roles = response.Data!.Roles.ToList();
+            Roles = response.Data.Roles.ToList();
         }
-
     }
 
     private async Task Delete(int id)
@@ -50,7 +54,8 @@
 
         if (result == true)
         {
-            await _DataService.DeleteByIdAsync(new Uri("role", UriKind.Relative), id);
+            await _DataService.DeleteByIdAsync("role", id);
+            await GetRoles();
         }
     }
 }

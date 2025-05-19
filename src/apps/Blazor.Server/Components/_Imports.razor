@@ -1,4 +1,4 @@
-﻿@using global::System.Security.Claims
+﻿@using Blazor.Server.Common.HttpClients
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -6,15 +6,14 @@
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
+@using global::System.Security.Claims
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 
 @* Project Folders *@
 @using global::Common.Domain.DataTransferObjects.System
+
 @using Blazor.Server
 @using Blazor.Server.Common
-@using Blazor.Server.Common.Dtos
-
-@using Blazor.Server.HttpClients
 @using Blazor.Server.Components
 @using Blazor.Server.Components.Layout
 @using Blazor.Server.Services.Interfaces
@@ -37,5 +36,4 @@
 @inject DataService _DataService
 @inject IHttpContextAccessor _HttpContextAccessor
 @inject BaseHttpClient _BaseHttpClient
-
 @inject IDialogService _DialogService

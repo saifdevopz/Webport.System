@@ -1,5 +1,6 @@
 ﻿@page "/tenant/modify"
 @page "/tenant/modify/{Id}"
+@using Blazor.Server.Common.HttpClients
 
 <MudCard Elevation="0" Style="margin-left:20px; padding:20px;">
     <MudTextField @bind-Value="TenantObj.TenantName"

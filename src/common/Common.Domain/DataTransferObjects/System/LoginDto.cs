@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Blazor.Server.Common.Dtos;
+namespace Common.Domain.DataTransferObjects.System;
 
 public class LoginDto
 {

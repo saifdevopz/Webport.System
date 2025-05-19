@@ -1,7 +1,7 @@
 ﻿using Blazor.Server.Common;
 using System.Net.Http.Headers;
 
-namespace Blazor.Server.HttpClients;
+namespace Blazor.Server.Common.HttpClients;
 
 public sealed class BaseHttpClient(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
 {

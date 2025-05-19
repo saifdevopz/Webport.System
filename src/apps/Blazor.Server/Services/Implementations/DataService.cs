@@ -1,4 +1,4 @@
-﻿using Blazor.Server.HttpClients;
+﻿using Blazor.Server.Common.HttpClients;
 using Common.Domain.Errors;
 using Common.Domain.Results;
 
@@ -100,11 +100,11 @@ public class DataService(BaseHttpClient BaseHttpClient)
     }
 
 
-    public async Task<Result> DeleteByIdAsync(Uri source, int id)
+    public async Task<Result> DeleteByIdAsync(string source, int id)
     {
         try
         {
-            Uri deleteUri = new(source, $"/delete/{id}");
+            var deleteUri = new Uri($"{source}/{id}", UriKind.Relative);
 
             var client = BaseHttpClient.GetPrivateHttpClient();
             var response = await client.DeleteAsync(deleteUri);

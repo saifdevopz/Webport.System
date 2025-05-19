@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Blazor.Server.Authentication;
+namespace Blazor.Server.Common.Authentication;
 
 public class CustomAuthenticationStateProvider(IHttpContextAccessor httpContextAccessor) : AuthenticationStateProvider
 {

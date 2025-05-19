@@ -1,7 +1,7 @@
-using Blazor.Server.Authentication;
+using Blazor.Server.Common.Authentication;
 using Blazor.Server.Common.Helpers;
+using Blazor.Server.Common.HttpClients;
 using Blazor.Server.Components;
-using Blazor.Server.HttpClients;
 using Blazor.Server.Services.Implementations;
 using Blazor.Server.Services.Interfaces;
 using Blazored.LocalStorage;
@@ -20,10 +20,7 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQx
 builder.Services.AddSyncfusionBlazor();
 
 // Mudblazor
-builder.Services.AddMudServices(config =>
-{
-
-});
+builder.Services.AddMudServices();
 
 // Local Storage
 builder.Services.AddHttpContextAccessor();
@@ -33,10 +30,8 @@ builder.Services.AddScoped<LocalStorageService>();
 // Http Client
 builder.Services.AddHttpClient<BaseHttpClient>((sp, client) =>
 {
-    //IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
-#pragma warning disable S1075 // URIs should not be hardcoded
-    client.BaseAddress = new Uri("https://system.webport.co.za");
-#pragma warning restore S1075 // URIs should not be hardcoded
+    IConfiguration configuration = sp.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri(configuration["BaseUrls:Production"]!);
 });
 
 builder.Services.AddScoped<BaseHttpClient>();
@@ -46,7 +41,6 @@ builder.Services.AddScoped<DataService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Authentication
-//builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 var app = builder.Build();

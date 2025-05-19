@@ -1,4 +1,4 @@
-﻿using Blazor.Server.Common.Dtos;
+﻿using Common.Domain.DataTransferObjects.System;
 using Common.Domain.Results;
 
 namespace Blazor.Server.Services.Interfaces;
