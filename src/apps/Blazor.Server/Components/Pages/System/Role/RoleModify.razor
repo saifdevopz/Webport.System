@@ -1,5 +1,6 @@
 ﻿@page "/role/modify"
 @page "/role/modify/{Id}"
+@attribute [Authorize(Roles = "Admin")]
 @using Blazor.Server.Common.HttpClients
 
 <EditForm Model="@model" OnValidSubmit="OnValidSubmit">

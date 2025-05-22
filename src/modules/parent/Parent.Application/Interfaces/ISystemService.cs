@@ -6,20 +6,20 @@ namespace Parent.Application.Interfaces;
 
 public interface ISystemService
 {
-    Task<ApiResponse<TenantWrapper<GetTenantDto>>> GetAllTenantsAsync(CancellationToken cancellation = default);
+    Task<Result<TenantsWrapper<GetTenantDto>>> GetAllTenantsAsync(CancellationToken cancellation = default);
 }
 
 public class SystemService(HttpClient httpClient) : ISystemService
 {
-    public async Task<ApiResponse<TenantWrapper<GetTenantDto>>> GetAllTenantsAsync(CancellationToken cancellation = default)
+    public async Task<Result<TenantsWrapper<GetTenantDto>>> GetAllTenantsAsync(CancellationToken cancellation = default)
     {
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
         var response = await httpClient.GetAsync("/tenant", cancellation);
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
         response.EnsureSuccessStatusCode();
 
-        var tenants = await response.Content.ReadFromJsonAsync<ApiResponse<TenantWrapper<GetTenantDto>>>(cancellationToken: cancellation);
-        return tenants!;
+        var result = await response.Content.ReadFromJsonAsync<Result<TenantsWrapper<GetTenantDto>>>(cancellationToken: cancellation);
+        return result!;
     }
 
 }

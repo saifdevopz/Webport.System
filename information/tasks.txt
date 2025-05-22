@@ -23,3 +23,9 @@ Blazor
 
 - Authentication & Authorization
 - CRUD UI
+
+---------------------------------------------------------------
+
+Wordpress
+
+- Install Wordpress 
