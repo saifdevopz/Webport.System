@@ -93,6 +93,11 @@ dotnet_diagnostic.CA1848.severity = none
 
 dotnet_diagnostic.S108.severity = none
 dotnet_diagnostic.S125.severity = none
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_operators = false:silent
+csharp_style_expression_bodied_properties = true:silent
+csharp_style_expression_bodied_indexers = true:silent
+csharp_style_expression_bodied_accessors = true:silent
 
 
 

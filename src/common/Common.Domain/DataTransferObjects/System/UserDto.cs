@@ -5,7 +5,11 @@ namespace Common.Domain.DataTransferObjects.System;
 public class UserDto
 {
     public int UserId { get; set; }
+
+    [DeniedValues(0)]
     public int TenantId { get; set; }
+
+    [Required]
     public int RoleId { get; set; }
 
     [Required]

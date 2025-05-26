@@ -23,7 +23,6 @@ builder.Services.AddSyncfusionBlazor();
 builder.Services.AddMudServices();
 
 // Local Storage
-builder.Services.AddHttpContextAccessor();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<LocalStorageService>();
 
@@ -41,6 +40,7 @@ builder.Services.AddScoped<DataService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Authentication
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 var app = builder.Build();

@@ -3,8 +3,6 @@
 
 <PageTitle>Home</PageTitle>
 
-<Blazor.Server.Components.Pages.UserInterfaces.Counter />
-
 <AuthorizeView>
     <Authorized>
         @{
@@ -30,7 +28,7 @@
             }
         }
 
-        <h2>Welcome,sss @name!</h2>
+        <h2>Welcome, @name!</h2>
         <p><strong>Authenticated:</strong> @isAuthenticated</p>
         <p><strong>Auth Type:</strong> @authType</p>
         @if (tokenExpiry != null)
@@ -38,13 +36,13 @@
             <p><strong>Token Expiration:</strong> @tokenExpiry</p>
         }
 
-        <h3>Roles</h3>
-        @if (roleClaims.Any())
+        <h3>Claims (@allClaims.Count)</h3>
+        @if (allClaims.Any())
         {
             <ul>
-                @foreach (var role in roleClaims)
+                @foreach (var role in allClaims)
                 {
-                    <li>@role</li>
+                    <p>@role</p>
                 }
             </ul>
         }
@@ -53,18 +51,20 @@
             <p>No roles found.</p>
         }
 
-        <h3>Claims (@allClaims.Count)</h3>
-        <h3>Security Info (Raw Dump)</h3>
-        <p>@user.ToString()</p>
+        @if (roleClaims.Any())
+        {
+            <ul>
+                @foreach (var role in roleClaims)
+                {
+                    <p>@role</p>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No roles found.</p>
+        }
     </Authorized>
-
-    <NotAuthorized>
-        <p class="text-danger">You are not authorized to view this page. Please <a href="/login">log in</a>.</p>
-    </NotAuthorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Admin">
-    <div class="alert alert-info mt-3">
-        <strong>Admin Panel:</strong> You have administrative access.
-    </div>
-</AuthorizeView>
+

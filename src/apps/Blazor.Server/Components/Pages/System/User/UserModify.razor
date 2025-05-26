@@ -16,12 +16,27 @@
             <MudTextField @bind-Value="Model.FullName" For="@(() => Model.FullName)" Label="Full Name" />
             <MudTextField @bind-Value="Model.Email" For="@(() => Model.Email)" Label="Email" />
 
-            <MudSelect @bind-Value="Model.TenantId">
+            <MudSelect @bind-Value="Model.TenantId"                
+                Label="Tenants"
+                Placeholder="Please Select"
+                Strict="true"
+                For="@(() => Model.TenantId)">
                 @if (Tenants != null)
                 {
+                    <MudSelectItem Value="-1">Select</MudSelectItem>
                     @foreach (var tenant in Tenants!)
                     {
                         <MudSelectItem Value="tenant.TenantId">@tenant.TenantName</MudSelectItem>
+                    }
+                }
+            </MudSelect>
+
+            <MudSelect @bind-Value="Model.RoleId" Strict="true" Clearable="true">
+                @if (Roles != null)
+                {
+                    @foreach (var role in Roles!)
+                    {
+                        <MudSelectItem Value="role.RoleId">@role.RoleName</MudSelectItem>
                     }
                 }
             </MudSelect>
@@ -38,16 +53,26 @@
 @code {
     [Parameter] public string? Id { get; set; }
     private UserDto Model = new();
-    private List<GetTenantDto>? Tenants;
+    private IEnumerable<GetTenantDto>? Tenants;
+    private List<RoleDto>? Roles;
 
     protected override async Task OnInitializedAsync()
     {
         await GetTenants();
+        await GetRoles();
 
         if (Id != null)
         {
             await GetUser();
         }
+
+
+    }
+
+    public async Task GetRoles()
+    {
+        var response = await _DataService.GetAllAsync<RolesWrapper<RoleDto>>("role");
+        Roles = response.Data!.Roles.ToList();
     }
 
     public async Task GetTenants()

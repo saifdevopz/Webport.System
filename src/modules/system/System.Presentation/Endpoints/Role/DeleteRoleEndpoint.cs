@@ -14,6 +14,7 @@ internal sealed class DeleteRoleEndpoint(ICommandDispatcher _sender) : IEndpoint
 
             return response;
         })
-        .WithTags(Tags.Role);
+        .WithTags(Tags.Role)
+        .RequireAuthorization();
     }
 }
