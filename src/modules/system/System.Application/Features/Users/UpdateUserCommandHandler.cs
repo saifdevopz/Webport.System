@@ -1,20 +1,16 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Errors;
-using Common.Domain.Results;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Domain.Models;
 
 namespace System.Application.Features.Users;
 
 public class UpdateUserCommandHandler(IGenericRepository<UserM> Repository)
-    : ICommandHandler<UpdateUserCommand, Result>
+    : ICommandHandler<UpdateUserCommand>
 {
     public async Task<Result> Handle(
         UpdateUserCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await Repository.FindOneAsync(_ => _.UserId == command.UserId, cancellation);
+        var obj = await Repository.FindOneAsync(_ => _.UserId == command.UserId, cancellationToken);
 
         if (obj == null)
         {
@@ -24,7 +20,7 @@ public class UpdateUserCommandHandler(IGenericRepository<UserM> Repository)
         obj.FullName = command.FullName;
 
         Repository.Update(obj);
-        await Repository.SaveChangesAsync(cancellation);
+        await Repository.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
@@ -32,7 +28,7 @@ public class UpdateUserCommandHandler(IGenericRepository<UserM> Repository)
 
 public sealed record UpdateUserCommand(
     int UserId,
-    string FullName);
+    string FullName) : ICommand;
 
 public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {

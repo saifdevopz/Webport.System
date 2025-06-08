@@ -1,19 +1,15 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Errors;
-using Common.Domain.Results;
-using System.Domain.Models;
+﻿using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
 public class GetTenantByIdQueryHandler(IGenericRepository<TenantM> repository)
-    : IQueryHandler<GetTenantByIdQuery, Result<GetTenantByIdQueryResult>>
+    : IQueryHandler<GetTenantByIdQuery, GetTenantByIdQueryResult>
 {
     public async Task<Result<GetTenantByIdQueryResult>> Handle(
         GetTenantByIdQuery query,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await repository.FindOneAsync(_ => _.TenantId == query.TenantId, cancellation);
+        var obj = await repository.FindOneAsync(_ => _.TenantId == query.TenantId, cancellationToken);
 
         return obj is not null
             ? Result.Success(new GetTenantByIdQueryResult(obj))
@@ -21,6 +17,6 @@ public class GetTenantByIdQueryHandler(IGenericRepository<TenantM> repository)
     }
 }
 
-public sealed record GetTenantByIdQuery(int TenantId);
+public sealed record GetTenantByIdQuery(int TenantId) : IQuery<GetTenantByIdQueryResult>;
 
 public sealed record GetTenantByIdQueryResult(TenantM Tenant);

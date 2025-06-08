@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Application.Database;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Infrastructure.Database;
-
-public interface IDbContextProvider
-{
-    DbContext GetContext();
-}
 
 public class DbContextProvider(IServiceScopeFactory serviceFactory, string assemblyName) : IDbContextProvider
 {

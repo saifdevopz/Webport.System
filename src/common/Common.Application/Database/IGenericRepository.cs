@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Common.Application.Interfaces;
+namespace Common.Application.Database;
 
 public interface IGenericRepository<TEntity> where TEntity : class
 {

@@ -1,4 +1,6 @@
-﻿namespace System.Domain.Models;
+﻿using System.Domain.Events;
+
+namespace System.Domain.Models;
 
 public sealed class UserM : AggregateRoot
 {
@@ -35,6 +37,8 @@ public sealed class UserM : AggregateRoot
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt
         };
+
+        obj.AddDomainEvent(new UserCreatedDomainEvent(obj.UserId));
 
         return obj;
     }

@@ -1,16 +1,17 @@
 ﻿using System.Application.Features.Tenant;
-using System.Domain.Models;
 
 namespace System.Presentation.Endpoints.Tenant;
 
-internal sealed class GetTenantsEndpoint(IQueryDispatcher _sender) : IEndpoint
+internal sealed class GetTenantsEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("tenant", async () =>
+        app.MapGet("tenant", async (
+            IQueryHandler<GetTenantsQuery, GetTenantsQueryResult> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<GetTenantsQuery, Result<List<TenantM>>>(new GetTenantsQuery())
+            var response = await handler
+                .Handle(new GetTenantsQuery(), cancellationToken)
                 .MapResult();
 
             return response;
@@ -18,3 +19,5 @@ internal sealed class GetTenantsEndpoint(IQueryDispatcher _sender) : IEndpoint
         .WithTags(Tags.Tenant);
     }
 }
+
+

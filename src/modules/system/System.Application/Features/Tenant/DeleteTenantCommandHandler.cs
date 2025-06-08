@@ -1,19 +1,15 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Errors;
-using Common.Domain.Results;
-using System.Domain.Models;
+﻿using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
 public class DeleteTenantCommandHandler(IGenericRepository<TenantM> Repository)
-    : ICommandHandler<DeleteTenantCommand, Result>
+    : ICommandHandler<DeleteTenantCommand>
 {
     public async Task<Result> Handle(
         DeleteTenantCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await Repository.FindOneAsync(_ => _.TenantId == command.TenantId, cancellation);
+        var obj = await Repository.FindOneAsync(_ => _.TenantId == command.TenantId, cancellationToken);
 
         if (obj is null)
         {
@@ -21,10 +17,10 @@ public class DeleteTenantCommandHandler(IGenericRepository<TenantM> Repository)
         }
 
         Repository.Delete(obj);
-        await Repository.SaveChangesAsync(cancellation);
+        await Repository.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
 }
 
-public sealed record DeleteTenantCommand(int TenantId);
+public sealed record DeleteTenantCommand(int TenantId) : ICommand;

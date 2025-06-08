@@ -1,28 +1,25 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Results;
-using FluentValidation;
+﻿using FluentValidation;
 using Parent.Domain.Inventory.Category;
 
 namespace Parent.Application.Features.Category;
 
 public sealed class CreateCategoryCommandHandler(IGenericRepository<CategoryM> Repository)
-    : ICommandHandler<CreateCategoryCommand, Result>
+    : ICommandHandler<CreateCategoryCommand>
 {
     public async Task<Result> Handle(
         CreateCategoryCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
         var obj = CategoryM.Create(command.CategoryCode, command.CategoryDesc);
 
         await Repository.AddAsync(obj);
-        await Repository.SaveChangesAsync(cancellation);
+        await Repository.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
 }
 
-public sealed record CreateCategoryCommand(string CategoryCode, string CategoryDesc);
+public sealed record CreateCategoryCommand(string CategoryCode, string CategoryDesc) : ICommand;
 
 public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
 {

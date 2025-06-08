@@ -2,14 +2,17 @@
 
 namespace System.Presentation.Endpoints.User;
 
-internal sealed class UpdateUserEndpoint(ICommandDispatcher _sender) : IEndpoint
+internal sealed class UpdateUserEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut("user", async (UpdateUserCommand request) =>
+        app.MapPut("user", async (
+            UpdateUserCommand request,
+            ICommandHandler<UpdateUserCommand> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<UpdateUserCommand, Result>(request)
+            var response = await handler
+                .Handle(request, cancellationToken)
                 .MapResult();
 
             return response;

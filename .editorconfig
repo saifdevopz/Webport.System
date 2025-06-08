@@ -89,16 +89,15 @@ dotnet_diagnostic.CA1812.severity = none
 # For improved performance, use the LoggerMessage delegates
 dotnet_diagnostic.CA1848.severity = none
 
+# Avoid empty interfaces
+dotnet_diagnostic.CA1040.severity = none
 
+# SonarAnalyzer.CSharp rules
 
-dotnet_diagnostic.S108.severity = none
+# S2326: General or reserved exceptions should never be thrown
+dotnet_diagnostic.S2326.severity = none
+
+# S125: Sections of code should not be commented out
 dotnet_diagnostic.S125.severity = none
-csharp_style_expression_bodied_constructors = false:silent
-csharp_style_expression_bodied_operators = false:silent
-csharp_style_expression_bodied_properties = true:silent
-csharp_style_expression_bodied_indexers = true:silent
-csharp_style_expression_bodied_accessors = true:silent
-
-
 
 ########################################################

@@ -1,19 +1,15 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Errors;
-using Common.Domain.Results;
-using System.Domain.Models;
+﻿using System.Domain.Models;
 
 namespace System.Application.Features.Users;
 
 public class DeleteUserCommandHandler(IGenericRepository<UserM> Repository)
-    : ICommandHandler<DeleteUserCommand, Result>
+    : ICommandHandler<DeleteUserCommand>
 {
     public async Task<Result> Handle(
         DeleteUserCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await Repository.FindOneAsync(_ => _.UserId == command.UserId, cancellation);
+        var obj = await Repository.FindOneAsync(_ => _.UserId == command.UserId, cancellationToken);
 
         if (obj is null)
         {
@@ -21,10 +17,10 @@ public class DeleteUserCommandHandler(IGenericRepository<UserM> Repository)
         }
 
         Repository.Delete(obj);
-        await Repository.SaveChangesAsync(cancellation);
+        await Repository.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
 }
 
-public sealed record DeleteUserCommand(int UserId);
+public sealed record DeleteUserCommand(int UserId) : ICommand;

@@ -1,20 +1,16 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Errors;
-using Common.Domain.Results;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Domain.Models;
 
 namespace System.Application.Features.Roles;
 
 public class DeleteRoleCommandHandler(IGenericRepository<RoleM> Repository)
-    : ICommandHandler<DeleteRoleCommand, Result>
+    : ICommandHandler<DeleteRoleCommand>
 {
     public async Task<Result> Handle(
         DeleteRoleCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await Repository.FindOneAsync(_ => _.RoleId == command.RoleId, cancellation);
+        var obj = await Repository.FindOneAsync(_ => _.RoleId == command.RoleId, cancellationToken);
 
         if (obj is null)
         {
@@ -22,13 +18,13 @@ public class DeleteRoleCommandHandler(IGenericRepository<RoleM> Repository)
         }
 
         Repository.Delete(obj);
-        await Repository.SaveChangesAsync(cancellation);
+        await Repository.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
 }
 
-public sealed record DeleteRoleCommand(int RoleId);
+public sealed record DeleteRoleCommand(int RoleId) : ICommand;
 
 public class DeleteRoleCommandValidator : AbstractValidator<DeleteRoleCommand>
 {

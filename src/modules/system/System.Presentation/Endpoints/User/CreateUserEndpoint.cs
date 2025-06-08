@@ -2,14 +2,17 @@
 
 namespace System.Presentation.Endpoints.User;
 
-internal sealed class CreateUserEndpoint(ICommandDispatcher _sender) : IEndpoint
+internal sealed class CreateUserEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("user", async (CreateUserCommand request) =>
+        app.MapPost("user", async (
+            CreateUserCommand request,
+            ICommandHandler<CreateUserCommand> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<CreateUserCommand, Result>(request)
+            var response = await handler
+                .Handle(request, cancellationToken)
                 .MapResult();
 
             return response;

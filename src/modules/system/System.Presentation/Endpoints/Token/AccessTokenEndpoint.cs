@@ -2,14 +2,17 @@
 
 namespace System.Presentation.Endpoints.Token;
 
-internal sealed class AccessTokenEndpoint(ICommandDispatcher _sender) : IEndpoint
+internal sealed class AccessTokenEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("access", async (AccessTokenCommand request) =>
+        app.MapPost("access", async (
+            AccessTokenCommand request,
+            ICommandHandler<AccessTokenCommand, AccessTokenResult> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<AccessTokenCommand, Result<AccessTokenResult>>(request)
+            var response = await handler
+                .Handle(request, cancellationToken)
                 .MapResult();
 
             return response;

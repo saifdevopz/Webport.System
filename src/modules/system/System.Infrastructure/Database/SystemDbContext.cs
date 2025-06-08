@@ -1,4 +1,5 @@
 ﻿using Common.Infrastructure.Interceptors;
+using Common.Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore;
 using System.Domain.Models;
 
@@ -17,6 +18,7 @@ public sealed class SystemDbContext(DbContextOptions<SystemDbContext> options) :
         modelBuilder.HasDefaultSchema(SystemConstants.Schema);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SystemDbContext).Assembly);
+        modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

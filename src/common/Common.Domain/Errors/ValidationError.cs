@@ -20,3 +20,4 @@ public sealed record ValidationError : CustomError
         return new(results.Where(r => r.IsFailure).Select(r => r.Error!).ToArray());
     }
 }
+

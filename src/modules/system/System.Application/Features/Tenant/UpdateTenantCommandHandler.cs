@@ -1,20 +1,16 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Errors;
-using Common.Domain.Results;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
 public class UpdateTenantCommandHandler(IGenericRepository<TenantM> Repository)
-    : ICommandHandler<UpdateTenantCommand, Result>
+    : ICommandHandler<UpdateTenantCommand>
 {
     public async Task<Result> Handle(
         UpdateTenantCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await Repository.FindOneAsync(_ => _.TenantId == command.TenantId, cancellation);
+        var obj = await Repository.FindOneAsync(_ => _.TenantId == command.TenantId, cancellationToken);
 
         if (obj == null)
         {
@@ -24,7 +20,7 @@ public class UpdateTenantCommandHandler(IGenericRepository<TenantM> Repository)
         obj.TenantName = command.TenantName;
 
         Repository.Update(obj);
-        await Repository.SaveChangesAsync(cancellation);
+        await Repository.SaveChangesAsync(cancellationToken);
 
         return Result.Success(obj);
     }
@@ -32,7 +28,7 @@ public class UpdateTenantCommandHandler(IGenericRepository<TenantM> Repository)
 
 public sealed record UpdateTenantCommand(
     int TenantId,
-    string TenantName);
+    string TenantName) : ICommand;
 
 public class UpdateTenantCommandValidator : AbstractValidator<UpdateTenantCommand>
 {

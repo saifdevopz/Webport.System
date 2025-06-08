@@ -1,23 +1,23 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Results;
-using System.Domain.Models;
+﻿using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
-public class GetTenantsQueryHandler(IGenericRepository<TenantM> repository)
-    : IQueryHandler<GetTenantsQuery, Result<List<TenantM>>>
+internal sealed class GetTenantsQueryHandler(IGenericRepository<TenantM> repository)
+    : IQueryHandler<GetTenantsQuery, GetTenantsQueryResult>
 {
-    public async Task<Result<List<TenantM>>> Handle(
+    public async Task<Result<GetTenantsQueryResult>> Handle(
         GetTenantsQuery query,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await repository.GetAllAsync(cancellation);
+        var obj = await repository.GetAllAsync(cancellationToken);
 
-        return Result.Success(obj);
+        return Result.Success(new GetTenantsQueryResult(obj));
     }
 }
 
-public sealed record GetTenantsQuery;
+public sealed record GetTenantsQuery : IQuery<GetTenantsQueryResult>;
 
 public sealed record GetTenantsQueryResult(IEnumerable<TenantM> Tenants);
+
+
+

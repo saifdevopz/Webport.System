@@ -6,4 +6,9 @@
     <ProjectReference Include="..\System.Presentation\System.Presentation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Database\Migrations\" />
+    <Folder Include="Outbox\" />
+  </ItemGroup>
+
 </Project>

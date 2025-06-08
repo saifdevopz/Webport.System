@@ -1,19 +1,15 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Errors;
-using Common.Domain.Results;
-using System.Domain.Models;
+﻿using System.Domain.Models;
 
 namespace System.Application.Features.Roles;
 
 public class GetRoleByIdQueryHandler(IGenericRepository<RoleM> repository)
-    : IQueryHandler<GetRoleByIdQuery, Result<GetRoleByIdQueryResult>>
+    : IQueryHandler<GetRoleByIdQuery, GetRoleByIdQueryResult>
 {
     public async Task<Result<GetRoleByIdQueryResult>> Handle(
         GetRoleByIdQuery query,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await repository.FindOneAsync(_ => _.RoleId == query.RoleId, cancellation);
+        var obj = await repository.FindOneAsync(_ => _.RoleId == query.RoleId, cancellationToken);
 
         return obj is not null
             ? Result.Success(new GetRoleByIdQueryResult(obj))
@@ -21,6 +17,6 @@ public class GetRoleByIdQueryHandler(IGenericRepository<RoleM> repository)
     }
 }
 
-public sealed record GetRoleByIdQuery(int RoleId);
+public sealed record GetRoleByIdQuery(int RoleId) : IQuery<GetRoleByIdQuery>;
 
 public sealed record GetRoleByIdQueryResult(RoleM Role);

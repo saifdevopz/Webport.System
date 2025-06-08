@@ -2,14 +2,17 @@
 
 namespace System.Presentation.Endpoints.Tenant;
 
-internal sealed class CreateTenantEndpoint(ICommandDispatcher _sender) : IEndpoint
+internal sealed class CreateTenantEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("tenant", async (CreateTenantCommand request) =>
+        app.MapPost("tenant", async (
+            CreateTenantCommand request,
+            ICommandHandler<CreateTenantCommand> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<CreateTenantCommand, Result>(request)
+            var response = await handler
+                .Handle(request, cancellationToken)
                 .MapResult();
 
             return response;

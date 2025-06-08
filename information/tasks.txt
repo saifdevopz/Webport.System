@@ -1,11 +1,11 @@
 
 API
 
+- Domain Events
 - Current Tenant Service
 - Current User Service
 - Only Allow Authorized Requests Globally
 - Configure Dapper
-- Domain Events
 - Permission Authorization
 - Configure SMTP
 - Open Telemetry - Tracing & Monitoring

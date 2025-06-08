@@ -11,7 +11,7 @@ using System.Reflection;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Connection Strings
-string? systemDatabaseString = builder.Configuration["SQLServer:ProductionConnection"];
+string? systemDatabaseString = builder.Configuration["PostgreSQL:ProductionConnection"];
 ArgumentException.ThrowIfNullOrWhiteSpace(systemDatabaseString);
 
 // Serilog

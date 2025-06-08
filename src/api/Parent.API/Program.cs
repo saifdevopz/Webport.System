@@ -2,7 +2,6 @@ using Common.Application;
 using Common.Infrastructure;
 using Common.Infrastructure.Middlewares;
 using Common.Presentation.Endpoints;
-using Parent.API.Extensions;
 using Parent.Infrastructure;
 using Scalar.AspNetCore;
 using Serilog;
@@ -67,7 +66,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
         _.Servers = [];
         _.Theme = ScalarTheme.BluePlanet;
     });
-    await app.ApplyAllMigrations();
+    //await app.ApplyAllMigrations();
 }
 
 app.UseSerilogRequestLogging();

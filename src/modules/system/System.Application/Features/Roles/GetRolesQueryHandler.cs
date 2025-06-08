@@ -1,23 +1,20 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Results;
-using System.Domain.Models;
+﻿using System.Domain.Models;
 
 namespace System.Application.Features.Roles;
 
 public class GetRolesQueryHandler(IGenericRepository<RoleM> repository)
-    : IQueryHandler<GetRolesQuery, Result<GetRolesQueryResult>>
+    : IQueryHandler<GetRolesQuery, GetRolesQueryResult>
 {
     public async Task<Result<GetRolesQueryResult>> Handle(
         GetRolesQuery query,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await repository.GetAllAsync(cancellation);
+        var obj = await repository.GetAllAsync(cancellationToken);
 
         return Result.Success(new GetRolesQueryResult(obj));
     }
 }
 
-public sealed record GetRolesQuery;
+public sealed record GetRolesQuery : IQuery<GetRolesQueryResult>;
 
 public sealed record GetRolesQueryResult(IEnumerable<RoleM> Roles);

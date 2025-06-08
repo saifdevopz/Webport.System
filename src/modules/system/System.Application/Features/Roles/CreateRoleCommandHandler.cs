@@ -1,5 +1,5 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
+﻿using Common.Application.Database;
+using Common.Application.Messaging;
 using Common.Domain.Results;
 using FluentValidation;
 using System.Domain.Models;
@@ -7,22 +7,22 @@ using System.Domain.Models;
 namespace System.Application.Features.Roles;
 
 public class CreateRoleCommandHandler(IGenericRepository<RoleM> Repository)
-    : ICommandHandler<CreateRoleCommand, Result>
+    : ICommandHandler<CreateRoleCommand>
 {
     public async Task<Result> Handle(
         CreateRoleCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
         var obj = RoleM.Create(command.RoleName);
 
         await Repository.AddAsync(obj);
-        await Repository.SaveChangesAsync(cancellation);
+        await Repository.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
 }
 
-public sealed record CreateRoleCommand(string RoleName);
+public sealed record CreateRoleCommand(string RoleName) : ICommand;
 
 public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
 {

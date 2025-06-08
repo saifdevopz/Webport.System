@@ -1,4 +1,4 @@
-﻿using Common.Application.Interfaces;
+﻿using Common.Application.Database;
 using Common.Infrastructure.Authentication;
 using Common.Infrastructure.Database;
 using Common.Presentation.Endpoints;

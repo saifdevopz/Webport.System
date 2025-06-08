@@ -1,15 +1,19 @@
-﻿using System.Application.Features.Roles;
+﻿using Common.Application.Messaging;
+using System.Application.Features.Roles;
 
 namespace System.Presentation.Endpoints.Role;
 
-internal sealed class GetRoleByIdEndpoint(IQueryDispatcher _sender) : IEndpoint
+internal sealed class GetRoleByIdEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("role/{Id}", async (int Id) =>
+        app.MapGet("role/{Id}", async (
+            int Id,
+            IQueryHandler<GetRoleByIdQuery, GetRoleByIdQueryResult> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<GetRoleByIdQuery, Result<GetRoleByIdQueryResult>>(new GetRoleByIdQuery(Id))
+            var response = await handler
+                .Handle(new GetRoleByIdQuery(Id), cancellationToken)
                 .MapResult();
 
             return response;

@@ -17,7 +17,7 @@ public sealed class TenantM : AggregateRoot
             TenantName = tenantName,
             DatabaseName = databaseName,
             ConnectionString = GeneralExtensions.BuildConnectionString(databaseName),
-            LicenceExpiryDate = DateTime.Now.AddDays(30),
+            LicenceExpiryDate = DateTime.UtcNow.AddDays(30),
         };
 
         return obj;

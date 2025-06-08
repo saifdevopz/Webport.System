@@ -58,9 +58,9 @@ public class DataSeeder(SystemDbContext context)
 
         UserM[] users =
         [
-            UserM.Create(1, 1, "Saif Khan", "saif@gmail.com", "12345678"),
-            UserM.Create(2, 2, "Itachi Uchiha", "itachi@gmail.com", "12345678"),
-            UserM.Create(3, 2, "Naruto Uzumaki", "naruto@gmail.com", "12345678"),
+            UserM.Create(1, 1, "Saif Khan", "admin@gmail.com", "12345678"),
+            UserM.Create(2, 2, "Itachi Uchiha", "customer1@gmail.com", "12345678"),
+            UserM.Create(3, 2, "Naruto Uzumaki", "customer@gmail.com", "12345678"),
         ];
 
         await _context.Users.AddRangeAsync(users);

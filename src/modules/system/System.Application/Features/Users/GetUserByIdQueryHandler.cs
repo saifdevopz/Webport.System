@@ -1,19 +1,15 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Errors;
-using Common.Domain.Results;
-using System.Domain.Models;
+﻿using System.Domain.Models;
 
 namespace System.Application.Features.Users;
 
 public class GetUserByIdQueryHandler(IGenericRepository<UserM> repository)
-    : IQueryHandler<GetUserByIdQuery, Result<GetUserByIdQueryResult>>
+    : IQueryHandler<GetUserByIdQuery, GetUserByIdQueryResult>
 {
     public async Task<Result<GetUserByIdQueryResult>> Handle(
         GetUserByIdQuery query,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
-        var obj = await repository.FindOneAsync(_ => _.UserId == query.UserId, cancellation);
+        var obj = await repository.FindOneAsync(_ => _.UserId == query.UserId, cancellationToken);
 
         return obj is not null
             ? Result.Success(new GetUserByIdQueryResult(obj))
@@ -21,6 +17,6 @@ public class GetUserByIdQueryHandler(IGenericRepository<UserM> repository)
     }
 }
 
-public sealed record GetUserByIdQuery(int UserId);
+public sealed record GetUserByIdQuery(int UserId) : IQuery<GetUserByIdQueryResult>;
 
 public sealed record GetUserByIdQueryResult(UserM User);

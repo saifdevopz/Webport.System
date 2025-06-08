@@ -2,14 +2,17 @@
 
 namespace System.Presentation.Endpoints.Tenant;
 
-internal sealed class GetTenantByIdEndpoint(IQueryDispatcher _sender) : IEndpoint
+internal sealed class GetTenantByIdEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("tenant/{Id}", async (int Id) =>
+        app.MapGet("tenant/{Id}", async (
+            int Id,
+            IQueryHandler<GetTenantByIdQuery, GetTenantByIdQueryResult> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<GetTenantByIdQuery, Result<GetTenantByIdQueryResult>>(new GetTenantByIdQuery(Id))
+            var response = await handler
+                .Handle(new GetTenantByIdQuery(Id), cancellationToken)
                 .MapResult();
 
             return response;
@@ -17,3 +20,4 @@ internal sealed class GetTenantByIdEndpoint(IQueryDispatcher _sender) : IEndpoin
         .WithTags(Tags.Tenant);
     }
 }
+

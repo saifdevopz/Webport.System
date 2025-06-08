@@ -2,14 +2,17 @@
 
 namespace System.Presentation.Endpoints.Tenant;
 
-internal sealed class DeleteTenantEndpoint(ICommandDispatcher _sender) : IEndpoint
+internal sealed class DeleteTenantEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete("tenant/{Id}", async (int Id) =>
+        app.MapDelete("tenant/{Id}", async (
+            int Id,
+            ICommandHandler<DeleteTenantCommand> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<DeleteTenantCommand, Result>(new DeleteTenantCommand(Id))
+            var response = await handler
+                .Handle(new DeleteTenantCommand(Id), cancellationToken)
                 .MapResult();
 
             return response;

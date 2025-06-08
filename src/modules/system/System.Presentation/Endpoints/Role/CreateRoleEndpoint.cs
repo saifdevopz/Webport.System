@@ -1,16 +1,19 @@
-﻿using System.Application.Features.Roles;
+﻿using Common.Application.Messaging;
+using System.Application.Features.Roles;
 
 namespace System.Presentation.Endpoints.Role;
 
-internal sealed class CreateRoleEndpoint(ICommandDispatcher _sender) : IEndpoint
+internal sealed class CreateRoleEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("role", async (CreateRoleCommand request) =>
+        app.MapPost("role", async (
+            CreateRoleCommand request,
+            ICommandHandler<CreateRoleCommand> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<CreateRoleCommand, Result>(request)
-                .MapResult();
+            var response = await handler.Handle(request, cancellationToken)
+                                        .MapResult();
 
             return response;
         })

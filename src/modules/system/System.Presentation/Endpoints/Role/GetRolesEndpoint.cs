@@ -2,18 +2,21 @@
 
 namespace System.Presentation.Endpoints.Role;
 
-internal sealed class GetRolesEndpoint(IQueryDispatcher _sender) : IEndpoint
+internal sealed class GetRolesEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("role", async () =>
+        app.MapGet("role", async (
+            IQueryHandler<GetRolesQuery, GetRolesQueryResult> handler,
+            CancellationToken cancellation) =>
         {
-            var response = await _sender
-                .Dispatch<GetRolesQuery, Result<GetRolesQueryResult>>(new GetRolesQuery());
+            var response = await handler
+                .Handle(new GetRolesQuery(), cancellation)
+                .MapResult();
 
             return response;
         })
-        .WithTags(Tags.Role)
-        .RequireAuthorization();
+        .WithTags(Tags.Role);
+        //.RequireAuthorization();
     }
 }

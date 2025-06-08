@@ -1,8 +1,9 @@
-﻿using Common.Application.Interfaces;
+﻿using Common.Application.Database;
 using Common.Infrastructure.Authentication;
 using Common.Infrastructure.Database;
 using Common.Presentation.Endpoints;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Application.Interfaces;
@@ -21,7 +22,9 @@ public static class SystemModule
     {
         ArgumentNullException.ThrowIfNull(configuration);
 
-        services.AddInfrastructure(systemDatabaseString);
+        //services.AddDomainEventHandlers();
+
+        services.AddInfrastructure(/*configuration, */systemDatabaseString);
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
 
@@ -30,6 +33,7 @@ public static class SystemModule
 
     private static void AddInfrastructure(
         this IServiceCollection services,
+        //IConfiguration configuration,
         string systemDatabaseString)
     {
         string AssemblyName = Assembly.GetCallingAssembly().GetName().Name!;
@@ -46,15 +50,54 @@ public static class SystemModule
         services.AddAuthenticationInternal();
 
         services.AddScoped<DataSeeder>();
+
         services.AddDbContext<SystemDbContext>((sp, options) =>
         {
-            options.UseSqlServer(systemDatabaseString, sqlServerOptionsAction: sqlOptions =>
+            options.UseNpgsql(systemDatabaseString, npgsqlOptionsAction =>
             {
-                sqlOptions.EnableRetryOnFailure(
-                maxRetryCount: 10,
-                maxRetryDelay: TimeSpan.FromSeconds(5),
-                errorNumbersToAdd: null);
+                npgsqlOptionsAction.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(2),
+                        errorCodesToAdd: null);
+
+                npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, SystemConstants.Schema);
             });
         });
+        //services.AddDbContext<SystemDbContext>((sp, options) =>
+        //{
+        //    options.UseSqlServer(systemDatabaseString, sqlServerOptionsAction: sqlOptions =>
+        //    {
+        //        sqlOptions.EnableRetryOnFailure(
+        //        maxRetryCount: 10,
+        //        maxRetryDelay: TimeSpan.FromSeconds(5),
+        //        errorNumbersToAdd: null);
+        //    });
+        //});
+
+        //services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
+        //services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
+
+    //private static void AddDomainEventHandlers(this IServiceCollection services)
+    //{
+    //    Type[] domainEventHandlers = Application.AssemblyReference.Assembly
+    //        .GetTypes()
+    //        .Where(t => t.IsAssignableTo(typeof(IDomainEventDispatcher)))
+    //        .ToArray();
+
+    //    foreach (Type domainEventHandler in domainEventHandlers)
+    //    {
+    //        services.TryAddScoped(domainEventHandler);
+
+    //        Type domainEvent = domainEventHandler
+    //            .GetInterfaces()
+    //            .Single(i => i.IsGenericType)
+    //            .GetGenericArguments()
+    //            .Single();
+
+    //        Type closedIdempotentHandler = typeof(IdempotentDomainEventHandler<>).MakeGenericType(domainEvent);
+
+    //        services.Decorate(domainEventHandler, closedIdempotentHandler);
+    //    }
+    //}
 }

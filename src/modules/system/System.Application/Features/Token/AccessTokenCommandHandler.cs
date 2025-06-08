@@ -1,17 +1,15 @@
-﻿using Common.Application.CQRS;
-using Common.Domain.Results;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Application.Dtos;
 using System.Application.Interfaces;
 
 namespace System.Application.Features.Token;
 
 public class AccessTokenCommandHandler(ITokenService tokenService)
-    : ICommandHandler<AccessTokenCommand, Result<AccessTokenResult>>
+    : ICommandHandler<AccessTokenCommand, AccessTokenResult>
 {
     public async Task<Result<AccessTokenResult>> Handle(
         AccessTokenCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
 
         var tokenResult = await tokenService.AccessToken(new AccessTokenRequest(command.Email, command.Password));
@@ -27,7 +25,7 @@ public class AccessTokenCommandHandler(ITokenService tokenService)
     }
 }
 
-public sealed record AccessTokenCommand(string Email, string Password);
+public sealed record AccessTokenCommand(string Email, string Password) : ICommand<AccessTokenResult>;
 
 public sealed record AccessTokenResult(string Token, string RefreshToken);
 

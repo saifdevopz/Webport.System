@@ -1,15 +1,19 @@
-﻿using System.Application.Features.Roles;
+﻿using Common.Application.Messaging;
+using System.Application.Features.Roles;
 
 namespace System.Presentation.Endpoints.Role;
 
-internal sealed class UpdateRoleEndpoint(ICommandDispatcher _sender) : IEndpoint
+internal sealed class UpdateRoleEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut("role", async (UpdateRoleCommand request) =>
+        app.MapPut("role", async (
+            UpdateRoleCommand request,
+            ICommandHandler<UpdateRoleCommand> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<UpdateRoleCommand, Result>(request)
+            var response = await handler
+                .Handle(request, cancellationToken)
                 .MapResult();
 
             return response;

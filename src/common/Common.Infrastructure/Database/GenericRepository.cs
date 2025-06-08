@@ -1,4 +1,4 @@
-﻿using Common.Application.Interfaces;
+﻿using Common.Application.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

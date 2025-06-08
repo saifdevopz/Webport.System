@@ -1,22 +1,19 @@
-﻿using Common.Application.CQRS;
-using Common.Application.Interfaces;
-using Common.Domain.Results;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Domain.Models;
 
 namespace System.Application.Features.Tenant;
 
 public class CreateTenantCommandHandler(IGenericRepository<TenantM> Repository)
-    : ICommandHandler<CreateTenantCommand, Result>
+    : ICommandHandler<CreateTenantCommand>
 {
     public async Task<Result> Handle(
         CreateTenantCommand command,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken)
     {
         var obj = TenantM.Create(command.TenantName, command.DatabaseName);
 
         await Repository.AddAsync(obj);
-        await Repository.SaveChangesAsync(cancellation);
+        await Repository.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
@@ -24,7 +21,7 @@ public class CreateTenantCommandHandler(IGenericRepository<TenantM> Repository)
 
 public sealed record CreateTenantCommand(
     string TenantName,
-    string DatabaseName);
+    string DatabaseName) : ICommand;
 
 public class CreateTenantCommandValidator : AbstractValidator<CreateTenantCommand>
 {

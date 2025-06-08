@@ -2,14 +2,17 @@
 
 namespace System.Presentation.Endpoints.User;
 
-internal sealed class GetUsersByIdEndpoint(IQueryDispatcher _sender) : IEndpoint
+internal sealed class GetUsersByIdEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("user/{Id}", async (int Id) =>
+        app.MapGet("user/{Id}", async (
+            int Id,
+            IQueryHandler<GetUserByIdQuery, GetUserByIdQueryResult> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<GetUserByIdQuery, Result<GetUserByIdQueryResult>>(new GetUserByIdQuery(Id))
+            var response = await handler
+                .Handle(new GetUserByIdQuery(Id), cancellationToken)
                 .MapResult();
 
             return response;

@@ -1,17 +1,19 @@
-﻿using Parent.Application.Features.Category;
+﻿using Common.Application.Messaging;
+using Parent.Application.Features.Category;
 using Parent.Presentation.Common;
 
 namespace Parent.Presentation.Endpoints.Category;
 
-internal sealed class GetAllCategoryEndpoint(IQueryDispatcher _sender) : IEndpoint
+internal sealed class GetAllCategoryEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("category", async () =>
+        app.MapGet("category", async (
+            IQueryHandler<GetAllCategoryQuery, GetAllCategoryQueryResult> handler,
+            CancellationToken cancellationToken) =>
         {
-            var response = await _sender
-                .Dispatch<GetAllCategoryQuery, Result<GetAllCategoryQueryResult>>(new GetAllCategoryQuery())
-                .MapResult();
+            var response = await handler.Handle(new GetAllCategoryQuery(), cancellationToken)
+                                        .MapResult();
 
             return response;
         })
