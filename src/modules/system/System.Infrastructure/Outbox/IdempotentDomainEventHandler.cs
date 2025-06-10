@@ -5,7 +5,7 @@ using Common.Infrastructure.Outbox;
 using Dapper;
 using System.Data.Common;
 
-namespace System.Infrastructure.Common.Outbox;
+namespace System.Infrastructure.Outbox;
 
 internal sealed class IdempotentDomainEventHandler<TDomainEvent>(
         IDomainEventDispatcher<TDomainEvent> decorated,
@@ -13,7 +13,7 @@ internal sealed class IdempotentDomainEventHandler<TDomainEvent>(
         : DomainEventDispatcher<TDomainEvent>
         where TDomainEvent : IDomainEvent
 {
-    public override async Task Handle(TDomainEvent domainEvent, CancellationToken cancellationToken = default)
+    public override async Task Handle(TDomainEvent domainEvent, CancellationToken cancellationToken)
     {
         await using DbConnection connection = await _dbConnectionFactory.OpenPostgreSQLConnection();
 
@@ -34,11 +34,13 @@ internal sealed class IdempotentDomainEventHandler<TDomainEvent>(
             OutboxMessageConsumer outboxMessageConsumer)
     {
         const string sql =
-                $"""
+            $"""
+            SELECT EXISTS(
                 SELECT 1
-                FROM {SystemConstants.Schema}.outbox_messages_consumers
-                WHERE OutboxMessageId = @OutboxMessageId AND
-                      Name = @Name
+                FROM {SystemConstants.Schema}.outbox_message_consumers
+                WHERE outbox_message_id = @OutboxMessageId AND
+                      name = @Name
+            )
             """;
 
         return await dbConnection.ExecuteScalarAsync<bool>(sql, outboxMessageConsumer);
@@ -49,8 +51,8 @@ internal sealed class IdempotentDomainEventHandler<TDomainEvent>(
             OutboxMessageConsumer outboxMessageConsumer)
     {
         const string sql =
-                $"""
-            INSERT INTO {SystemConstants.Schema}.outbox_messages_consumers(OutboxMessageId, Name)
+            $"""
+            INSERT INTO {SystemConstants.Schema}.outbox_message_consumers(outbox_message_id, name)
             VALUES (@OutboxMessageId, @Name)
             """;
 

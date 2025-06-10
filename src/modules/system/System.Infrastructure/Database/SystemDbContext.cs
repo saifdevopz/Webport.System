@@ -19,6 +19,7 @@ public sealed class SystemDbContext(DbContextOptions<SystemDbContext> options) :
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(SystemDbContext).Assembly);
         modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
+        modelBuilder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

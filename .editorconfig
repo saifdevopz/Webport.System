@@ -92,6 +92,12 @@ dotnet_diagnostic.CA1848.severity = none
 # Avoid empty interfaces
 dotnet_diagnostic.CA1040.severity = none
 
+# CA2326: Do not use TypeNameHandling values other than None
+dotnet_diagnostic.CA2326.severity = none
+
+# CA2326: Do not use insecure JsonSerializerSettings
+dotnet_diagnostic.CA2327.severity = none
+
 # SonarAnalyzer.CSharp rules
 
 # S2326: General or reserved exceptions should never be thrown

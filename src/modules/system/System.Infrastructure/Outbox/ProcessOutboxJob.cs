@@ -12,7 +12,6 @@ using Newtonsoft.Json;
 using Quartz;
 using System.Data;
 using System.Data.Common;
-using System.Infrastructure.Common.Outbox;
 
 namespace System.Infrastructure.Outbox;
 

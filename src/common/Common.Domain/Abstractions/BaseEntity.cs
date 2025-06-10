@@ -2,9 +2,14 @@
 
 public abstract class BaseEntity
 {
+    private readonly List<IDomainEvent> _domainEvents = [];
+
+    protected BaseEntity()
+    {
+    }
+
     public bool IsActive { get; private set; } = true;
     public IReadOnlyCollection<IDomainEvent> DomainEvents => [.. _domainEvents];
-    private readonly List<IDomainEvent> _domainEvents = [];
 
     protected void AddDomainEvent(IDomainEvent domainEvent)
     {
@@ -14,4 +19,5 @@ public abstract class BaseEntity
     {
         _domainEvents.Clear();
     }
+
 }

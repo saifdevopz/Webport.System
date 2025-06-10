@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Parent.Domain.Inventory.Category;
 
-namespace System.Infrastructure.Database.Configurations;
+namespace Parent.Infrastructure.Database.Configurations;
 
 public sealed class CategoryConfiguration : IEntityTypeConfiguration<CategoryM>
 {

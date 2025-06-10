@@ -1,14 +1,17 @@
 ﻿using Common.Application.Database;
+using Common.Application.Messaging;
 using Common.Infrastructure.Authentication;
 using Common.Infrastructure.Database;
+using Common.Infrastructure.Interceptors;
 using Common.Presentation.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Application.Interfaces;
-using System.Infrastructure.Common.Outbox;
 using System.Infrastructure.Database;
+using System.Infrastructure.Outbox;
 using System.Infrastructure.Services;
 using System.Reflection;
 
@@ -23,7 +26,7 @@ public static class SystemModule
     {
         ArgumentNullException.ThrowIfNull(configuration);
 
-        //services.AddDomainEventHandlers();
+        services.AddDomainEventHandlers();
 
         services.AddInfrastructure(configuration, systemDatabaseString);
 
@@ -63,42 +66,33 @@ public static class SystemModule
 
                 npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, SystemConstants.Schema);
             })
-            .UseSnakeCaseNamingConvention();
+            .UseSnakeCaseNamingConvention()
+            .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
         });
-        //services.AddDbContext<SystemDbContext>((sp, options) =>
-        //{
-        //    options.UseSqlServer(systemDatabaseString, sqlServerOptionsAction: sqlOptions =>
-        //    {
-        //        sqlOptions.EnableRetryOnFailure(
-        //        maxRetryCount: 10,
-        //        maxRetryDelay: TimeSpan.FromSeconds(5),
-        //        errorNumbersToAdd: null);
-        //    });
-        //});
 
         services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
         services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
 
-    //private static void AddDomainEventHandlers(this IServiceCollection services)
-    //{
-    //    Type[] domainEventHandlers = [.. Application.AssemblyReference.Assembly
-    //        .GetTypes()
-    //        .Where(t => t.IsAssignableTo(typeof(IDomainEventDispatcher)))];
+    private static void AddDomainEventHandlers(this IServiceCollection services)
+    {
+        Type[] domainEventHandlers = [.. Application.AssemblyReference.Assembly
+            .GetTypes()
+            .Where(t => t.IsAssignableTo(typeof(IDomainEventDispatcher)))];
 
-    //    foreach (Type domainEventHandler in domainEventHandlers)
-    //    {
-    //        services.TryAddScoped(domainEventHandler);
+        foreach (Type domainEventHandler in domainEventHandlers)
+        {
+            services.TryAddScoped(domainEventHandler);
 
-    //        Type domainEvent = domainEventHandler
-    //            .GetInterfaces()
-    //            .Single(i => i.IsGenericType)
-    //            .GetGenericArguments()
-    //            .Single();
+            Type domainEvent = domainEventHandler
+                .GetInterfaces()
+                .Single(i => i.IsGenericType)
+                .GetGenericArguments()
+                .Single();
 
-    //        Type closedIdempotentHandler = typeof(IdempotentDomainEventHandler<>).MakeGenericType(domainEvent);
+            Type closedIdempotentHandler = typeof(IdempotentDomainEventHandler<>).MakeGenericType(domainEvent);
 
-    //        services.Decorate(domainEventHandler, closedIdempotentHandler);
-    //    }
-    //}
+            services.Decorate(domainEventHandler, closedIdempotentHandler);
+        }
+    }
 }

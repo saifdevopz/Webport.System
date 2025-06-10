@@ -1,6 +1,6 @@
 System
 
-Add-Migration -Name InitialCreate -Context SystemDbContext -OutputDir Database/Migrations -Project System.Infrastructure -StartupProject System.API
+Add-Migration -Name InitialCreate_2 -Context SystemDbContext -OutputDir Database/Migrations -Project System.Infrastructure -StartupProject System.API
 Update-Database -Context SystemDbContext -Project System.API -StartupProject System.API 
 
 -----------------------------------------------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 using Common.Application;
 using Common.Infrastructure;
 using Common.Presentation.Endpoints;
-using Parent.API.Middleware;
 using Scalar.AspNetCore;
 using Serilog;
 using System.API.Extensions;
+using System.API.Middlewares;
 using System.Infrastructure;
 using System.Reflection;
 

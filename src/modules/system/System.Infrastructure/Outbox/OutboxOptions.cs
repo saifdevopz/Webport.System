@@ -1,4 +1,4 @@
-﻿namespace System.Infrastructure.Common.Outbox;
+﻿namespace System.Infrastructure.Outbox;
 
 internal sealed class OutboxOptions
 {

@@ -1,6 +1,7 @@
 ﻿using Common.Application.Database;
 using Common.Infrastructure.Clock;
 using Common.Infrastructure.Database;
+using Common.Infrastructure.Interceptors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Quartz;
@@ -14,6 +15,7 @@ public static class InfrastructureConfiguration
     {
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient<CurrentConnection>();
+        services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
 
         services.TryAddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
