@@ -8,9 +8,7 @@ namespace Common.Infrastructure.Database;
 
 public sealed class CurrentConnection(IHttpContextAccessor httpContextAccessor, IConfiguration config)
 {
-    public string GetSystemConnectionString { get; } = config.GetValueOrThrow<string>("PostgreSQL:DefaultConnection");
-
-    private readonly string _parentConnectionString = config.GetValueOrThrow<string>("PostgreSQL:DefaultConnection");
+    private readonly string _parentConnectionString = config.GetValueOrThrow<string>("PostgreSQL:ProductionConnection");
     public string? TenantId => httpContextAccessor.HttpContext?.Request.Headers["Tenant"];
     public string? TenantDbName => httpContextAccessor.HttpContext?.User.GetTenantDbName();
 

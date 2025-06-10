@@ -1,5 +1,4 @@
-﻿using Common.Domain.Results;
-using System.Application.Dtos;
+﻿using System.Application.Dtos;
 
 namespace System.Application.Interfaces;
 

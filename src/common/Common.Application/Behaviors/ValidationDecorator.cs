@@ -1,4 +1,3 @@
-using Common.Application.Messaging;
 using Common.Domain.Errors;
 using FluentValidation;
 using FluentValidation.Results;

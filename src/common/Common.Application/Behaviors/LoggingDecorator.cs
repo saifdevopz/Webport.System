@@ -1,5 +1,4 @@
-﻿using Common.Application.Messaging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Common.Application.Behaviors;
 

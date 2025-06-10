@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Quartz;
+using System.Infrastructure.Outbox;
 
 namespace System.Infrastructure.Common.Outbox;
 

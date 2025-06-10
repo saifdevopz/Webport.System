@@ -1,5 +1,4 @@
-﻿using Common.Application.Messaging;
-using System.Application.Features.Roles;
+﻿using System.Application.Features.Roles;
 
 namespace System.Presentation.Endpoints.Role;
 
@@ -12,8 +11,9 @@ internal sealed class CreateRoleEndpoint : IEndpoint
             ICommandHandler<CreateRoleCommand> handler,
             CancellationToken cancellationToken) =>
         {
-            var response = await handler.Handle(request, cancellationToken)
-                                        .MapResult();
+            var response = await handler
+                .Handle(request, cancellationToken)
+                .MapResult();
 
             return response;
         })

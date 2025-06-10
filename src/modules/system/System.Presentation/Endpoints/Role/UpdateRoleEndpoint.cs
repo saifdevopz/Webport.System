@@ -1,5 +1,4 @@
-﻿using Common.Application.Messaging;
-using System.Application.Features.Roles;
+﻿using System.Application.Features.Roles;
 
 namespace System.Presentation.Endpoints.Role;
 

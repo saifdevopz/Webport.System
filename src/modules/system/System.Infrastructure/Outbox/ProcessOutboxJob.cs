@@ -12,8 +12,9 @@ using Newtonsoft.Json;
 using Quartz;
 using System.Data;
 using System.Data.Common;
+using System.Infrastructure.Common.Outbox;
 
-namespace System.Infrastructure.Common.Outbox;
+namespace System.Infrastructure.Outbox;
 
 [DisallowConcurrentExecution] // To allow only one instance of a background job.
 internal sealed class ProcessOutboxJob(
@@ -82,14 +83,16 @@ internal sealed class ProcessOutboxJob(
     {
 
         string sql =
-        $"""
-						SELECT TOP {outboxOptions.Value.BatchSize}
-								Id AS {nameof(OutboxMessageResponse.Id)},
-								Content AS {nameof(OutboxMessageResponse.Content)}
-						FROM {SystemConstants.Schema}.[outbox_messages]
-						WHERE ProcessedOnUtc IS NULL
-						ORDER BY OccurredOnUtc
-				""";
+            $"""
+             SELECT
+                id AS {nameof(OutboxMessageResponse.Id)},
+                content AS {nameof(OutboxMessageResponse.Content)}
+             FROM {SystemConstants.Schema}.outbox_messages
+             WHERE processed_on_utc IS NULL
+             ORDER BY occurred_on_utc
+             LIMIT {outboxOptions.Value.BatchSize}
+             FOR UPDATE
+             """;
 
         IEnumerable<OutboxMessageResponse> outboxMessages = await connection.QueryAsync<OutboxMessageResponse>(
                 sql,
@@ -106,11 +109,11 @@ internal sealed class ProcessOutboxJob(
     {
 
         const string sql =
-        $"""
-            UPDATE {SystemConstants.Schema}.[outbox_messages]
-            SET ProcessedOnUtc = @ProcessedOnUtc,
+            $"""
+            UPDATE {SystemConstants.Schema}.outbox_messages
+            SET processed_on_utc = @ProcessedOnUtc,
                 error = @Error
-            WHERE Id = @Id
+            WHERE id = @Id
             """;
 
         await connection.ExecuteAsync(

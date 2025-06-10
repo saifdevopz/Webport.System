@@ -4,6 +4,7 @@
 	  <Compile Remove="Authorization\PermissionAuthorizationHandler.cs" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -12,9 +13,5 @@
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Application\Common.Application.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Authorization\" />
-    <Folder Include="Outbox\" />
   </ItemGroup>
 </Project>

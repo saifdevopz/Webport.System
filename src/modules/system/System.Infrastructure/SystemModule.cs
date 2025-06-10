@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Application.Interfaces;
+using System.Infrastructure.Common.Outbox;
 using System.Infrastructure.Database;
 using System.Infrastructure.Services;
 using System.Reflection;
@@ -24,7 +25,7 @@ public static class SystemModule
 
         //services.AddDomainEventHandlers();
 
-        services.AddInfrastructure(/*configuration, */systemDatabaseString);
+        services.AddInfrastructure(configuration, systemDatabaseString);
 
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
 
@@ -33,7 +34,7 @@ public static class SystemModule
 
     private static void AddInfrastructure(
         this IServiceCollection services,
-        //IConfiguration configuration,
+        IConfiguration configuration,
         string systemDatabaseString)
     {
         string AssemblyName = Assembly.GetCallingAssembly().GetName().Name!;
@@ -61,7 +62,8 @@ public static class SystemModule
                         errorCodesToAdd: null);
 
                 npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, SystemConstants.Schema);
-            });
+            })
+            .UseSnakeCaseNamingConvention();
         });
         //services.AddDbContext<SystemDbContext>((sp, options) =>
         //{
@@ -74,16 +76,15 @@ public static class SystemModule
         //    });
         //});
 
-        //services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
-        //services.ConfigureOptions<ConfigureProcessOutboxJob>();
+        services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
+        services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
 
     //private static void AddDomainEventHandlers(this IServiceCollection services)
     //{
-    //    Type[] domainEventHandlers = Application.AssemblyReference.Assembly
+    //    Type[] domainEventHandlers = [.. Application.AssemblyReference.Assembly
     //        .GetTypes()
-    //        .Where(t => t.IsAssignableTo(typeof(IDomainEventDispatcher)))
-    //        .ToArray();
+    //        .Where(t => t.IsAssignableTo(typeof(IDomainEventDispatcher)))];
 
     //    foreach (Type domainEventHandler in domainEventHandlers)
     //    {
