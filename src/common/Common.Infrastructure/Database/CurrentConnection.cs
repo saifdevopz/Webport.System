@@ -11,6 +11,7 @@ public sealed class CurrentConnection(IHttpContextAccessor httpContextAccessor, 
     private readonly string _parentConnectionString = config.GetValueOrThrow<string>("PostgreSQL:ProductionConnection");
     public string? TenantId => httpContextAccessor.HttpContext?.Request.Headers["Tenant"];
     public string? TenantDbName => httpContextAccessor.HttpContext?.User.GetTenantDbName();
+    public string? UserEmail => httpContextAccessor.HttpContext?.User.GetUserEmail();
 
     public string GetParentConnectionString()
     {

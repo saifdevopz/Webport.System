@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Domain.DTOs.Tenants;
-using System.Domain.Models;
+using System.Domain.Entities.Tenants;
 using System.Infrastructure.Database;
 
 namespace System.API.Controllers;

@@ -1,4 +1,4 @@
-﻿using System.Domain.Models;
+﻿using System.Domain.Entities.Roles;
 
 namespace System.Application.Features.Roles;
 

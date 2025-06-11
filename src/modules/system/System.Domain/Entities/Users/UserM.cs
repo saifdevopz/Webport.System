@@ -1,6 +1,8 @@
-﻿using System.Domain.Events;
+﻿using Common.Domain.Extensions;
+using System.Domain.Entities.Roles;
+using System.Domain.Entities.Tenants;
 
-namespace System.Domain.Models;
+namespace System.Domain.Entities.Users;
 
 public sealed class UserM : AggregateRoot
 {

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using System.Domain.Models;
+using System.Domain.Entities.Users;
 
 namespace System.Application.Features.Users;
 

@@ -19,5 +19,4 @@ public abstract class BaseEntity
     {
         _domainEvents.Clear();
     }
-
 }

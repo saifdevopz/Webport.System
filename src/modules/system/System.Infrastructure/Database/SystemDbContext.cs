@@ -1,7 +1,9 @@
 ﻿using Common.Infrastructure.Interceptors;
 using Common.Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore;
-using System.Domain.Models;
+using System.Domain.Entities.Roles;
+using System.Domain.Entities.Tenants;
+using System.Domain.Entities.Users;
 
 namespace System.Infrastructure.Database;
 

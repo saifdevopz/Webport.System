@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using System.Application.Dtos;
+using System.Application.DTOs;
 using System.Application.Interfaces;
 
 namespace System.Application.Features.Token;

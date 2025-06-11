@@ -1,4 +1,4 @@
-﻿namespace System.Application.Dtos;
+﻿namespace System.Application.DTOs;
 
 public sealed record TokenResponse(string Token, string RefreshToken, DateTime RefreshTokenExpiryTime);
 

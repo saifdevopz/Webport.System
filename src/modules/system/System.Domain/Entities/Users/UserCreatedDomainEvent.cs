@@ -1,4 +1,4 @@
-﻿namespace System.Domain.Events;
+﻿namespace System.Domain.Entities.Users;
 
 public sealed class UserCreatedDomainEvent(int userId) : DomainEvent
 {

@@ -2,7 +2,7 @@
 
 namespace System.Presentation.Endpoints.User;
 
-internal sealed class GetUsersByIdEndpoint : IEndpoint
+internal sealed class GetUserByIdEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

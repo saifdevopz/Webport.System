@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Domain.Models;
+using System.Domain.Entities.Tenants;
 
 namespace System.Infrastructure.Database.Configurations;
 

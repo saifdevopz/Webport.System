@@ -1,4 +1,6 @@
-﻿namespace System.Domain.Models;
+﻿using Common.Domain.Extensions;
+
+namespace System.Domain.Entities.Tenants;
 
 public sealed class TenantM : AggregateRoot
 {
