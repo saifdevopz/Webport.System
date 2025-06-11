@@ -2,10 +2,10 @@
 
 public interface IDateTimeProvider
 {
-    public DateTime UtcNow { get; }
+    public DateTime Now { get; }
 }
 
 internal sealed class DateTimeProvider : IDateTimeProvider
 {
-    public DateTime UtcNow => DateTime.UtcNow;
+    public DateTime Now => DateTime.UtcNow.AddHours(2);
 }

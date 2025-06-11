@@ -2,7 +2,7 @@
 using Common.Application.Messaging;
 using Common.Domain.Abstractions;
 using Common.Infrastructure.Clock;
-using Common.Infrastructure.Database;
+using Common.Infrastructure.Outbox;
 using Common.Infrastructure.Serialization;
 using Dapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -120,7 +120,7 @@ internal sealed class ProcessOutboxJob(
                 new
                 {
                     outboxMessage.Id,
-                    ProcessedOnUtc = dateTimeProvider.UtcNow,
+                    ProcessedOnUtc = dateTimeProvider.Now,
                     Error = exception?.ToString()
                 },
                 transaction: transaction);

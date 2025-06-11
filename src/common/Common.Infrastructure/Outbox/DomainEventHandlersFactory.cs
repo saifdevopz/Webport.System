@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace Common.Infrastructure.Database;
+namespace Common.Infrastructure.Outbox;
 
 public static class DomainEventHandlersFactory
 {
@@ -21,9 +21,7 @@ public static class DomainEventHandlersFactory
                 $"{assembly.GetName().Name}{type.Name}",
                 _ =>
                 {
-                    Type[] domainEventHandlerTypes = assembly.GetTypes()
-                                    .Where(t => t.IsAssignableTo(typeof(IDomainEventDispatcher<>).MakeGenericType(type)))
-                                    .ToArray();
+                    Type[] domainEventHandlerTypes = [.. assembly.GetTypes().Where(t => t.IsAssignableTo(typeof(IDomainEventDispatcher<>).MakeGenericType(type)))];
 
                     return domainEventHandlerTypes;
                 });

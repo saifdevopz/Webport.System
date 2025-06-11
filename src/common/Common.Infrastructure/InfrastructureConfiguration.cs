@@ -1,7 +1,9 @@
 ﻿using Common.Application.Database;
+using Common.Infrastructure.Authentication;
 using Common.Infrastructure.Clock;
 using Common.Infrastructure.Database;
 using Common.Infrastructure.Interceptors;
+using Common.Infrastructure.Mail;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Quartz;
@@ -13,6 +15,11 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddCommonInfrastructure(
         this IServiceCollection services)
     {
+        // Mail
+        services.ConfigureMailing();
+
+        services.AddAuthenticationInternal();
+
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient<CurrentConnection>();
         services.TryAddSingleton<InsertOutboxMessagesInterceptor>();

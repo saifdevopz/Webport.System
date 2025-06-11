@@ -26,7 +26,9 @@ public sealed class SystemDbContext(DbContextOptions<SystemDbContext> options) :
     {
         ArgumentNullException.ThrowIfNull(optionsBuilder);
 
+        // Interceptors
         optionsBuilder.AddInterceptors(new AuditableEntityInterceptor());
+        optionsBuilder.AddInterceptors(new InsertOutboxMessagesInterceptor());
     }
 }
 

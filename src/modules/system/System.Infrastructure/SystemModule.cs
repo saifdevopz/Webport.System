@@ -1,8 +1,6 @@
 ﻿using Common.Application.Database;
 using Common.Application.Messaging;
-using Common.Infrastructure.Authentication;
 using Common.Infrastructure.Database;
-using Common.Infrastructure.Interceptors;
 using Common.Presentation.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -51,8 +49,6 @@ public static class SystemModule
 
         services.AddScoped<ITokenService, TokenService>();
 
-        services.AddAuthenticationInternal();
-
         services.AddScoped<DataSeeder>();
 
         services.AddDbContext<SystemDbContext>((sp, options) =>
@@ -66,8 +62,7 @@ public static class SystemModule
 
                 npgsqlOptionsAction.MigrationsHistoryTable(HistoryRepository.DefaultTableName, SystemConstants.Schema);
             })
-            .UseSnakeCaseNamingConvention()
-            .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>());
+            .UseSnakeCaseNamingConvention();
         });
 
         services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
