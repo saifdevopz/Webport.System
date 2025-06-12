@@ -1,4 +1,4 @@
-﻿using System.Domain.Models;
+﻿using System.Domain.Entities.Tenants;
 
 namespace System.Application.Features.Tenant;
 

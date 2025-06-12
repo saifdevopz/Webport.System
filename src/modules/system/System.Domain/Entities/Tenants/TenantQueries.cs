@@ -1,7 +1,6 @@
-﻿using System.Domain.Models;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
-namespace System.Domain.DTOs.Tenants;
+namespace System.Domain.Entities.Tenants;
 
 public static class TenantQueries
 {

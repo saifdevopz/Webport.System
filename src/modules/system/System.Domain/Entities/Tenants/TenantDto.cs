@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace System.Domain.DTOs.Tenants;
+namespace System.Domain.Entities.Tenants;
 
 public sealed record CreateTenantDto
 {

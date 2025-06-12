@@ -1,4 +1,4 @@
-﻿namespace System.Domain.Models;
+﻿namespace System.Domain.Entities.Roles;
 
 public sealed class RoleM : AggregateRoot
 {

@@ -1,5 +1,5 @@
 ﻿using Common.Application.Mail;
-using System.Domain.Events;
+using System.Domain.Entities.Users;
 
 namespace System.Application.Features.Users.Events;
 
