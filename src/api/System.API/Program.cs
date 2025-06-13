@@ -10,8 +10,29 @@ using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+// Build logger temporarily so we can log before app is built
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+// Environment info logging
+var environment = builder.Environment;
+
+if (environment.IsDevelopment())
+{
+    Log.Information("Running in Development environment.");
+}
+else if (environment.IsProduction())
+{
+    Log.Information("Running in Production environment.");
+}
+else
+{
+    Log.Information("Running in {EnvironmentName} environment.", environment.EnvironmentName);
+}
+
 // Connection Strings
-string? systemDatabaseString = builder.Configuration["PostgreSQL:ProductionConnection"];
+string? systemDatabaseString = builder.Configuration["PostgreSQL:DefaultConnection"];
 ArgumentException.ThrowIfNullOrWhiteSpace(systemDatabaseString);
 
 // Serilog

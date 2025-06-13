@@ -3,7 +3,6 @@ using System.Domain.Entities.Users;
 
 namespace System.Application.Features.Users.Events;
 
-
 internal sealed class UserCreatedDomainEventHandler(IMailService mailService)
     : DomainEventDispatcher<UserCreatedDomainEvent>
 {
@@ -13,7 +12,7 @@ internal sealed class UserCreatedDomainEventHandler(IMailService mailService)
     {
         MailRequest mailRequest = new
         (
-            to: ["saif43515@gmail.com"],
+            to: ["saifdev22@gmail.com"],
             subject: "Unhandled Exception Notification",
             body: $"An unhandled exception occurred during the handling of",
             from: "info@saifkhan.co.za",
