@@ -76,7 +76,47 @@ namespace System.Infrastructure.Database.Migrations
                     b.ToTable("outbox_message_consumers", "webport");
                 });
 
-            modelBuilder.Entity("System.Domain.Models.RoleM", b =>
+            modelBuilder.Entity("System.Domain.Entities.Permissions.PermissionM", b =>
+                {
+                    b.Property<int>("PermissionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("permission_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PermissionId"));
+
+                    b.Property<string>("PermissionCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("permission_code");
+
+                    b.HasKey("PermissionId")
+                        .HasName("pk_permissions");
+
+                    b.ToTable("permissions", "webport");
+                });
+
+            modelBuilder.Entity("System.Domain.Entities.Permissions.RolePermissionM", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer")
+                        .HasColumnName("role_id");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("permission_id");
+
+                    b.HasKey("RoleId", "PermissionId")
+                        .HasName("pk_role_permissions");
+
+                    b.HasIndex("PermissionId")
+                        .HasDatabaseName("ix_role_permissions_permission_id");
+
+                    b.ToTable("role_permissions", "webport");
+                });
+
+            modelBuilder.Entity("System.Domain.Entities.Roles.RoleM", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
@@ -129,7 +169,7 @@ namespace System.Infrastructure.Database.Migrations
                     b.ToTable("roles", "webport");
                 });
 
-            modelBuilder.Entity("System.Domain.Models.TenantM", b =>
+            modelBuilder.Entity("System.Domain.Entities.Tenants.TenantM", b =>
                 {
                     b.Property<int>("TenantId")
                         .ValueGeneratedOnAdd()
@@ -191,7 +231,7 @@ namespace System.Infrastructure.Database.Migrations
                     b.ToTable("tenants", "webport");
                 });
 
-            modelBuilder.Entity("System.Domain.Models.UserM", b =>
+            modelBuilder.Entity("System.Domain.Entities.Users.UserM", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -277,16 +317,33 @@ namespace System.Infrastructure.Database.Migrations
                     b.ToTable("users", "webport");
                 });
 
-            modelBuilder.Entity("System.Domain.Models.UserM", b =>
+            modelBuilder.Entity("System.Domain.Entities.Permissions.RolePermissionM", b =>
                 {
-                    b.HasOne("System.Domain.Models.RoleM", "Role")
+                    b.HasOne("System.Domain.Entities.Permissions.PermissionM", null)
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_role_permissions_permissions_permission_id");
+
+                    b.HasOne("System.Domain.Entities.Roles.RoleM", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_role_permissions_roles_role_id");
+                });
+
+            modelBuilder.Entity("System.Domain.Entities.Users.UserM", b =>
+                {
+                    b.HasOne("System.Domain.Entities.Roles.RoleM", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_users_roles_role_id");
 
-                    b.HasOne("System.Domain.Models.TenantM", "Tenant")
+                    b.HasOne("System.Domain.Entities.Tenants.TenantM", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)

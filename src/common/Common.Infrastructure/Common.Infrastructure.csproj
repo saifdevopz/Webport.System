@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-	  <Compile Remove="Authorization\CustomClaimsTransformation.cs" />
-	  <Compile Remove="Authorization\PermissionAuthorizationHandler.cs" />
-	</ItemGroup>
-	<ItemGroup>
 		<PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
 		<PackageReference Include="MailKit" Version="4.12.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />

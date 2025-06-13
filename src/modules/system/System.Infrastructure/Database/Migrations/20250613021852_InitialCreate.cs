@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -45,6 +46,20 @@ namespace System.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "permissions",
+                schema: "webport",
+                columns: table => new
+                {
+                    permission_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    permission_code = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_permissions", x => x.permission_id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "roles",
                 schema: "webport",
                 columns: table => new
@@ -87,6 +102,33 @@ namespace System.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "role_permissions",
+                schema: "webport",
+                columns: table => new
+                {
+                    role_id = table.Column<int>(type: "integer", nullable: false),
+                    permission_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_role_permissions", x => new { x.role_id, x.permission_id });
+                    table.ForeignKey(
+                        name: "fk_role_permissions_permissions_permission_id",
+                        column: x => x.permission_id,
+                        principalSchema: "webport",
+                        principalTable: "permissions",
+                        principalColumn: "permission_id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_role_permissions_roles_role_id",
+                        column: x => x.role_id,
+                        principalSchema: "webport",
+                        principalTable: "roles",
+                        principalColumn: "role_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "users",
                 schema: "webport",
                 columns: table => new
@@ -125,6 +167,12 @@ namespace System.Infrastructure.Database.Migrations
                         principalColumn: "tenant_id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_role_permissions_permission_id",
+                schema: "webport",
+                table: "role_permissions",
+                column: "permission_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_roles_normalized_role_name",
@@ -172,7 +220,15 @@ namespace System.Infrastructure.Database.Migrations
                 schema: "webport");
 
             migrationBuilder.DropTable(
+                name: "role_permissions",
+                schema: "webport");
+
+            migrationBuilder.DropTable(
                 name: "users",
+                schema: "webport");
+
+            migrationBuilder.DropTable(
+                name: "permissions",
                 schema: "webport");
 
             migrationBuilder.DropTable(

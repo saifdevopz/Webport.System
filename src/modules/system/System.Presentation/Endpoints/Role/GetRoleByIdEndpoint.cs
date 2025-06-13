@@ -18,6 +18,6 @@ internal sealed class GetRoleByIdEndpoint : IEndpoint
             return response;
         })
         .WithTags(Tags.Role)
-        .RequireAuthorization();
+        .RequireAuthorization("inventoy");
     }
 }

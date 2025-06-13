@@ -1,4 +1,5 @@
-﻿using Common.Application.Database;
+﻿using Common.Application.Authorization;
+using Common.Application.Database;
 using Common.Application.Messaging;
 using Common.Infrastructure.Database;
 using Common.Presentation.Endpoints;
@@ -38,6 +39,9 @@ public static class SystemModule
         IConfiguration configuration,
         string systemDatabaseString)
     {
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IPermissionService, PermissionService>();
+
         string AssemblyName = Assembly.GetCallingAssembly().GetName().Name!;
         services.AddScoped<IDbContextProvider>(sp =>
         {

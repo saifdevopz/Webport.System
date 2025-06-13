@@ -4,7 +4,7 @@ using System.Domain.Entities.Tenants;
 
 namespace System.Infrastructure.Database.Configurations;
 
-public sealed class TenantConfiguration : IEntityTypeConfiguration<TenantM>
+public sealed class TenantConfig : IEntityTypeConfiguration<TenantM>
 {
     public void Configure(EntityTypeBuilder<TenantM> builder)
     {

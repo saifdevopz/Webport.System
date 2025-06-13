@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Domain.Entities.Permissions;
 using System.Domain.Entities.Roles;
 using System.Domain.Entities.Tenants;
 using System.Domain.Entities.Users;
@@ -14,6 +15,8 @@ public class DataSeeder(SystemDbContext context)
         await SeedTenantsAsync();
         await SeedRolesAsync();
         await SeedUsersAsync();
+        await SeedPermissionsAsync();
+        await SeedRolePermissionsAsync();
     }
 
     private async Task SeedTenantsAsync()
@@ -66,6 +69,42 @@ public class DataSeeder(SystemDbContext context)
         ];
 
         await _context.Users.AddRangeAsync(users);
+        await _context.SaveChangesAsync();
+    }
+
+    private async Task SeedRolePermissionsAsync()
+    {
+        if (await _context.RolePermissions.AnyAsync())
+        {
+            return;
+        }
+
+        RolePermissionM[] rolePermissions =
+        [
+            new RolePermissionM { RoleId = 1, PermissionId = 1 },
+            new RolePermissionM { RoleId = 2, PermissionId = 2 },
+            new RolePermissionM { RoleId = 2, PermissionId = 3 }
+        ];
+
+        await _context.RolePermissions.AddRangeAsync(rolePermissions);
+        await _context.SaveChangesAsync();
+    }
+
+    private async Task SeedPermissionsAsync()
+    {
+        if (await _context.Permissions.AnyAsync())
+        {
+            return;
+        }
+
+        PermissionM[] permissions =
+        [
+            PermissionM.Create("global:access"),
+            PermissionM.Create("parent:modify"),
+            PermissionM.Create("parent:read"),
+        ];
+
+        await _context.Permissions.AddRangeAsync(permissions);
         await _context.SaveChangesAsync();
     }
 }

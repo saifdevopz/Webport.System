@@ -4,7 +4,7 @@ using System.Domain.Entities.Users;
 
 namespace System.Infrastructure.Database.Configurations;
 
-public sealed class UserConfiguration : IEntityTypeConfiguration<UserM>
+public sealed class UserConfig : IEntityTypeConfiguration<UserM>
 {
     public void Configure(EntityTypeBuilder<UserM> builder)
     {

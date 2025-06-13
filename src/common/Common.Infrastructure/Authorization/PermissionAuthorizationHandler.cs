@@ -1,5 +1,4 @@
 ﻿using Common.Application.Authorization;
-using Common.Application.Exceptions;
 using Common.Domain.Results;
 using Common.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -31,8 +30,8 @@ internal sealed class PermissionAuthorizationHandler(IServiceScopeFactory servic
         Result<PermissionsResponse> result = await permissionService.GetUserPermissionsAsync(context.User.GetUserId());
 
         return result.IsFailure
-            ? throw new StarterException(nameof(IPermissionService.GetUserPermissionsAsync), result.Error)
-            : result.Value.Permissions;
+            ? throw new CustomException(nameof(IPermissionService.GetUserPermissionsAsync), result.Error)
+            : result.Data.Permissions;
     }
 
 }

@@ -4,7 +4,7 @@ using System.Domain.Entities.Roles;
 
 namespace System.Infrastructure.Database.Configurations;
 
-public sealed class RoleConfiguration : IEntityTypeConfiguration<RoleM>
+public sealed class RoleConfig : IEntityTypeConfiguration<RoleM>
 {
     public void Configure(EntityTypeBuilder<RoleM> builder)
     {

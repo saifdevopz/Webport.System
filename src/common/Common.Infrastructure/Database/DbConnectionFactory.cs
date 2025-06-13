@@ -1,4 +1,5 @@
 ﻿using Common.Application.Database;
+using Dapper;
 using Npgsql;
 using System.Data.Common;
 
@@ -15,5 +16,14 @@ internal sealed class DbConnectionFactory(CurrentConnection ct) : IDbConnectionF
         await connection.OpenAsync();
 
         return connection;
+    }
+
+    public async Task<List<T>> QueryAsync<T>(string sql, object parameters = null!, bool systemDb = false)
+    {
+        using DbConnection connection = await OpenPostgreSQLConnection();
+        //await connection.OpenAsync();
+
+        IEnumerable<T> result = await connection.QueryAsync<T>(sql, parameters);
+        return [.. result];
     }
 }
