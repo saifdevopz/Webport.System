@@ -2,5 +2,5 @@
 
 public interface IPermissionService
 {
-    Task<PermissionsResponse> GetUserPermissionsAsync(int userId);
+    Task<Result<PermissionsResponse>> GetUserPermissionsAsync(int userId);
 }
