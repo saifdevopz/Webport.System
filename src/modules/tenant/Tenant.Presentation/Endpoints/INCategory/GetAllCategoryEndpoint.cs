@@ -16,6 +16,7 @@ internal sealed class GetAllCategoryEndpoint : IEndpoint
 
             return response;
         })
-        .WithTags(Tags.Category);
+        .WithTags(Tags.Category)
+        .RequireAuthorization();
     }
 }

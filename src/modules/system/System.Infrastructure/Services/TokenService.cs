@@ -2,6 +2,7 @@
 using Common.Domain.Errors;
 using Common.Domain.Results;
 using Common.Infrastructure.Authentication;
+using Common.Infrastructure.Clock;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -21,7 +22,8 @@ namespace System.Infrastructure.Services;
 public class TokenService(
     IOptions<JwtOptions> JwtOptions,
     IGenericRepository<UserM> Repository,
-    SystemDbContext SystemContext) : ITokenService
+    SystemDbContext SystemContext,
+    IDateTimeProvider dateTimeProvider) : ITokenService
 {
     public async Task<Result<TokenResponse>> AccessToken(AccessTokenRequest request)
     {
@@ -87,7 +89,7 @@ public class TokenService(
     {
         JwtSecurityToken token = new(
              claims: claims,
-             expires: DateTime.UtcNow.AddMinutes(JwtOptions.Value.TokenExpirationInMinutes),
+             expires: dateTimeProvider.Now.AddMinutes(JwtOptions.Value.TokenExpirationInMinutes),
              signingCredentials: signingCredentials,
              issuer: JwtOptions.Value.Issuer,
              audience: JwtOptions.Value.Audience);

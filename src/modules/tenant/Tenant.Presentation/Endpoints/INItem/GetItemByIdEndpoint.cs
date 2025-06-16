@@ -17,6 +17,7 @@ internal sealed class GetItemByIdEndpoint : IEndpoint
 
             return response;
         })
-        .WithTags(Tags.Item);
+        .WithTags(Tags.Item)
+        .RequireAuthorization();
     }
 }
