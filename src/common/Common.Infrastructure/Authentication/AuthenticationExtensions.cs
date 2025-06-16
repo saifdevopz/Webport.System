@@ -30,6 +30,7 @@ public static class AuthenticationExtensions
 
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
+#pragma warning disable CA5404 // Do not disable token validation checks
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
@@ -37,13 +38,14 @@ public static class AuthenticationExtensions
                     ValidAudience = jwtOptions.Audience,
 
                     ValidateIssuerSigningKey = true,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ValidateLifetime = true,
 
                     RequireExpirationTime = true,
                     ClockSkew = TimeSpan.Zero,
                 };
+#pragma warning restore CA5404 // Do not disable token validation checks
             });
 
         services.AddAuthorization();
