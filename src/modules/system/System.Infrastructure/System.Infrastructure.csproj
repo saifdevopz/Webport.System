@@ -6,8 +6,4 @@
     <ProjectReference Include="..\System.Presentation\System.Presentation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database\Migrations\" />
-  </ItemGroup>
-
 </Project>

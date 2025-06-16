@@ -5,10 +5,10 @@ Update-Database -Context SystemDbContext -Project System.API -StartupProject Sys
 
 -----------------------------------------------------------------------------------------------------------------
 
-Parent
+Tenant
 
-Add-Migration -Name InitialCreate -Context ParentDbContext -OutputDir Database/Migrations -Project Parent.Infrastructure -StartupProject Parent.API
-Update-Database -Context ParentDbContext -Project Parent.API -StartupProject Parent.API 
+Add-Migration -Name InitialCreate -Context TenantDbContext -OutputDir Database/Migrations -Project Tenant.Infrastructure -StartupProject Tenant.API
+Update-Database -Context TenantDbContext -Project Tenant.API -StartupProject Tenant.API 
 
 -----------------------------------------------------------------------------------------------------------------
 
@@ -17,8 +17,9 @@ Project Reference
 
 Modules
 
-Domain => Common.Domain
-Infrastructure => Common.Infrastructure, Application, Presentation
+API => Module.Infrastructure
+Module.Domain => Common.Domain
+Module.Infrastructure => Common.Infrastructure, Application, Presentation
 Application => Common.Application, Domain, IntegrationEvents
 Presentation => Common.Presentation, Application
 

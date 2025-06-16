@@ -1,8 +1,8 @@
-﻿using Common.Infrastructure.Authentication;
+﻿using Common.Domain.Extensions;
+using Common.Infrastructure.Authentication;
 using Common.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System.Text.RegularExpressions;
 
 namespace Common.Infrastructure.Database;
 
@@ -20,9 +20,6 @@ public sealed class CurrentConnection(IHttpContextAccessor httpContextAccessor, 
             return _parentConnectionString;
         }
 
-        string pattern = @"(?<=Database=)([^;]*)";
-        string newConnectionString = Regex.Replace(_parentConnectionString, pattern, TenantDbName);
-
-        return newConnectionString;
+        return GeneralExtensions.BuildConnectionString(TenantDbName);
     }
 }
