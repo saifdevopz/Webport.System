@@ -2,19 +2,19 @@
 
 namespace Tenant.Application.Features.INCategory;
 
-public class GetCategoriesQueryHandler(IGenericRepository<INCategoryM> repository)
-    : IQueryHandler<GetAllCategoryQuery, GetAllCategoryQueryResult>
+public class GetCategoriesQueryHandler(IGenericRepository<INCategoryM> Repository)
+    : IQueryHandler<GetCategoriesQuery, GetCategoriesQueryResult>
 {
-    public async Task<Result<GetAllCategoryQueryResult>> Handle(
-        GetAllCategoryQuery query,
+    public async Task<Result<GetCategoriesQueryResult>> Handle(
+        GetCategoriesQuery query,
         CancellationToken cancellationToken)
     {
-        var obj = await repository.GetAllAsync(cancellationToken);
+        var obj = await Repository.GetAllAsync(cancellationToken);
 
-        return Result.Success(new GetAllCategoryQueryResult(obj));
+        return Result.Success(new GetCategoriesQueryResult(obj));
     }
 }
 
-public sealed record GetAllCategoryQuery : IQuery<GetAllCategoryQueryResult>;
+public sealed record GetCategoriesQuery : IQuery<GetCategoriesQueryResult>;
 
-public sealed record GetAllCategoryQueryResult(IEnumerable<INCategoryM> Categories);
+public sealed record GetCategoriesQueryResult(IEnumerable<INCategoryM> Categories);

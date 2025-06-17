@@ -2,14 +2,14 @@
 
 namespace Tenant.Application.Features.INItem;
 
-public class GetItemByIdQueryHandler(IGenericRepository<INItemM> repository)
+public class GetItemByIdQueryHandler(IGenericRepository<INItemM> Repository)
     : IQueryHandler<GetItemByIdQuery, GetItemByIdQueryResult>
 {
     public async Task<Result<GetItemByIdQueryResult>> Handle(
         GetItemByIdQuery query,
         CancellationToken cancellationToken)
     {
-        var obj = await repository.FindOneAsync(_ => _.ItemId == query.ItemId, cancellationToken);
+        var obj = await Repository.FindOneAsync(_ => _.ItemId == query.ItemId, cancellationToken);
 
         return obj is not null
             ? Result.Success(new GetItemByIdQueryResult(obj))

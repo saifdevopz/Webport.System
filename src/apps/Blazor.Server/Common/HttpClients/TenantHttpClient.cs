@@ -2,12 +2,12 @@
 
 namespace Blazor.Server.Common.HttpClients;
 
-public sealed class BaseHttpClient(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
+public sealed class TenantHttpClient(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
 {
     private const string HeaderKey = "Authorization";
     public HttpClient GetPrivateHttpClient()
     {
-        HttpClient client = httpClientFactory.CreateClient(nameof(BaseHttpClient));
+        HttpClient client = httpClientFactory.CreateClient(nameof(TenantHttpClient));
 
         string? stringToken = httpContextAccessor?.HttpContext?.Request.Cookies[BlazorConstants.AuthCookieName];
         if (string.IsNullOrEmpty(stringToken))
@@ -21,7 +21,7 @@ public sealed class BaseHttpClient(IHttpClientFactory httpClientFactory, IHttpCo
 
     public HttpClient GetPublicHttpClient()
     {
-        HttpClient client = httpClientFactory.CreateClient(nameof(BaseHttpClient));
+        HttpClient client = httpClientFactory.CreateClient(nameof(TenantHttpClient));
         client.DefaultRequestHeaders.Remove(HeaderKey);
         return client;
     }

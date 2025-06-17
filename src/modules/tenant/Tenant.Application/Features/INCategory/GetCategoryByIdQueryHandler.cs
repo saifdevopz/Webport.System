@@ -2,14 +2,14 @@
 
 namespace Tenant.Application.Features.INCategory;
 
-public class GetCategoryByIdQueryHandler(IGenericRepository<INCategoryM> repository)
+public class GetCategoryByIdQueryHandler(IGenericRepository<INCategoryM> Repository)
     : IQueryHandler<GetCategoryByIdQuery, GetCategoryByIdQueryResult>
 {
     public async Task<Result<GetCategoryByIdQueryResult>> Handle(
         GetCategoryByIdQuery query,
         CancellationToken cancellationToken)
     {
-        var obj = await repository.FindOneAsync(_ => _.CategoryId == query.CategoryId, cancellationToken);
+        var obj = await Repository.FindOneAsync(_ => _.CategoryId == query.CategoryId, cancellationToken);
 
         return obj is not null
             ? Result.Success(new GetCategoryByIdQueryResult(obj))

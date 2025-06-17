@@ -5,13 +5,23 @@ using Common.Domain.Results;
 
 namespace Blazor.Server.Services.Implementations;
 
-public class DataService(BaseHttpClient BaseHttpClient)
+public class DataService(BaseHttpClient BaseHttpClient, TenantHttpClient TenantHttpClient)
 {
-    public async Task<Result<T>> GetAllAsync<T>(string source)
+    private readonly BaseHttpClient _baseHttpClient = BaseHttpClient;
+    private readonly TenantHttpClient _tenantHttpClient = TenantHttpClient;
+
+    private HttpClient GetClient(bool useBaseClient)
+    {
+        return useBaseClient
+            ? _baseHttpClient.GetPrivateHttpClient()
+            : _tenantHttpClient.GetPrivateHttpClient();
+    }
+
+    public async Task<Result<T>> GetAllAsync<T>(string source, bool useBaseClient = false)
     {
         try
         {
-            var client = BaseHttpClient.GetPrivateHttpClient();
+            HttpClient client = GetClient(useBaseClient);
             var response = await client.GetFromJsonAsync<Result<T>>(source);
 
             if (response == null)
@@ -32,7 +42,7 @@ public class DataService(BaseHttpClient BaseHttpClient)
     {
         try
         {
-            var client = BaseHttpClient.GetPrivateHttpClient();
+            HttpClient client = GetClient(true);
             var response = await client.GetFromJsonAsync<Result<T>>($"{basePath}/{id}");
 
             if (response == null)
@@ -53,7 +63,7 @@ public class DataService(BaseHttpClient BaseHttpClient)
     {
         try
         {
-            var client = BaseHttpClient.GetPrivateHttpClient();
+            HttpClient client = GetClient(true);
             var response = await client.PostAsJsonAsync(source, obj);
 
             var result = await response.Content.ReadFromJsonAsync<Result>();
@@ -78,7 +88,7 @@ public class DataService(BaseHttpClient BaseHttpClient)
     {
         try
         {
-            var client = BaseHttpClient.GetPrivateHttpClient();
+            HttpClient client = GetClient(true);
             var response = await client.PutAsJsonAsync(source, obj);
 
             var result = response.Content.ReadFromJsonAsync<Result>();
@@ -106,7 +116,7 @@ public class DataService(BaseHttpClient BaseHttpClient)
         {
             var deleteUri = new Uri($"{source}/{id}", UriKind.Relative);
 
-            var client = BaseHttpClient.GetPrivateHttpClient();
+            HttpClient client = GetClient(true);
             var response = await client.DeleteAsync(deleteUri);
 
             if (response == null)
