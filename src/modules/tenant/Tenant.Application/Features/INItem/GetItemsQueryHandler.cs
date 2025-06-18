@@ -2,14 +2,14 @@
 
 namespace Tenant.Application.Features.INItem;
 
-public class GetItemsQueryHandler(IGenericRepository<INItemM> repository)
+public class GetItemsQueryHandler(IGenericRepository<INItemM> Repository)
     : IQueryHandler<GetItemsQuery, GetItemsQueryResult>
 {
     public async Task<Result<GetItemsQueryResult>> Handle(
         GetItemsQuery query,
         CancellationToken cancellationToken)
     {
-        var obj = await repository.GetAllAsync(cancellationToken);
+        var obj = await Repository.GetAllAsync(cancellationToken);
 
         return Result.Success(new GetItemsQueryResult(obj));
     }

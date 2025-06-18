@@ -12,8 +12,4 @@
     <ProjectReference Include="..\Tenant.Presentation\Tenant.Presentation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database\Migrations\" />
-  </ItemGroup>
-
 </Project>
