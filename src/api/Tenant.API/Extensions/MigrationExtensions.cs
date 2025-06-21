@@ -59,12 +59,30 @@ internal static class MigrationExtensions
             context.Database.SetConnectionString(connectionString);
         }
 
-        if (!await context.Database.CanConnectAsync() && (await context.Database.GetPendingMigrationsAsync()).Any())
+        try
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"Applying Migrations for '{connectionString ?? "Default Database"}'.");
+            if (await context.Database.CanConnectAsync())
+            {
+                var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
+                if (pendingMigrations.Any())
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine($"Applying Migrations for '{connectionString ?? "Default Database"}'.");
+                    Console.ResetColor();
+                    await context.Database.MigrateAsync();
+                }
+            }
+            else
+            {
+                await context.Database.MigrateAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Error during migration for '{connectionString}': {ex.Message}");
             Console.ResetColor();
-            await context.Database.MigrateAsync();
+            throw;
         }
     }
 }
