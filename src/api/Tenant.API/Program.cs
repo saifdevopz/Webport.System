@@ -1,6 +1,7 @@
 using Common.Application;
 using Common.Infrastructure;
 using Common.Infrastructure.Middlewares;
+using Common.Infrastructure.OpenAPI;
 using Common.Presentation.Endpoints;
 using QuestPDF.Infrastructure;
 using Scalar.AspNetCore;
@@ -49,7 +50,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 // Open API
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("v1", options =>
+{
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+});
 
 // Global Exception Handling
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
