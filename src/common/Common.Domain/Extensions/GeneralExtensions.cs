@@ -15,7 +15,7 @@ public static class GeneralExtensions
     public static string BuildConnectionString(string databaseName)
     {
         //return $"Server=127.0.0.1;Port=5432;Database={databaseName};User Id=postgres;Password=25122000;";
-        return $"Host=102.211.206.231;Port=5432;Database={databaseName};Username=postgres;Password=25122000SK;Pooling=true;MinPoolSize=10;MaxPoolSize=100;Include Error Detail=true";
+        return $"Host=102.210.146.251;Port=5432;Database={databaseName};Username=postgres;Password=25122000SK;Pooling=true;MinPoolSize=10;MaxPoolSize=100;Include Error Detail=true";
     }
 }
 
