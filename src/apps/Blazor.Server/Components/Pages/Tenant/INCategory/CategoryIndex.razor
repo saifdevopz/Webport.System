@@ -4,7 +4,7 @@
 
 <MudText Typo="Typo.h6">Role Index</MudText>
 
-<MudDataGrid Items="@Categories.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
+<MudDataGrid Items="@Categories" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
     <ToolBarContent>
         <MudIconButton Href="@($"role/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
         <MudSpacer />
@@ -40,7 +40,7 @@
     {
         var response = await _DataService.GetAllAsync<CategoriesWrapper<CategoryDto>>("category");
 
-        if (response.IsSuccess && response is not null)
+        if (response.IsSuccess && response.Data.Category.Any())
         {
             Categories = response.Data.Category.ToList();
         }
