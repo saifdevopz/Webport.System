@@ -2,17 +2,18 @@
 @using Blazor.Server.Common.HttpClients
 @using global::Common.Domain.DataTransferObjects.Tenant
 
-<MudText Typo="Typo.h6">Role Index</MudText>
+<MudText Typo="Typo.h6">Category Index</MudText>
 
-<MudDataGrid Items="@Categories" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
+<MudDataGrid Items="@Categories.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
     <ToolBarContent>
         <MudIconButton Href="@($"role/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
         <MudSpacer />
         <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <Columns>
-        <PropertyColumn Property="_ => _.CategoryId" Title="Role Id" />
-        <PropertyColumn Property="_ => _.CategoryCode" Title="Role Name" />               
+        <PropertyColumn Property="_ => _.CategoryId" Title="Id" />
+        <PropertyColumn Property="_ => _.CategoryCode" Title="Code" />
+        <PropertyColumn Property="_ => _.CategoryDesc" Title="Description" />
         <TemplateColumn CellClass="">
             <CellTemplate>
                 <MudStack Row>
@@ -40,9 +41,9 @@
     {
         var response = await _DataService.GetAllAsync<CategoriesWrapper<CategoryDto>>("category");
 
-        if (response.IsSuccess && response.Data.Category.Any())
+        if (response.IsSuccess && response.Data.Categories != null /* response.Data.Category.Any() */)
         {
-            Categories = response.Data.Category.ToList();
+            Categories = response.Data.Categories.ToList();
         }
     }
 

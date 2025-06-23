@@ -1,11 +1,4 @@
-﻿using Common.Domain.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Common.Domain.DataTransferObjects.Tenant;
+﻿namespace Common.Domain.DataTransferObjects.Tenant;
 
 public class CategoryDto
 {
@@ -15,4 +8,4 @@ public class CategoryDto
 }
 
 public record CategoryWrapper<T>(T Category);
-public record CategoriesWrapper<T>(IEnumerable<T> Category);
+public record CategoriesWrapper<T>(IEnumerable<T> Categories);
