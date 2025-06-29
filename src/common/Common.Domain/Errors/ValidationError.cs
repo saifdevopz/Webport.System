@@ -4,8 +4,7 @@ namespace Common.Domain.Errors;
 
 public sealed record ValidationError : CustomError
 {
-    public ValidationError(CustomError[] errors)
-            : base(
+    public ValidationError(CustomError[] errors) : base(
                     "General.Validation",
                     "One or more validation errors occurred",
                     ErrorType.Validation)

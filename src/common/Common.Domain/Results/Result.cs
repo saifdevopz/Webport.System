@@ -4,11 +4,13 @@ using System.Text.Json.Serialization;
 
 namespace Common.Domain.Results;
 
-public class Result(bool isSuccess, CustomError error)
+public class Result(bool isSuccess, CustomError error, string? message = null)
 {
     public bool IsSuccess { get; } = isSuccess;
     public bool IsFailure => !IsSuccess;
     public CustomError? Error { get; } = isSuccess ? null : error;
+
+    public string? Message { get; } = message;
 
     public static Result Success() => new(true, CustomError.None);
     public static Result<T> Success<T>(T data) => data is not null

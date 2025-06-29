@@ -14,6 +14,7 @@ public class GetUserByIdQueryHandler(IGenericRepository<UserM> repository)
         return obj is not null
             ? Result.Success(new GetUserByIdQueryResult(obj))
             : Result.Failure<GetUserByIdQueryResult>(CustomError.NotFound("Not Found", "User not found."));
+
     }
 }
 

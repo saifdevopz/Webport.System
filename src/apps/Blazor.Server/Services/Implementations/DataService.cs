@@ -1,6 +1,7 @@
 ﻿using Blazor.Server.Common.HttpClients;
 using Common.Domain.Errors;
 using Common.Domain.Results;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Blazor.Server.Services.Implementations;
@@ -66,17 +67,27 @@ public class DataService(BaseHttpClient BaseHttpClient, TenantHttpClient TenantH
             HttpClient client = GetClient(true);
             var response = await client.PostAsJsonAsync(source, obj);
 
-            var result = await response.Content.ReadFromJsonAsync<Result>();
-
             if (response == null)
-                return Result.Failure<T>(CustomError.Conflict(",", "No response from server."));
+                return Result.Failure<T>(CustomError.Conflict("NETWORK", "No response from server."));
 
-            if (result!.IsFailure)
-                return Result.Failure<T>(CustomError.Conflict(",", "No response from server."));
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<Result>();
 
-            return result.IsSuccess
-                ? Result.Success()
-                : Result.Failure<T>(CustomError.Conflict(",", "No response from server."));
+                if (result == null || result.IsFailure)
+                    return Result.Failure<T>(CustomError.Conflict("RESPONSE", "Unexpected empty or failed result."));
+
+                return Result.Success(result);
+            }
+
+            var problem = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+
+            if (problem != null)
+            {
+                return Result.Failure<T>(CustomError.Failure(problem.Title!, problem.Detail!));
+            }
+
+            return Result.Failure<T>(CustomError.Conflict("HTTP", $"Unexpected error: {response.StatusCode}"));
         }
         catch (HttpRequestException ex)
         {

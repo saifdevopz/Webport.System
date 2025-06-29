@@ -11,8 +11,7 @@ public class AccessTokenCommandHandler(ITokenService tokenService)
         AccessTokenCommand command,
         CancellationToken cancellationToken)
     {
-
-        var tokenResult = await tokenService.AccessToken(new AccessTokenRequest(command.Email, command.Password));
+        Result<TokenResponse> tokenResult = await tokenService.AccessToken(new AccessTokenRequest(command.Email, command.Password));
 
         if (tokenResult.IsFailure)
         {
