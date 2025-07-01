@@ -6,7 +6,7 @@
 
 <MudDataGrid Items="@Categories.Take(50)" Filterable="true" ColumnResizeMode="ResizeMode.Column" Dense="true" Hover="true" Striped="true" RowStyle="height: 5px;">
     <ToolBarContent>
-        <MudIconButton Href="@($"role/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
+        <MudIconButton Href="@($"category/modify")" Icon="@Icons.Material.Filled.Add" aria-label="delete" />
         <MudSpacer />
         <MudTextField Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
@@ -17,7 +17,7 @@
         <TemplateColumn CellClass="">
             <CellTemplate>
                 <MudStack Row>
-                    <MudIconButton Href="@($"role/modify/{context.Item.CategoryId}")" Icon="@Icons.Material.Filled.Edit" Color="Color.Success" />
+                    <MudIconButton Href="@($"category/modify/{context.Item.CategoryId}")" Icon="@Icons.Material.Filled.Edit" Color="Color.Success" />
                     <MudIconButton OnClick="@(() => Delete(context.Item.CategoryId))" Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
                 </MudStack>
             </CellTemplate>

@@ -3,8 +3,8 @@
 public class CategoryDto
 {
     public int CategoryId { get; set; }
-    public required string CategoryCode { get; set; }
-    public required string CategoryDesc { get; set; }
+    public string CategoryCode { get; set; } = string.Empty;
+    public string CategoryDesc { get; set; } = string.Empty;
 }
 
 public record CategoryWrapper<T>(T Category);

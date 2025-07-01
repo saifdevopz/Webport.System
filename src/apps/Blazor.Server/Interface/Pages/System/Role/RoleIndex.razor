@@ -13,7 +13,7 @@
     <Columns>
         <PropertyColumn Property="_ => _.RoleId" Title="Role Id" />
         <PropertyColumn Property="_ => _.RoleName" Title="Role Name" />               
-        <TemplateColumn CellClass="">
+        <TemplateColumn>
             <CellTemplate>
                 <MudStack Row>
                     <MudIconButton Href="@($"role/modify/{context.Item.RoleId}")" Icon="@Icons.Material.Filled.Edit" Color="Color.Success" />
@@ -38,7 +38,7 @@
 
     private async Task GetRoles()
     {
-        var response = await _DataService.GetAllAsync<RolesWrapper<RoleDto>>("role");
+        var response = await _DataService.GetAllAsync<RolesWrapper<RoleDto>>("role", true);
 
         if (response.IsSuccess)
         {

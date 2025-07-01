@@ -39,11 +39,11 @@ public class DataService(BaseHttpClient BaseHttpClient, TenantHttpClient TenantH
         }
     }
 
-    public async Task<Result<T>> GetByIdAsync<T>(string basePath, string id)
+    public async Task<Result<T>> GetByIdAsync<T>(string basePath, string id, bool useBaseClient = false)
     {
         try
         {
-            HttpClient client = GetClient(true);
+            HttpClient client = GetClient(useBaseClient);
             var response = await client.GetFromJsonAsync<Result<T>>($"{basePath}/{id}");
 
             if (response == null)
@@ -60,11 +60,11 @@ public class DataService(BaseHttpClient BaseHttpClient, TenantHttpClient TenantH
         }
     }
 
-    public async Task<Result> PostAsync<T>(string source, T obj)
+    public async Task<Result> PostAsync<T>(string source, T obj, bool useBaseClient = false)
     {
         try
         {
-            HttpClient client = GetClient(true);
+            HttpClient client = GetClient(useBaseClient);
             var response = await client.PostAsJsonAsync(source, obj);
 
             if (response == null)
