@@ -31,12 +31,28 @@ else
     Log.Information("Running in {EnvironmentName} environment.", environment.EnvironmentName);
 }
 
+// Serilog
+//builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
+
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    logging.IncludeScopes = true;
+    logging.IncludeFormattedMessage = true;
+
+    //var otelConfig = builder.Configuration.GetSection("OpenTelemetry");
+
+    //logging.AddOtlpExporter(options =>
+    //{
+    //    options.Endpoint = new Uri(otelConfig["Endpoint"]!);
+    //    options.Headers = otelConfig["Headers"]!;
+    //    options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
+    //});
+});
+
+
 // Connection Strings
 string? systemDatabaseString = builder.Configuration["PostgreSQL:DefaultConnection"];
 ArgumentException.ThrowIfNullOrWhiteSpace(systemDatabaseString);
-
-// Serilog
-builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
 
 // Controller Support
 builder.Services.AddControllers();
@@ -61,7 +77,7 @@ Assembly[] moduleApplicationAssemblies =
 builder.Services.AddCommonApplication(moduleApplicationAssemblies);
 
 // Common Infrastructure Module
-builder.Services.AddCommonInfrastructure();
+builder.Services.AddCommonInfrastructure(builder.Configuration, DiagnosticsConfig.ServiceName);
 
 builder.Services.AddSystemModule(builder.Configuration, systemDatabaseString);
 
@@ -91,7 +107,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     await app.ApplyAllMigrations();
 }
 
-app.UseSerilogRequestLogging();
+//app.UseSerilogRequestLogging();
 
 app.UseExceptionHandler();
 

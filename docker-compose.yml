@@ -9,19 +9,22 @@ services:
     environment: 
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
+      - OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp-gateway-prod-me-central-1.grafana.net/otlp
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf 
+      - OTEL_EXPORTER_OTLP_HEADERS=Authorization=Basic MTMwNzQxMTpnbGNfZXlKdklqb2lNVFEzTkRnek9TSXNJbTRpT2lKemRHRmpheTB4TXpBM05ERXhMVzkwYkhBdGQzSnBkR1V0ZDJWaWNHOXlkQzEwWlhOMElpd2lheUk2SWpJM1FYSTVNa3BTTTFZeFVucE5NamM1Ym5WMFVreFdOQ0lzSW0waU9uc2ljaUk2SW5CeWIyUXRiV1V0WTJWdWRISmhiQzB4SW4xOQ==
     ports:
       - "5000:8080"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.system-api.loadbalancer.server.port=8080"
-      - "traefik.http.routers.system-api.entrypoints=https"
-      - "traefik.http.routers.system-api.rule=Host(`system.webport.co.za`)"
-      - "traefik.http.routers.system-api.tls=true"
-      - "traefik.http.routers.system-api.tls.certresolver=cloudflare"
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-    networks:
-      - proxy
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.services.system-api.loadbalancer.server.port=8080"
+    #   - "traefik.http.routers.system-api.entrypoints=https"
+    #   - "traefik.http.routers.system-api.rule=Host(`system.webport.co.za`)"
+    #   - "traefik.http.routers.system-api.tls=true"
+    #   - "traefik.http.routers.system-api.tls.certresolver=cloudflare"
+    #   - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+    # networks:
+    #   - proxy
 
-networks:
-  proxy:
-    external: true
+# networks:
+#   proxy:
+#     external: true

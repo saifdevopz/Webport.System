@@ -69,7 +69,7 @@ Assembly[] moduleApplicationAssemblies =
 builder.Services.AddCommonApplication(moduleApplicationAssemblies);
 
 // Common Infrastructure Module
-builder.Services.AddCommonInfrastructure();
+builder.Services.AddCommonInfrastructure(builder.Configuration, DiagnosticsConfig.ServiceName);
 
 builder.Services.AddTenantModule(builder.Configuration);
 
