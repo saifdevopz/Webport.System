@@ -106,4 +106,10 @@ dotnet_diagnostic.S2326.severity = none
 # S125: Sections of code should not be commented out
 dotnet_diagnostic.S125.severity = none
 
+# CA1002: Do not expose generic lists
+dotnet_diagnostic.CA1002.severity = none
+
+# CA1024: Use properties where appropriate
+dotnet_diagnostic.CA1024.severity = none
+
 ########################################################

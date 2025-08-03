@@ -1,6 +1,5 @@
 ﻿@page "/"
-@using Blazor.Server.Common.HttpClients
-@using Blazor.Server.Services.Interfaces
+@rendermode InteractiveServer
 @using global::System.Security.Claims
 
 <CascadingAuthenticationState>
@@ -18,15 +17,15 @@
     {
         if (firstRender && !_navigated)
         {
-            // if (AuthenticationState == null)
-            //     return;
+            if (AuthenticationState == null)
+                return;
 
-            var authState = await AuthenticationState!;
+            var authState = await AuthenticationState;
             User = authState.User;
 
             _navigated = true;
 
-            if (User.Identity?.IsAuthenticated == true && AuthenticationState is not null)
+            if (User.Identity?.IsAuthenticated == true)
             {
                 _NavigationManager.NavigateTo("/dashboard/home", forceLoad: false);
             }

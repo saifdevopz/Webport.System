@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@rendermode InteractiveServer
+<!--=============== HEADER ===============-->
+<header class="header">
+    <nav class="nav container">
+        <div class="nav__data">
+            <AuthorizeView>
+                <a href="#" class="nav__logo">
+                    <i class="ri-planet-line"></i> @context.User.FindFirst("TenantName")?.Value
+                </a>
+            </AuthorizeView>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="ri-menu-line nav__burger"></i>
+                <i class="ri-close-line nav__close"></i>
+            </div>
+        </div>
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li><a href="dashboard/home" class="nav__link">Home</a></li>
+
+                <AuthorizeView Roles="Admin">
+                    <li class="dropdown__item">
+                    <div class="nav__link">
+                        Admin <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                    </div>
+
+                        <ul class="dropdown__menu">
+                            <li class="dropdown__subitem">
+                                <div class="dropdown__link">
+                                    <i class="ri-bar-chart-line"></i> System <i class="ri-add-line dropdown__add"></i>
+                                </div>
+
+                                <ul class="dropdown__submenu">
+                                    <li>
+                                        <a href="/role/index" class="dropdown__link">
+                                            <i class="ri-user-line"></i> Role
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/tenant/index" class="dropdown__link">
+                                            <i class="ri-user-line"></i> Tenant
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/user/index" class="dropdown__link">
+                                            <i class="ri-user-line"></i> User
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                </li>
+                </AuthorizeView>
+
+                <AuthorizeView>
+                    <!--=============== DROPDOWN 1 ===============-->
+                    <li class="dropdown__item">
+                        <div class="nav__link">
+                            Inventory <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                        </div>
+
+                        <ul class="dropdown__menu">
+                            <li>
+                                <a href="/category/index" class="dropdown__link">
+                                    <i class="ri-pie-chart-line"></i> Category
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </AuthorizeView>
+                <li @onclick="LogoutClicked"><a href="#" class="nav__link">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+@code {
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _IJSRuntime.InvokeVoidAsync("showMenu", "nav-toggle", "nav-menu");
+            StateHasChanged();
+        }
+    }
+
+    private void LogoutClicked()
+    {
+        _NavigationManager.NavigateTo("/logout", forceLoad: true);
+    }
+
+}
