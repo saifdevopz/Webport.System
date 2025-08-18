@@ -1,0 +1,13 @@
+﻿@page "/"
+@inject IJSRuntime jsRuntime
+
+<PageTitle>Home</PageTitle>
+
+<button @onclick="WriteToConsole">Click</button>
+
+@code{
+    public void WriteToConsole()
+    {
+       jsRuntime.InvokeAsync<string>("console.log", "hello world");
+    }
+}

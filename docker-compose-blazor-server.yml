@@ -1,11 +1,11 @@
 services:
 
-  blazor.server:
-    image: ghcr.io/saifdevopz/blazor-server:latest
-    container_name: blazor-server
+  blazor.admin:
+    image: ghcr.io/saifdevopz/blazor-admin:latest
+    container_name: blazor-admin
     build:
       context: .
-      dockerfile: src/apps/Blazor.Server/Dockerfile
+      dockerfile: src/apps/BlazorAdmin/Dockerfile
     environment: 
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
@@ -13,11 +13,11 @@ services:
       - "5050:8080"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.blazor-server.loadbalancer.server.port=8080"
-      - "traefik.http.routers.blazor-server.entrypoints=https"
-      - "traefik.http.routers.blazor-server.rule=Host(`blazor.webport.co.za`)"
-      - "traefik.http.routers.blazor-server.tls=true"
-      - "traefik.http.routers.blazor-server.tls.certresolver=cloudflare"
+      - "traefik.http.services.blazor-admin.loadbalancer.server.port=8080"
+      - "traefik.http.routers.blazor-admin.entrypoints=https"
+      - "traefik.http.routers.blazor-admin.rule=Host(`blazor.webport.co.za`)"
+      - "traefik.http.routers.blazor-admin.tls=true"
+      - "traefik.http.routers.blazor-admin.tls.certresolver=cloudflare"
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
     networks:
       - proxy

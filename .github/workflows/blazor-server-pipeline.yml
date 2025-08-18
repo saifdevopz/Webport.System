@@ -1,4 +1,4 @@
-name: BlazorServer.App CI/CD
+name: BlazorAdmin.App CI/CD
 
 on:
   push:

@@ -1,0 +1,81 @@
+﻿@layout AuthLayout
+@page "/account/login"
+@using global::Common.Domain.DataTransferObjects.System
+@attribute [AllowAnonymous]
+@rendermode InteractiveServer
+
+<EditForm Model="@model" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <MudCard Elevation="1" Style="padding: 30px;">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Login</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+
+        <MudCardContent>
+            <MudTextField @bind-Value="model.Email" For="@(() => model.Email)" Label="Email" Style="margin-bottom:15px;"/>
+            <MudTextField @bind-Value="model.Password" For="@(() => model.Password)" Label="Password" />
+        </MudCardContent>
+
+        <p>@ErrorMessage</p>
+
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Dark">Login</MudButton>
+        </MudCardActions>
+    </MudCard>
+</EditForm>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState>? AuthenticationState { get; set; }
+    public string? ErrorMessage { get; set; }
+    internal LoginDto model { get; set; } = new();
+
+    
+
+    private bool shouldRedirect = false;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await CheckUserAuthentication();
+
+        #if DEBUG
+            model.Email = "customer1@gmail.com";
+            model.Password = "12345678";
+        #endif
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && shouldRedirect)
+        {
+            _NavigationManager.NavigateTo("/dashboard/home", forceLoad: true);
+        }
+    }
+
+    private async Task CheckUserAuthentication()
+    {
+        var user = (await AuthenticationState!).User;
+
+        if (user?.Identity?.IsAuthenticated == true)
+        {
+            shouldRedirect = true;
+        }
+    }
+
+    public async Task HandleLogin()
+    {
+        var response = await _ITokenService.AccessToken(model);
+
+        if (response.IsSuccess)
+        {
+            _NavigationManager.NavigateTo("/account/postlogin?Token=" + response.Data.Token, forceLoad: true);
+        }
+        else
+        {
+
+            ErrorMessage = response.Error!.Description;
+        }
+    }
+}

@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\common\Common.Domain\Common.Domain.csproj" />
-    <ProjectReference Include="..\Blazor.WebportSystem.Client\Blazor.WebportSystem.Client.csproj" />
+    <ProjectReference Include="..\Blazor.WebportSystem.Client\Blazor.WebportSystem.Cljjt.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.3" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />		
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.13.0" />

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    @* <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" /> *@
+    @* <link rel="stylesheet" href="@Assets["app.css"]" /> *@
+    <link rel="stylesheet" href="@Assets["css/main.css"]" />
+    <link rel="stylesheet" href="@Assets["css/sidebar.css"]" />
+    <link rel='stylesheet' href='https://unpkg.com/css-pro-layout@1.1.0/dist/css/css-pro-layout.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css'>
+    <link rel="stylesheet" href="@Assets["BlazorServer.WebportSystem.styles.css"]" />
+    <ImportMap />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <HeadOutlet @rendermode="InteractiveServer" />
+</head>
+
+<body>
+    <Routes @rendermode="InteractiveServer" />
+    <script src="_framework/blazor.web.js"></script>
+</body>
+
+</html>
